@@ -25,6 +25,8 @@ class ProductController extends Controller
         return view('admin.products.create', compact('categories', 'brands'));
     }
 
+
+    
     public function store(ProductFormRequest $request)
     {
         $validatedData = $request->validated();
@@ -51,12 +53,12 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
             $uploadPath = 'uploads/products/';
-
+            $i = 1;
             foreach ($request->file('image') as $imageFile) {
-                $extention = $imageFile->getClientOriginalExtention();
-                $filename = time() . '.' . $extention;
-                $file->move($uploadPath, $filename);
-                $finalImagePathName = $uploadPath . '-' . $filename;
+                $extention = $imageFile->getClientOriginalExtension();
+                $filename = time() . $i++ . '.' . $extention;
+                $imageFile->move($uploadPath, $filename);
+                $finalImagePathName = $uploadPath . $filename;
 
                 $product->productImages()->create([
                     'product_id' => $product->id,
@@ -64,8 +66,6 @@ class ProductController extends Controller
                 ]);
             }
         }
-
-
-        return redirect('/admin/products')->with('success', 'Product created successfully');
+        return redirect('/admin/products')->with('message', 'Product created successfully');
     }
 }
