@@ -38,10 +38,25 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
     Route::controller(App\Http\Controllers\Admin\ProductController::class)->group(function () {
         Route::get('products', 'index')->name('productIndex');
         Route::get('products/create', 'create')->name('product.create');
-        Route::post('products', 'store');
+        Route::post('products', 'store')->name('product.store');
+        Route::get('products/{product}/edit', 'edit')->name('product.edit');
+        Route::put('products/{product}', 'update')->name('product.update');
+        Route::get('products/{product_id}/delete', 'destroy')->name('product.delete');
 
+        Route::get('product-image/{product_image_id}/delete', 'destroyImage')->name('product.deleteImage');
     });
 
     //Brands routes
     Route::get('/brands', App\Http\Livewire\Admin\Brand\Index::class)->name('brandIndex');
+
+    //Colors routes
+    Route::controller(App\Http\Controllers\Admin\ColorController::class)->group(function () {
+        Route::get('colors', 'index')->name('colorIndex');
+        Route::get('colors/create', 'create')->name('color.create');
+        Route::post('colors/create', 'store')->name('color.store');
+        Route::get('colors/{color}/edit', 'edit')->name('color.edit');
+        Route::put('colors/{color_id}', 'update')->name('color.update');
+        Route::get('colors/{color_id}/delete', 'delete')->name('color.delete');
+    });
+
 });
