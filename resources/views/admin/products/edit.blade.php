@@ -4,8 +4,8 @@
     <div class="row">
         <div class="col-md-12">
             @if (session('message'))
-                        <h4 class="alert alert-success">{{session('message')}}</h4>
-                    @endif
+                <h4 class="alert alert-success">{{ session('message') }}</h4>
+            @endif
             <div class="card">
                 <div class="card-header">
                     <h4>Edit Product
@@ -13,7 +13,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    
+
                     @if ($errors->any())
                         <div class="alert alert-warning">
                             @foreach ($errors->all() as $item)
@@ -45,6 +45,11 @@
                                     data-bs-target="#image-tab-pane" type="button" role="tab"
                                     aria-controls="image-tab-pane" aria-selected="false">Product
                                     Image</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="color-tab" data-bs-toggle="tab"
+                                    data-bs-target="#color-tab-pane" type="button" role="tab">
+                                    Product Color</button>
                             </li>
 
                         </ul>
@@ -96,8 +101,8 @@
                             </div>
 
 
-                            <div class="tab-pane fade border d-3" id="seotag-pane" role="tabpane2" aria-labelledby="seotag"
-                                tabindex="0">
+                            <div class="tab-pane fade border d-3" id="seotag-pane" role="tabpane2"
+                                aria-labelledby="seotag" tabindex="0">
                                 <div class="mb-3">
                                     <label for="">Meta Title</label>
                                     <input type="text" name="meta_title" class="form-control"
@@ -163,6 +168,72 @@
                                 <input type="file" name="image[]" multiple class="form-control">
                             </div>
 
+                            <div class="tab-pane fade border d-3" id="color-tab-pane" role="tabpanel"
+                                aria-labelledby="color-tab" tabindex="0">
+                                <div class="mb-3">
+                                    <h3>Add Product Colors</h3>
+                                    <label for="">Select Color</label>
+                                    <hr>
+
+                                    <div class="row">
+                                        @forelse ($colors as $item)
+                                            {{-- $colors lấy từ ProductController-create-compact()  --}}
+                                            <div class="col-md-3">
+                                                <div class="p-2 border mb-3">
+
+                                                    Color : <input type="checkbox" name="colors[{{ $item->id }}]"
+                                                        value="{{ $item->id }}" />{{ ' ' . $item->name }}
+                                                    <br>
+                                                    Quantity : <input
+                                                        type="number"name="colorquantity[{{ $item->id }}]"style="width: 70px; border: 1px solid">
+                                                </div>
+                                            </div>
+                                        @empty
+                                            <div class="col-md-12">
+                                                <h1>No color found.</h1>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-sm table-bordered">
+                                            <thead>
+                                                <tr>
+                                                    <td>Color Name</td>
+                                                    <td>Quantity</td>
+                                                    <td>Delete</td>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($product->productColors as $item)
+                                                    <tr class="prod-color-tr">
+                                                        <td>
+                                                            @if ($item->color)
+                                                                {{ $item->color->name }}
+                                                            @else
+                                                                No Color Found
+                                                            @endif
+
+                                                        </td>
+                                                        <td>
+                                                            <div class="input-group mb-3" style="width: 150px">
+                                                                <input type="text" value="{{ $item->quantity }}"
+                                                                    class="productColorQuantity form-control form-control-sm">
+                                                                <button type="button" value="{{ $item->id }}"
+                                                                    class="updateProductColorBtn btn btn-primary btn-sm">Update</button>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <button type="button" value="{{ $item->id }}"
+                                                                class="deleteProductColorBtn btn btn-danger btn-sm">Delete</button>
+
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             {{-- Show product's images --}}
                             <div>
                                 @if ($product->productImages)
@@ -171,7 +242,8 @@
                                             <div class="col-md-2">
                                                 <img src="{{ asset($item->image) }}" alt=""
                                                     style="width:80px; height:80px" class="me-4 border">
-                                                <a href="{{url('admin/product-image/'. $item->id.'/delete')}}" class="d-block">Remove</a>
+                                                <a href="{{ url('admin/product-image/' . $item->id . '/delete') }}"
+                                                    class="d-block">Remove</a>
                                             </div>
                                         @endforeach
                                     </div>
@@ -181,7 +253,7 @@
                             </div>
                         </div>
                         <div>
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="btn btn-primary float-end">Update</button>
                         </div>
                     </form>
 
@@ -189,4 +261,81 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    {{-- Script check xem jquery load chưa --}}
+    {{-- <script>
+    if (typeof jQuery == 'undefined') {
+        alert('jQuery is not loaded!');
+    } else {
+        alert('jQuery is loaded!');
+    }
+</script> --}}
+
+    <script>
+        $(document).ready(function() {
+
+            // checking for the CSRF token as a POST parameter, lấy từ laravel.com (document X-CSRF)
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $(document).on('click', '.updateProductColorBtn', function(event) {
+
+                event.preventDefault();
+
+                var product_id = "{{ $product->id }}";
+                var prod_color_id = $(this).val();
+                var qty = $(this).closest('.prod-color-tr').find('.productColorQuantity').val();
+                // alert(prod_color_id);
+
+                if (qty <= 0) {
+                    alert('Quantity is required');
+                    return false;
+                }
+
+                var data = {
+                    '_token': '{{ csrf_token() }}',
+                    'product_id': product_id,
+                    'prod_color_id': prod_color_id,
+                    'qty': qty
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: "/admin/product-color/" + prod_color_id,
+                    data: data,
+                    success: function(response) {
+                        alert(response.message);
+                    }
+                });
+            });
+
+
+
+            //Delete Product's color
+            $(document).on('click', '.deleteProductColorBtn', function(event) {
+
+                event.preventDefault();
+                var prod_color_id = $(this).val();
+                var thisClick = $(this);
+                var data = {
+                    '_token': '{{ csrf_token() }}',
+                };
+
+                $.ajax({
+                    type: "DELETE", // Change the request method to DELETE
+                    url: "/admin/product-color/" + prod_color_id + "/delete",
+                    data: data,
+                    success: function(response) {
+                        thisClick.closest('.prod-color-tr').remove();
+                        alert(response.message);
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

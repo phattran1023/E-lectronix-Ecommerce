@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -12,6 +13,7 @@
 
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('admin/vendors/mdi/css/materialdesignicons.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('admin/vendors/mdi/css/materialdesignicons.min.css.map') }}">
     <link rel="stylesheet" href="{{ asset('admin/vendors/base/vendor.bundle.base.css') }}">
     <!-- endinject -->
     <!-- plugin css for this page -->
@@ -42,7 +44,9 @@
 
     <!-- plugins:js -->
     <script src="{{ asset('admin/vendors/base/vendor.bundle.base.js') }}"></script>
+    {{-- <script src="{{ asset('admin/vendors/base/vendor.bundle.base.js.map') }}"></script> --}}
     <!-- endinject -->
+
     <!-- Plugin js for this page-->
     <script src="{{ asset('admin/vendors/chart.js/Chart.min.js') }}"></script>
     <script src="{{ asset('admin/vendors/datatables.net/jquery.dataTables.js') }}"></script>
@@ -63,9 +67,13 @@
     <script src="{{ asset('admin/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('admin/js/dataTables.bootstrap4.js') }}"></script>
     <!-- End custom js for this page-->
-    @livewireStyles
 
+    <script src="{{ asset('admin/js/jquery_cookie.js') }}" type="text/javascript"></script>
+
+    @yield('scripts')
     <script src="{{ asset('livewire/livewire.js') }}" defer></script>
+
+
     @livewireScripts
 </body>
 
