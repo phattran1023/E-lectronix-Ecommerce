@@ -17,6 +17,23 @@
                 </div>
             @endif
 
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3>Price</h3>
+                </div>
+                <div class="card-body">
+                    <label class="d-block">
+                        <input type="radio" wire:model="priceInput"
+                            value="high-to-low" name="priceSort">High to Low
+                    </label>
+                    <label class="d-block">
+                        <input type="radio" wire:model="priceInput"
+                            value="low-to-high" name="priceSort">Low to High
+                    </label>
+                </div>
+            </div>
+
+
         </div>
         <div class="col-md-10">
             <div class="row">
