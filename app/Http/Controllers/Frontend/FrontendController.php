@@ -9,22 +9,25 @@ use App\Models\Category;
 
 class FrontendController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         $sliders = Slider::where('status', '0')->get();
-        return view('frontend.index',compact('sliders'));
+        return view('frontend.index', compact('sliders'));
     }
 
-    public function categories () {
-        $categories = Category::where('status','0')->get();
-        return view('frontend.collections.categories.index',compact('categories'));
+    public function categories()
+    {
+        $categories = Category::where('status', '0')->get();
+        return view('frontend.collections.categories.index', compact('categories'));
     }
 
-    public function products ($category_slug) {
-        $category = Category::where('slug',$category_slug)->first();
+    public function products($category_slug)
+    {
+        $category = Category::where('slug', $category_slug)->first();
+
         if ($category) {
-            
-            $products = $category->products()->get(); //Category hasMany products
-            return view('frontend.collections.products.index',compact('products','category'));
+
+            return view('frontend.collections.products.index', compact( 'category'));
         } else {
             return redirect()->back();
         }
