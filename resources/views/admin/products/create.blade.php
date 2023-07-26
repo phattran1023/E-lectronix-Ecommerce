@@ -77,7 +77,7 @@
                                     <label for="">Select Brand</label>
                                     <select name="brand" class="form-control" id="">
                                         @foreach ($brands as $item)
-                                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>

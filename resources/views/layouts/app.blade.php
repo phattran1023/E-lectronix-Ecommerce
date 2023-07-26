@@ -10,6 +10,9 @@
 
     <title> @yield('title')</title>
 
+    <meta name="description" content="@yield('meta_description')">
+    <meta name="keywords" content="@yield('meta_keyword')">
+    <meta name="author" content="Shop Project">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -83,7 +86,7 @@
             </div>
         </nav> --}}
 
-        <main class="py-4">
+        <main >
             @yield('content')
         </main>
     </div>

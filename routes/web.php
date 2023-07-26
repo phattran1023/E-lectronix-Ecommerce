@@ -23,6 +23,7 @@ Auth::routes();
 
 Route::get('/',[App\Http\Controllers\Frontend\FrontendController::class,'index'])->name('homepage');
 Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::class,'categories']);
+Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'products']);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -48,7 +49,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('category/create', 'create')->name('category.create');
         Route::post('category', 'store');
         Route::get('category/{category}/edit', 'edit');
-        Route::put('/category/{category}', 'update');
+        Route::put('category/{category}', 'update');
     });
 
     //Product routes-Phat's routes

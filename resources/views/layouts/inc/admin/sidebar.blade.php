@@ -24,6 +24,8 @@
                 <span class="menu-title">Color</span>
             </a>
         </li>
+
+
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                 aria-controls="ui-basic">
@@ -41,6 +43,8 @@
             </div>
         </li>
 
+
+        
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false"
                 aria-controls="ui-basic2">
@@ -50,8 +54,7 @@
             </a>
             <div class="collapse" id="ui-basic2">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products/create') }}">Add Product</a>
-                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products/create') }}">Add Product</a></li>
                     <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products') }}">View Product</a></li>
                 </ul>
             </div>
