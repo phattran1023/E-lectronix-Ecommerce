@@ -21,7 +21,14 @@ class Category extends Model
         'status',
     ];
 
-    public function products (){
-        return $this->hasMany(Product::class,'category_id','id');
+    //category has many products
+    public function products()
+    {
+        return $this->hasMany(Product::class, 'category_id', 'id');
+    }
+    // category has many brands
+    public function brands()
+    {
+        return $this->hasMany(Brand::class, 'category_id', 'id')->where('status', '0');
     }
 }

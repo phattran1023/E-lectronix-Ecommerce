@@ -18,6 +18,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
+                                <th>Category</th>
                                 <th>Slug</th>
                                 <th>Status</th>
                                 <th>Action</th>
@@ -28,6 +29,13 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
+                                    <td>
+                                        @if ($item->category)
+                                            {{ $item->category->name }}
+                                        @else
+                                            No category
+                                        @endif
+                                    </td>
                                     <td>{{ $item->slug }}</td>
                                     <td>{{ $item->status == 1 ? 'hidden' : 'visible' }}</td>
                                     <td><a href="#" wire:click='editBrand({{ $item->id }})'

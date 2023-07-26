@@ -23,6 +23,9 @@ Auth::routes();
 
 Route::get('/',[App\Http\Controllers\Frontend\FrontendController::class,'index'])->name('homepage');
 Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::class,'categories']);
+Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'products']);
+Route::get('collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'productView']);
+
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -48,7 +51,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('category/create', 'create')->name('category.create');
         Route::post('category', 'store');
         Route::get('category/{category}/edit', 'edit');
-        Route::put('/category/{category}', 'update');
+        Route::put('category/{category}', 'update');
     });
 
     //Product routes-Phat's routes
@@ -59,9 +62,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('products/{product}/edit', 'edit')->name('product.edit');
         Route::put('products/{product}', 'update')->name('product.update');
         Route::get('products/{product_id}/delete', 'destroy')->name('product.delete');
-
         Route::get('product-image/{product_image_id}/delete', 'destroyImage')->name('product.deleteImage');
-
         Route::post('product-color/{prod_color_id}', 'updateProdColorQty');
         Route::delete('product-color/{prod_color_id}/delete', 'deleteProdColor')->name('product.deleteColor');
     });
