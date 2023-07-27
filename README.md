@@ -89,12 +89,10 @@ cp .env.example .env
 
 <ol start="9">
   <li>Open the '.env' file and set the <code>DATABASE_NAME</code> to your desired database name (e.g., 'ecommerce').</li>
-  <li>Run database migrations to create the necessary tables:</li>
+  <li>Import file 'ecommerce.sql' into MySQL</li>
+  <li>Open MySQL, create a new Database name: 'ecommerce', then select import, then choose the file 'ecommerce.sql'</li>    
 </ol>
 
-<pre>
-php artisan migrate
-</pre>
 
 <ol start="11">
   <li>Start the development server:</li>
