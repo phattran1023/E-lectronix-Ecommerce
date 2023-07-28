@@ -1,7 +1,8 @@
 <div>
     <div class="py-3 py-md-5 bg-light">
         <div class="container">
-
+            <div style="border-bottom:1px solid"><h3>My wishlist</h3></div>
+            <br>
             <div class="row">
                 <div class="col-md-12">
                     <div class="shopping-cart">
@@ -42,9 +43,10 @@
 
                                         <div class="col-md-2 col-12 my-auto">
                                             <div class="remove">
-                                                <a href="" class="btn btn-danger btn-sm">
-                                                    <i class="fa fa-trash"></i> Remove
-                                                </a>
+                                                <button href="" wire:click="removeWishlistItem({{$wishlistItem->id}})" class="btn btn-danger btn-sm">
+                                                    <span wire:loading.remove wire:target="removeWishlistItem({{$wishlistItem->id}})"><i class="fa fa-trash"></i> Remove</span>
+                                                    <span wire:loading wire:target="removeWishlistItem({{$wishlistItem->id}})"><i class="fa fa-trash"></i>Removing...</span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>

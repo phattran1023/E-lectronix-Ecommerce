@@ -4,4 +4,5 @@
   'frontend.product.index' => 'App\\Http\\Livewire\\Frontend\\Product\\Index',
   'frontend.product.view' => 'App\\Http\\Livewire\\Frontend\\Product\\View',
   'frontend.wish-list-show' => 'App\\Http\\Livewire\\Frontend\\WishListShow',
+  'frontend.wishlist-count' => 'App\\Http\\Livewire\\Frontend\\WishlistCount',
 );
