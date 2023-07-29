@@ -64,8 +64,8 @@
                                     </a>
                                 </h5>
                                 <div>
-                                    <span class="selling-price">${{ $item->selling_price }}</span>
-                                    <span class="original-price">${{ $item->original_price }}</span>
+                                    <span class="selling-price">{{ number_format($item->selling_price) }} VND</span>
+                                    <span class="original-price">{{ number_format($item->original_price) }} VND</span>
                                 </div>
 
                             </div>
