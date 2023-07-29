@@ -28,8 +28,9 @@ Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\Frontend
 Route::get('collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'productView']);
 
 Route::middleware(['auth'])->group(function() {
-    Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
 
+    Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
+    Route::get('cart',[App\Http\Controllers\Frontend\CartController::class,'index']);
 });
 
 
