@@ -3,6 +3,7 @@
 use App\Models\Category;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\socialLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,12 +27,21 @@ Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::cla
 Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'products']);
 Route::get('collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'productView']);
 
-Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
+Route::middleware(['auth'])->group(function() {
+
+    Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
+    Route::get('cart',[App\Http\Controllers\Frontend\CartController::class,'index']);
+});
 
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
+//Login with social account
+Route::get('login/google',[socialLoginController::class,'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback',[socialLoginController::class,'handleGoogleCallback']);
+Route::get('login/twitter',[socialLoginController::class,'redirectToTwitter'])->name('login.twitter');
+Route::get('login/twitter/callback',[socialLoginController::class,'handleTwitterCallback']);
 
 // Admin routes-Phat's routes
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {

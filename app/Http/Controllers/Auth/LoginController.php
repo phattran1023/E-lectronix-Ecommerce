@@ -31,8 +31,11 @@ class LoginController extends Controller
     public function authenticated() {
         if (Auth::user()->role_as== '1') {
             return redirect('admin/dashboard')->with('message','Welcome to dashboard');
+        } else if(Auth::user()->role_as== '3') {
+            return redirect('/home')->with('status', 'Login social account successfully');
         } else {
-            return redirect('/home')->with('status','Loggin successfully logged in');}
+            return redirect('/home')->with('status','Login successfully logged in');
+        }
     }
     /**
      * Create a new controller instance.

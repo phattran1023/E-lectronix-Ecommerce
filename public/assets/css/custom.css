@@ -1,4 +1,19 @@
 /* Cart or Wishlist */
+.color-square {
+    display: inline-block;
+    line-height: 1; /* To align the text and the square properly */
+}
+
+.color-square::before {
+    content: "\00a0"; /* Unicode character for non-breaking space */
+    display: inline-block;
+    width: 20px; /* Adjust the size of the square */
+    height: 20px;
+    margin-right: 5px; /* Adjust this value to control the distance between the square and the text */
+    background-color: inherit;
+    /* vertical-align: middle; To align the square with the text vertically */
+}
+
 .shopping-cart .cart-header{
     padding: 10px;
 }

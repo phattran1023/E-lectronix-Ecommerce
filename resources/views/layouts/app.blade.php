@@ -51,31 +51,34 @@
     <!-- JavaScript Alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script>
-        window.addEventListener('message', event => {
-            alertify.set('notifier', 'position', 'top-right');
+        // Set the notifier defaults before any alerts are shown
+        alertify.defaults.notifier.position = 'top-right';
+        alertify.defaults.notifier.delay = 3;
 
+        window.addEventListener('message', event => {
             // Get the alert type from the event details
             let alertType = event.detail.type;
 
             switch (alertType) {
                 case 'success':
-                    alertify.success(event.detail.text, event.detail.status);
+                    alertify.success(event.detail.text);
                     break;
                 case 'warning':
-                    alertify.warning(event.detail.text, event.detail.status);
+                    alertify.warning(event.detail.text);
                     break;
                 case 'info':
-                    alertify.message(event.detail.text, event.detail.status);
+                    alertify.message(event.detail.text);
                     break;
                 case 'error':
-                    alertify.error(event.detail.text, event.detail.status);
+                    alertify.error(event.detail.text);
                     break;
                 default:
-                    alertify.log(event.detail.text, event.detail.status);
+                    alertify.log(event.detail.text);
                     break;
             }
         });
     </script>
+
 
 
     @livewireScripts
