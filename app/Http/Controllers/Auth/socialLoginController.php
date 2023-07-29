@@ -36,7 +36,7 @@ class socialLoginController extends Controller
                 $newUser->save();
                 Auth::login($newUser);
             }
-            return redirect('/home'); 
+            return redirect('/'); 
         }
     }
 
@@ -67,7 +67,7 @@ class socialLoginController extends Controller
                 $newUser->save();
                 Auth::login($newUser);
             }
-            return redirect('/home'); 
+            return redirect('/'); 
         }
     }
 }
