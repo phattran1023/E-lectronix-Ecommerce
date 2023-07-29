@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 28, 2023 at 05:29 PM
+-- Generation Time: Jul 29, 2023 at 02:18 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -54,6 +54,31 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `status`, `created_at`, `updated_at`
 (10, 'Xiaomi Tablet', 'xiaomi-tablet', 0, '2023-07-27 05:00:02', '2023-07-27 05:03:07', 3),
 (11, 'Lenovo', 'lenovo', 0, '2023-07-27 05:18:07', '2023-07-27 05:18:07', 2),
 (12, 'Samsung Tablet', 'samsung-tablet', 0, '2023-07-27 05:23:09', '2023-07-27 05:23:21', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts`
+--
+
+CREATE TABLE `carts` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_color_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_color_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, 1, '2023-07-28 19:21:52', '2023-07-28 19:21:52'),
+(2, 1, 2, 1, 1, '2023-07-28 19:27:29', '2023-07-28 19:27:29'),
+(3, 1, 6, NULL, 3, '2023-07-28 19:44:19', '2023-07-28 19:44:19');
 
 -- --------------------------------------------------------
 
@@ -157,7 +182,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (12, '2023_07_23_145915_create_product_colors_table', 1),
 (13, '2023_07_24_141928_create_slider_table', 1),
 (14, '2023_07_26_044719_add_category_id_to_brands_table', 2),
-(15, '2023_07_26_145239_create_wishlists_table', 3);
+(15, '2023_07_26_145239_create_wishlists_table', 3),
+(16, '2023_07_29_020240_create_carts_table', 4);
 
 -- --------------------------------------------------------
 
@@ -387,6 +413,12 @@ ALTER TABLE `brands`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `carts`
+--
+ALTER TABLE `carts`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categories`
 --
 ALTER TABLE `categories`
@@ -483,6 +515,12 @@ ALTER TABLE `brands`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `carts`
+--
+ALTER TABLE `carts`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
@@ -504,7 +542,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -546,7 +584,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- Constraints for dumped tables
