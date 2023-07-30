@@ -22,8 +22,9 @@
 </p>
 
 <p>Welcome to Laravel Shop_v2! This project is a simple e-commerce platform built using the Laravel PHP framework. It allows you to set up an online shop with user registration, admin rights, and more.</p>
-
+<p align="center">
 [![Anurag's GitHub stats](https://github-readme-stats.vercel.app/api?username=phattran1023&show_icons=true&theme=transparent)](https://github.com/anuraghazra/github-readme-stats)
+</p>
 
 <h2>Installation</h2>
 
