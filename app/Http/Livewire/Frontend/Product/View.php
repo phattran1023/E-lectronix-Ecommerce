@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Frontend\Product;
 use App\Models\Cart;
 use Livewire\Component;
 use App\Models\Wishlist;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 
 class View extends Component

@@ -36,17 +36,17 @@
     <div id="app">
 
         @include('layouts.inc.frontend.navbar')
-
-
         <main>
             @yield('content')
         </main>
+        @include('layouts.inc.frontend.footer')
     </div>
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js')}}"></script>
 
     <!-- JavaScript Alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
