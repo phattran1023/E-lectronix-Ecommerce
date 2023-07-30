@@ -26,7 +26,7 @@ class CartShow extends Component
                     ]);
                 } else {
                     $this->dispatchBrowserEvent('message', [
-                        'text' => 'Only ' . $productColor->quantity . ' Product Available',
+                        'text' => 'Only ' . $productColor->quantity . ' Product(s) Available',
                         'type' => 'warning',
                         'status' => 409
                     ]);
@@ -42,7 +42,7 @@ class CartShow extends Component
                     ]);
                 } else {
                     $this->dispatchBrowserEvent('message', [
-                        'text' => 'Only ' . $cartData->product->quantity . ' Product Available',
+                        'text' => 'Only ' . $cartData->product->quantity . ' Product(s) Available',
                         'type' => 'warning',
                         'status' => 409
                     ]);
@@ -82,6 +82,28 @@ class CartShow extends Component
                 'text' => 'Something Went Wrong!',
                 'type' => 'error',
                 'status' => 404
+            ]);
+        }
+    }
+
+    public function removeCartItem(int $cartId)
+    {
+        $cartRemoveData = Cart::where('user_id', auth()->user()->id)->where('id', $cartId)->first();
+        if ($cartRemoveData) {
+            $cartRemoveData->delete();
+
+            $this->emit('CartAddedUpdated');
+            // session()->flash('message', 'Added to Wishlist'); 
+            $this->dispatchBrowserEvent('message', [
+                'text' => 'Cart item deleted successfully',
+                'type' => 'success',
+                'status' => 200
+            ]);
+        } else {
+            $this->dispatchBrowserEvent('message', [
+                'text' => 'Something went wrong',
+                'type' => 'error',
+                'status' => 500
             ]);
         }
     }

@@ -37,7 +37,7 @@ Route::middleware(['auth'])->group(function() {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-//Login with social account
+//Login with social account- Tai's routes
 Route::get('login/google',[socialLoginController::class,'redirectToGoogle'])->name('login.google');
 Route::get('login/google/callback',[socialLoginController::class,'handleGoogleCallback']);
 Route::get('login/twitter',[socialLoginController::class,'redirectToTwitter'])->name('login.twitter');
