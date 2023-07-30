@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 29, 2023 at 02:18 PM
+-- Generation Time: Jul 30, 2023 at 07:53 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -70,15 +70,6 @@ CREATE TABLE `carts` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `carts`
---
-
-INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_color_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, 1, '2023-07-28 19:21:52', '2023-07-28 19:21:52'),
-(2, 1, 2, 1, 1, '2023-07-28 19:27:29', '2023-07-28 19:27:29'),
-(3, 1, 6, NULL, 3, '2023-07-28 19:44:19', '2023-07-28 19:44:19');
 
 -- --------------------------------------------------------
 
@@ -183,7 +174,66 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (13, '2023_07_24_141928_create_slider_table', 1),
 (14, '2023_07_26_044719_add_category_id_to_brands_table', 2),
 (15, '2023_07_26_145239_create_wishlists_table', 3),
-(16, '2023_07_29_020240_create_carts_table', 4);
+(16, '2023_07_29_020240_create_carts_table', 4),
+(17, '2023_07_30_165517_create_orders_table', 5),
+(18, '2023_07_30_165819_create_order_items_table', 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders`
+--
+
+CREATE TABLE `orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `tracking_no` varchar(255) NOT NULL,
+  `fullname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `pincode` varchar(255) NOT NULL,
+  `address` mediumtext NOT NULL,
+  `status_message` varchar(255) NOT NULL,
+  `payment_mode` varchar(255) NOT NULL,
+  `payment_id` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `tracking_no`, `fullname`, `email`, `phone`, `pincode`, `address`, `status_message`, `payment_mode`, `payment_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Order-bwVCeZ', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(2, 1, 'Order-3i3e4A', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:36:46', '2023-07-30 10:36:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_items`
+--
+
+CREATE TABLE `order_items` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_color_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL,
+  `price` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `order_items`
+--
+
+INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_color_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, NULL, 5, 1200, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(2, 1, 2, 1, 4, 1400, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(3, 2, 1, NULL, 5, 1200, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
+(4, 2, 2, 1, 4, 1400, '2023-07-30 10:36:46', '2023-07-30 10:36:46');
 
 -- --------------------------------------------------------
 
@@ -378,7 +428,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$DmplFPO0/F.64Qd0DvaxEus8BkKcfZHvykyE8FgQ9LqtHNC9RkRIG', NULL, '2023-07-25 19:19:17', '2023-07-25 19:19:17', 1),
-(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$zwH7d5.a6AflIasiFO/Fxu18b.lwPNc4ETiT56v8q.DRo6By9WHIO', NULL, '2023-07-25 19:20:04', '2023-07-25 19:20:04', 0);
+(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$zwH7d5.a6AflIasiFO/Fxu18b.lwPNc4ETiT56v8q.DRo6By9WHIO', NULL, '2023-07-25 19:20:04', '2023-07-25 19:20:04', 0),
+(3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3);
 
 -- --------------------------------------------------------
 
@@ -441,6 +492,18 @@ ALTER TABLE `failed_jobs`
 -- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders`
+--
+ALTER TABLE `orders`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `order_items`
+--
+ALTER TABLE `order_items`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -542,7 +605,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT for table `orders`
+--
+ALTER TABLE `orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `order_items`
+--
+ALTER TABLE `order_items`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -578,7 +653,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `wishlists`

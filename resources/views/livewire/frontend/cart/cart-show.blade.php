@@ -27,6 +27,7 @@
                                 </div>
                             </div>
                         </div>
+
                         @forelse ($cart as $cartItem)
                             @if ($cartItem->product)
                                 <div class="cart-item">
@@ -59,7 +60,7 @@
                                             </a>
                                         </div>
                                         <div class="col-md-1 my-auto">
-                                            <label class="price">${{ $cartItem->product->selling_price }} </label>
+                                            <label class="price">{{ number_format($cartItem->product->selling_price) }}đ </label>
                                         </div>
                                         <div class="col-md-2 col-7 my-auto">
                                             <div class="quantity">
@@ -77,8 +78,13 @@
                                         </div>
                                         <div class="col-md-1 my-auto">
                                             <label
-                                                class="price">${{ $cartItem->product->selling_price * $cartItem->quantity }}
+                                                class="price">{{ number_format($cartItem->product->selling_price * $cartItem->quantity) }}đ
                                             </label>
+
+                                            @php
+                                                $totalPrice += $cartItem->product->selling_price * $cartItem->quantity
+                                            @endphp
+
                                         </div>
                                         <div class="col-md-2 col-5 my-auto">
                                             <div class="remove">
@@ -101,6 +107,22 @@
                         @endforelse
 
 
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 my-md-auto mt-3">
+                    <h4>
+                        Get the besst deals and offers <a href="{{url('/collections')}}">Shop Now</a>
+                    </h4>
+                </div>
+                <div class="col-md-4 mt-3">
+                    <div class="shadow-sm bg-white p-3">
+                        <h5>Total: 
+                            <span class="float-end"> {{number_format($totalPrice)}}đ</span>
+                        </h5>
+                        <hr>
+                        <a href="{{url('/checkout')}}" class="btn btn-warning w-100">Checkout</a>
                     </div>
                 </div>
             </div>
