@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire\Frontend;
 
-use App\Models\Wishlist;
+use App\Models\Cart;
 use Livewire\Component;
+use App\Models\Wishlist;
 
 class WishListShow extends Component
 {
@@ -29,8 +30,10 @@ class WishListShow extends Component
         // Check if the user is authenticated before accessing the wishlist
         if (auth()->check()) {
             $wishlist = Wishlist::where('user_id', auth()->user()->id)->get();
+            $cart = Cart::where('user_id', auth()->user()->id)->get();
         }
-
-        return view('livewire.frontend.wish-list-show', ['wishlist' => $wishlist]);
+        
+        
+        return view('livewire.frontend.wish-list-show', ['wishlist' => $wishlist, 'cart' => $cart]);
     }
 }

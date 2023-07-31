@@ -34,6 +34,16 @@
                                                         style="width: 50px; height: 50px"
                                                         alt="{{ $wishlistItem->product->name }}">
                                                     {{ $wishlistItem->product->name }}
+                                                    {{-- @if ($cartItem->productColor)
+                                                        <br>
+                                                        @if ($cartItem->productColor->color)
+                                                            <span>With color:<span class="color-square d-inline"
+                                                                    style="color: {{ $cartItem->productColor->color->name }};">
+                                                                    &#9632; {{ $cartItem->productColor->color->name }}
+                                                                </span>
+                                                            </span>
+                                                        @endif
+                                                    @endif --}}
                                                 </label>
                                             </a>
                                         </div>

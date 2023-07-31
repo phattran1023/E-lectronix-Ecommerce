@@ -34,6 +34,9 @@
 
 <body>
     <div id="app">
+
+        @include('layouts.inc.frontend.navbar')
+
         <main>
             @yield('content')
         </main>
