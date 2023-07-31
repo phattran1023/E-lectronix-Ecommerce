@@ -138,71 +138,25 @@
         src="https://www.paypal.com/sdk/js?client-id=AYcQStguVLJexIkvzWz-d-q0Pm9UDIBYEdDQ46wbf-RMy8gXun4mjk9ayqI23Rb4lBeFDnHRMmBEupeF&currency=USD"
         onload="console.log('PayPal SDK loaded!')"></script>
 
-        <script>
-            paypal.Buttons({
-                 // onClick is called when the button is clicked
-            onClick()  {
 
-                // Show a validation error if the checkbox is not checked
-                if (!document.getElementById('fullname').value
-                    || !document.getElementById('phone').value
-                    || !document.getElementById('email').value
-                    || !document.getElementById('pincode').value
-                    || !document.getElementById('address').value
-                ) 
-                {
-                    Livewire.emit('validationForAll');
-                    return false;
-                }
-                else
-                {
-                    @this.set('fullname',document.getElementById('fullname').value);
-                    @this.set('phone',document.getElementById('phone').value);
-                    @this.set('email',document.getElementById('email').value);
-                    @this.set('pincode',document.getElementById('pincode').value);
-                    @this.set('address',document.getElementById('address').value);
-                }
-            },
-              createOrder: function(data, actions) {
-                return actions.order.create({
-                  purchase_units: [{
-                    amount: {
-                      value: "0.01" // Replace with the amount you want to charge{{ $this->totalProductAmount }}
-                    }
-                  }]
-                });
-              },
-              onApprove: function(data, actions) {
-                return actions.order.capture().then(function(orderData) {
-                  // This function will be executed after a successful transaction
-                  console.log('Capture result', orderData, JSON.stringify(orderData,null,2));
-                  const transaction = orderData.purchase_units[0].payments.captures[0];
-                  if (transaction.status == "COMPLETED") {
-                    Livewire.emit('transactionEmit', transaction.id );
-                    
-                  }
-                //   alert('Transaction completed by ' + details.payer.name.given_name);
-                  // Add any additional logic or redirect to a success page here
-                });
-              }
-            }).render('#paypal-button-container');
-          </script>
-          
 
-    {{-- <script>
+    <script>
         paypal.Buttons({
+
             // onClick is called when the button is clicked
             onClick() {
-                // Show a validation error if any required fields are empty
+
+
+                // Show a validation error if the checkbox is not checked
                 if (!document.getElementById('fullname').value ||
                     !document.getElementById('phone').value ||
                     !document.getElementById('email').value ||
                     !document.getElementById('pincode').value ||
-                    !document.getElementById('address').value) {
+                    !document.getElementById('address').value
+                ) {
                     Livewire.emit('validationForAll');
                     return false;
                 } else {
-                    // Set the form values to Livewire component properties
                     @this.set('fullname', document.getElementById('fullname').value);
                     @this.set('phone', document.getElementById('phone').value);
                     @this.set('email', document.getElementById('email').value);
@@ -210,57 +164,57 @@
                     @this.set('address', document.getElementById('address').value);
                 }
             },
-
-            // Order is created on the server and the order id is returned
-            createOrder() {
-                // Set the totalProductAmount in the cart object
-                const totalAmount = "{{ $this->totalProductAmount }}"; // Use PHP Blade syntax to retrieve the value
-                return fetch("/my-server/create-paypal-order", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        // Pass the totalProductAmount in the cart object
-                        body: JSON.stringify({
-                            cart: [{
-                                sku: "YOUR_PRODUCT_STOCK_KEEPING_UNIT",
-                                quantity: "YOUR_PRODUCT_QUANTITY",
-                                amount: {
-                                    currency_code: "USD",
-                                    value: totalAmount, 
-                                },
-                            }, ],
-                        }),
-                    })
-                    .then((response) => response.json())
-                    .then((order) => order.id);
+            createOrder: function(data, actions) {
+                var exchangerate = 23688;
+                var amountVND = "{{ $this->totalProductAmount }}";
+                var amountUSD = amountVND / exchangerate;
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: amountUSD.toFixed(2), // Replace with the amount you want to charge{{ $this->totalProductAmount }}
+                        }
+                    }]
+                });
             },
 
-            // Finalize the transaction on the server after payer approval
-            onApprove(data) {
-                return fetch("/my-server/capture-paypal-order", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            orderID: data.orderID
-                        }),
-                    })
-                    .then((response) => response.json())
-                    .then((orderData) => {
-                        // Successful capture! For dev/demo purposes:
-                        console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
-                        const transaction = orderData.purchase_units[0].payments.captures[0];
-                        alert(
-                            `Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`
-                        );
-                        // When ready to go live, remove the alert and show a success message within this page. For example:
-                        // const element = document.getElementById('paypal-button-container');
-                        // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-                        // Or go to another URL:  window.location.href = 'thank_you.html';
-                    });
+            //             createOrder: function(data, actions) {
+            //     // Make an AJAX request to get the latest exchange rates
+            //     return $.ajax({
+            //         url: 'https://openexchangerates.org/api/latest.json?app_id=cf99efa81799440e86de645a51f19c7e',
+            //         dataType: 'jsonp',
+            //         success: function(json) {
+            //             // Access the conversion rate for VND (Vietnamese Dong) from the response
+            //             var vndRate = json.rates.VND;
+            //             console.log(vndRate);
+            //             // Calculate the amount to be charged in VND based on the desired amount in USD (0.01 in this case)
+            //             var amountUSD = "{{ $this->totalProductAmount }}";
+            //             var amountVND = amountUSD / vndRate;
+
+            //             // Replace the hardcoded amount value with the calculated amount in VND
+            //             return actions.order.create({
+            //                 purchase_units: [{
+            //                     amount: {
+            //                         value: amountVND.toFixed(2) // Ensure to round to 2 decimal places
+            //                     }
+            //                 }]
+            //             });
+            //         }
+            //     });
+            // },
+
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(orderData) {
+                    // This function will be executed after a successful transaction
+                    console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                    const transaction = orderData.purchase_units[0].payments.captures[0];
+                    if (transaction.status == "COMPLETED") {
+                        Livewire.emit('transactionEmit', transaction.id);
+
+                    }
+                    //   alert('Transaction completed by ' + details.payer.name.given_name);
+                    // Add any additional logic or redirect to a success page here
+                });
             }
         }).render('#paypal-button-container');
-    </script> --}}
+    </script>
 @endpush
