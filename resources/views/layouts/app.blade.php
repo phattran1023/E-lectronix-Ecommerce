@@ -34,7 +34,6 @@
 
 <body>
     @include('layouts.inc.frontend.header')
-    @include('layouts.inc.frontend.navbar')
     <div id="app">
 
         @include('layouts.inc.frontend.navbar')
