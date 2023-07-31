@@ -3,7 +3,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block">
-                    <a href="{{route('homepage')}}"><h5 class="brand-name">My Shopping Site</h5></a>
+                    <a class="text-decoration-none" href="{{route('homepage')}}"><h5 class="brand-name">My Shopping Site</h5></a>
                 </div>
                 <div class="col-md-5 my-auto">
                     <form role="search">
