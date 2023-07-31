@@ -33,6 +33,8 @@
 </head>
 
 <body>
+    @include('layouts.inc.frontend.header')
+    @include('layouts.inc.frontend.navbar')
     <div id="app">
 
         @include('layouts.inc.frontend.navbar')
@@ -41,6 +43,7 @@
             @yield('content')
         </main>
     </div>
+    @include('layouts.inc.frontend.footer')
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
