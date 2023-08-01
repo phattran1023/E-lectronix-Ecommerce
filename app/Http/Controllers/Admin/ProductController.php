@@ -105,8 +105,6 @@ class ProductController extends Controller
             ->products()->where('id', $product_id)->first();
         // dd($validatedData['brand']);
         if ($product) {
-
-
             $product->update([
                 'category_id' => $validatedData['category_id'],
                 'name' => $validatedData['name'],
@@ -151,6 +149,12 @@ class ProductController extends Controller
                     ]);
                 }
             }
+            // Calculate the total quantity for the given product_id
+            $totalQuantity = ProductColor::where('product_id', $product->id)->sum('quantity');;
+            // Set the total quantity as the product's quantity
+            $product->update([
+                'quantity' => $totalQuantity,
+            ]);
 
             return redirect('/admin/products')->with('message', 'Product updated successfully');
         } else {
