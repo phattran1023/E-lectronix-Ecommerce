@@ -28,6 +28,7 @@ Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::cla
 Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'products']);
 Route::get('collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'productView']);
 
+// User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function() {
 
     Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
@@ -97,5 +98,12 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('colors/{color}/edit', 'edit')->name('color.edit');
         Route::put('colors/{color_id}', 'update')->name('color.update');
         Route::get('colors/{color_id}/delete', 'delete')->name('color.delete');
+    });
+
+    //Orders-admin routes-Phat's routes
+    Route::controller(App\Http\Controllers\Admin\OrderController::class)->group(function () {
+        Route::get('/orders', 'index');
+        Route::get('/orders/{orderId}', 'show');
+        
     });
 });
