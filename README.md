@@ -76,7 +76,10 @@ composer update
 <pre>
 composer require laravel/socialite
 </pre>
-
+<pre>
+composer require barryvdh/laravel-dompdf
+</pre>
+    
 <p><em>Note: If you encounter any errors during the <code>composer update</code> process, navigate to the 'bootstrap' folder and delete the 'cache' folder. Then create a new 'cache' folder with the same name and run 'composer update' again.</em></p>
 
 <ol start="7">
