@@ -24,8 +24,6 @@
                 <span class="menu-title">Color</span>
             </a>
         </li>
-
-
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic" aria-expanded="false"
                 aria-controls="ui-basic">
@@ -42,9 +40,6 @@
                 </ul>
             </div>
         </li>
-
-
-        
         <li class="nav-item">
             <a class="nav-link" data-bs-toggle="collapse" href="#ui-basic2" aria-expanded="false"
                 aria-controls="ui-basic2">
@@ -54,16 +49,24 @@
             </a>
             <div class="collapse" id="ui-basic2">
                 <ul class="nav flex-column sub-menu">
-                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products/create') }}">Add Product</a></li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products/create') }}">Add Product</a>
+                    </li>
                     <li class="nav-item"> <a class="nav-link" href="{{ url('admin/products') }}">View Product</a></li>
                 </ul>
             </div>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="{{url('admin/sliders')}}">
+            <a class="nav-link" href="{{ url('admin/sliders') }}">
                 <i class="mdi menu-icon mdi-television-classic"></i>
                 <span class="menu-title">Home Slider</span>
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/orders') }}">
+                <i class="mdi mdi-view-headline menu-icon"></i>
+                <span class="menu-title">Orders</span>
             </a>
         </li>
 
@@ -84,7 +87,7 @@
                 </ul>
             </div>
         </li>
-        
+
         <li class="nav-item">
             <a class="nav-link" href="pages/tables/basic-table.html">
                 <i class="mdi mdi-settings menu-icon"></i>
