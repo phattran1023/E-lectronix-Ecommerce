@@ -26,7 +26,6 @@
                                 Basic Information
                             </h4>
                             <hr>
-
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label>Full Name</label>
@@ -82,6 +81,11 @@
                                                 data-bs-target="#onlinePayment" type="button" role="tab"
                                                 aria-controls="onlinePayment" aria-selected="false">Online
                                                 Payment</button>
+                                            <button wire:loading.attr="disabled" class="nav-link fw-bold"
+                                                id="momoPayment" data-bs-toggle="pill"
+                                                data-bs-target="#momoPayment" type="button" role="tab"
+                                                aria-controls="momoPayment" aria-selected="false">MoMo
+                                                Payment</button>
                                         </div>
                                         <div class="tab-content col-md-9" id="v-pills-tabContent">
                                             <div class="tab-pane active show fade" id="cashOnDeliveryTab"
@@ -115,8 +119,6 @@
 
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -217,4 +219,30 @@
             }
         }).render('#paypal-button-container');
     </script>
+    <script>
+        document.getElementById('momoPayment').addEventListener('click', function() {
+            var amount = {{ $totalProductAmount }};
+            
+            // Show a validation error if any required field is not filled
+            if (!document.getElementById('fullname').value ||
+                !document.getElementById('phone').value ||
+                !document.getElementById('email').value ||
+                !document.getElementById('pincode').value ||
+                !document.getElementById('address').value
+            ) {
+                Livewire.emit('validationForAll');
+                return;
+            }
+    
+            // Set Livewire properties with input values
+            @this.set('fullname', document.getElementById('fullname').value);
+            @this.set('phone', document.getElementById('phone').value);
+            @this.set('email', document.getElementById('email').value);
+            @this.set('pincode', document.getElementById('pincode').value);
+            @this.set('address', document.getElementById('address').value);
+            
+            // Call the momoOrder function with the correct amount
+            @this.call('checkoutHadle', amount);
+        });
+    </script>    
 @endpush
