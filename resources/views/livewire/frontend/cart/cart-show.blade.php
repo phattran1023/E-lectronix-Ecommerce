@@ -46,6 +46,7 @@
                                                     @endif
 
                                                     {{ $cartItem->product->name }}
+                                                    
                                                     @if ($cartItem->productColor)
                                                         <br>
                                                         @if ($cartItem->productColor->color)
