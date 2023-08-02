@@ -10,6 +10,29 @@
                     <h4>My Orders</h4>
                 </div>
                 <div class="card-body">
+                    <form action="" method="GET">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="">Filter By Date</label>
+                                <input type="date" name="date" value="{{Request::get('date') ?? date('Y-m-d')}}" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <label for="">Filter By Status</label>
+                                <select  name="status" id="" class="form-select">
+                                    <option value="">- -All- -</option>
+                                    <option value="In Progress..." {{ Request::get('status') == 'In Progress...' ? 'selected' : ''}} >In progress</option>
+                                    <option value="completed" {{ Request::get('status') == 'completed' ? 'selected' : ''}} >Completed</option>
+                                    <option value="pending" {{ Request::get('status') == 'pending' ? 'selected' : ''}} >Pending</option>
+                                    <option value="cancelled" {{ Request::get('status') == 'cancelled' ? 'selected' : ''}} >Cancelled</option>
+                                    <option value="out-for-delivery" {{ Request::get('status') == 'out-for-delivery' ? 'selected' : ''}} >Out for delivery</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <br>
+                                <button class="btn btn-primary" type="submit">Filter</button>
+                            </div>
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped">
                             <thead>

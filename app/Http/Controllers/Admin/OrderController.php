@@ -9,9 +9,23 @@ use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {
-    public function index () {
-        $todayDate = Carbon::now();
-        $orders = Order::whereDate('created_at',$todayDate)->paginate(2);
+    public function index (Request $request) {
+        // $todayDate = Carbon::now();
+        // $orders = Order::whereDate('created_at',$todayDate)->paginate(2);
+        $todayDate = Carbon::now()->format('Y-m-d');
+        $orders = Order::when($request->date != null, function ($q) use ($request) {
+
+                            return $q->whereDate('created_at',$request->date);
+
+                        }, function($q) use ($todayDate) {
+                            $q ->whereDate('created_at',$todayDate);
+                        })
+                        ->when($request->status != null, function ($q) use ($request) {
+
+                            return $q->where('status_message',$request->status);
+
+                        })
+                        ->paginate(2);
         return view('admin.orders.index',compact('orders'));
     }
 
