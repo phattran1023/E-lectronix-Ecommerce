@@ -7,6 +7,7 @@ use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Livewire\Frontend\Checkout\CheckoutShow;
 
 class FrontendController extends Controller
 {

@@ -7,6 +7,8 @@ use App\Models\Order;
 use App\Models\Orderitem;
 use Livewire\Component;
 use Illuminate\Support\Str;
+use App\Mail\MailController;
+use Illuminate\Support\Facades\Mail;
 
 class CheckoutShow extends Component
 {
@@ -18,7 +20,8 @@ class CheckoutShow extends Component
     //Listener for paypal payment
     protected $listeners =[
         'validationForAll',
-        'transactionEmit' => 'paidOnlineOrder'
+        'transactionEmit' => 'paidOnlineOrder',
+        'momoOrderEmit' => 'momoOrder',
     ];
 
     public function paidOnlineOrder ($value) {
@@ -30,6 +33,7 @@ class CheckoutShow extends Component
 
             // When checkout is successful, delete the Cart items
             Cart::where('user_id', auth()->user()->id)->delete();
+            $this->sendInvoiceEmail($codOrder->id);
 
             session()->flash('message', 'Placed order successfully');
 
@@ -164,6 +168,7 @@ class CheckoutShow extends Component
         if ($momoOrder) {
             // Khi thanh toán thành công, xóa các mục Cart
             Cart::where('user_id', auth()->user()->id)->delete();
+            $this->sendInvoiceEmail($momoOrder->id);
 
             session()->flash('message', 'Placed order successfully');
 
@@ -252,6 +257,13 @@ class CheckoutShow extends Component
             // Redirect người dùng đến trang lỗi hoặc trang xử lý lỗi tương ứng
             return redirect()->away('http://127.0.0.1:8000/error-page');
         }
+    }
+
+    public function sendInvoiceEmail($orderId)
+    {    
+        $order = Order::findOrFail ($orderId);
+        // Gửi email
+        Mail::to($order->email)->send(new MailController($order));
 
     }
 }
