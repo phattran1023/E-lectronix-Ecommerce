@@ -26,8 +26,8 @@
                             Home / {{ $product->categoryGetName->name }} / {{ $product->name }}
                         </p>
                         <div>
-                            <span class="selling-price">${{ number_format($product->selling_price) }}</span>
-                            <span class="original-price">${{ number_format($product->original_price) }}</span>
+                            <span class="selling-price">{{ number_format($product->selling_price) }}đ</span>
+                            <span class="original-price">{{ number_format($product->original_price) }}đ</span>
                         </div>
                         <div>
                             {{-- check if product is In stock --}}

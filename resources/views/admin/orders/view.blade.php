@@ -13,7 +13,12 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Order Details
-                        <a href="{{ url('admin/orders') }}" class="btn btn-danger btn-sm float-end mx-1">Back</a>
+                        @php
+                        $date = Request::get('date');
+                        $previousDate = \Carbon\Carbon::parse($date)->format('Y-m-d');
+                    @endphp
+                    
+                        <a href="{{ url('admin/orders?date=' . $previousDate . '&status=') }}" class="btn btn-danger btn-sm float-end mx-1">Back</a>
                         <a href="{{ url('admin/invoice/'.$order->id.'/generate') }}" class="btn btn-primary btn-sm float-end mx-1">Download Invoice</a>
                         <a href="{{ url('admin/invoice/'.$order->id) }}" target="_blank" class="btn btn-warning btn-sm float-end mx-1">View Invoice</a>
                     </h4>
@@ -74,7 +79,7 @@
                                         <td width="10%">
                                             @if ($orderItem->product->productImages)
                                                 <img src="{{ asset($orderItem->product->productImages[0]->image) }}"
-                                                    style="width: 70px; height: 50px" alt="">
+                                                    style="width: 70px; height: 50px; border-radius:0;" alt="">
                                             @else
                                                 <img src="" style="width: 70px; height: 50px" alt="">
                                             @endif

@@ -3,7 +3,9 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block">
-                    <a class="text-decoration-none" href="{{route('homepage')}}"><h5 class="brand-name">My Shopping Site</h5></a>
+                    <a class="text-decoration-none" href="{{ route('homepage') }}">
+                        <h5 class="brand-name">My Shopping Site</h5>
+                    </a>
                 </div>
                 <div class="col-md-5 my-auto">
                     <form role="search">
@@ -19,13 +21,13 @@
                     <ul class="nav justify-content-end">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('cart')}}">
-                                <i class="fa fa-shopping-cart"></i> Cart (<livewire:frontend.cart.cart-count/>)
+                            <a class="nav-link" href="{{ url('cart') }}">
+                                <i class="fa fa-shopping-cart"></i> Cart (<livewire:frontend.cart.cart-count />)
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{url('wishlist')}}">
-                                <i class="fa fa-heart"></i> Wishlist (<livewire:frontend.wishlist-count/>)
+                            <a class="nav-link" href="{{ url('wishlist') }}">
+                                <i class="fa fa-heart"></i> Wishlist (<livewire:frontend.wishlist-count />)
                             </a>
                         </li>
                         @guest
@@ -49,8 +51,15 @@
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
-                                    <li><a class="dropdown-item" href="{{url('orders')}}"><i class="fa fa-list"></i> My Orders</a>
+                                    <li><a class="dropdown-item" href="{{ url('orders') }}"><i class="fa fa-list"></i> My
+                                            Orders</a>
                                     </li>
+                                    <!-- Check if the user is an admin (role_as == '1') -->
+                                    @if (Auth::user()->role_as == '1')
+                                        <!-- Display "Admin Panel" link for admins -->
+                                        <li><a class="dropdown-item" href="{{ url('admin/dashboard') }}"><i
+                                                    class="fa fa-list"></i> Admin Panel</a></li>
+                                    @endif
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a>
                                     </li>
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My
@@ -62,7 +71,8 @@
                                             {{ __('Logout') }}
                                         </a>
 
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                            class="d-none">
                                             @csrf
                                         </form>
                                     </li>
@@ -88,13 +98,13 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route('homepage')}}">Home</a>
+                        <a class="nav-link" href="{{ route('homepage') }}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('/collections')}}">All Categories</a>
+                        <a class="nav-link" href="{{ url('/collections') }}">All Categories</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{url('/new-arrivals')}}">New Arrivals</a>
+                        <a class="nav-link" href="{{ url('/new-arrivals') }}">New Arrivals</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Featured Products</a>

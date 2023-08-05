@@ -53,7 +53,10 @@
                                         <td>{{ $item->payment_mode }}</td>
                                         <td>{{ $item->created_at->format('d-m-Y') }}</td>
                                         <td>{{ $item->status_message }}</td>
-                                        <td><a href="{{ url('admin/orders/' . $item->id) }}" class="btn btn-primary btn-sm">View</a>
+                                        <td>
+                                            <a href="{{ url('admin/orders/' . $item->id) . '?date=' . Request::get('date') }}" class="btn btn-primary btn-sm">View</a>
+                                        </td>
+                                        
                                         </td>
                                     </tr>
                                 @empty

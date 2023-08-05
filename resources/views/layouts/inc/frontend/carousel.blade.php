@@ -1,5 +1,10 @@
 <!-- intro -->
 <section class="pt-3">
+    @if (session('status'))
+        <div class="alert alert-success">
+            {{session('status')}}
+        </div>
+    @endif
     <div class="container">
       <div class="row gx-3">
         <main class="col-lg-9">

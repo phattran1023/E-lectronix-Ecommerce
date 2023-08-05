@@ -4,6 +4,7 @@
 
 @section('content')
     @include('layouts.inc.frontend.carousel')
+   
     @include('layouts.inc.frontend.main')
     @push('scripts')
         <script>

@@ -32,9 +32,9 @@ class LoginController extends Controller
         if (Auth::user()->role_as== '1') {
             return redirect('admin/dashboard')->with('message','Welcome to dashboard');
         } else if(Auth::user()->role_as== '3') {
-            return redirect('/home')->with('status', 'Login social account successfully');
+            return redirect('/')->with('status', 'Login social account successfully');
         } else {
-            return redirect('/home')->with('status','Login successfully logged in');
+            return redirect('/')->with('status','Login successfully logged in');
         }
     }
     /**
