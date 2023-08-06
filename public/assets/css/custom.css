@@ -185,6 +185,13 @@
     background-color: #fff;
     border: 1px solid #ccc;
     margin-bottom: 24px;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 10px;
 }
 .product-card a{
     text-decoration: none;
@@ -197,15 +204,24 @@
     margin: 8px;
     font-size: 12px;
 }
-.product-card .product-card-img{
-    max-height: 260px;
+.stock{
+    z-index: 1;
+}
+.product-card-img{
+    padding: 10px;
+    height: 180px;
+    position: relative;
     overflow: hidden;
-    border-bottom: 1px solid #ccc;
 }
-.product-card .product-card-img img{
-    width: 100%;
+.product-card-img img{
+    width:80%;
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translateX(-50%);
 }
-.product-card .product-card-body{
+
+.product-card-body{
     padding: 10px 10px;
 }
 .product-card .product-card-body .product-brand{
@@ -218,23 +234,23 @@
     overflow: hidden;
 }
 .product-card .product-card-body .product-name{
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 400;
     color: #000;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
 }
 .product-card .product-card-body .selling-price{
-    font-size: 22px;
+    font-size: 14px;
     color: #000;
-    font-weight: 600;
+    font-weight: 400;
     margin-right: 8px;
 }
 .product-card .product-card-body .original-price{
-    font-size: 18px;
+    font-size: 14px;
     color: #937979;
-    font-weight: 400;
+    font-weight: 200;
     text-decoration: line-through;
 }
 .product-card .product-card-body .btn1{
@@ -349,4 +365,43 @@
 }
 .navbar a:hover {
     border-bottom: 2px solid  rgb(34, 29, 132);
+}
+.col-md-2 {
+    width: 15%; 
+}
+.col-md-3 {
+    width: 25%; 
+}
+@media (max-width: 1000px) {
+    .col-md-10{
+        width: 100%;
+    }
+    .col-md-3 {
+        width: 33.33%; 
+        margin: auto;
+    }
+    .card{
+        width: 50%;
+        float: left;
+        height: 100%;
+        margin: 0;
+    }
+    .mt-3{
+        margin: 0;
+    }
+    .col-md-2 {
+        width: 100%; 
+    }
+}
+@media (max-width: 550px) {
+    .col-md-3 {
+        width: 50%; 
+        margin: auto;
+    }
+}
+@media (max-width: 420px) {
+    .col-md-3 {
+        width: 80%; 
+        margin: auto;
+    }
 }

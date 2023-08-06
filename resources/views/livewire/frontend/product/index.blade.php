@@ -1,6 +1,6 @@
 <div>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-2 mb-4">
             @if ($category->brands)
                 <div class="card">
                     <div class="card-header">
@@ -17,7 +17,7 @@
                 </div>
             @endif
 
-            <div class="card mt-3">
+            <div class="card">
                 <div class="card-header">
                     <h3>Price</h3>
                 </div>
@@ -36,7 +36,7 @@
 
         </div>
         <div class="col-md-10">
-            <div class="row">
+            <div class="row card-container">
                 @forelse ($products as $item)
                     <div class="col-md-3">
                         <div class="product-card">
@@ -48,7 +48,7 @@
                                 @endif
 
                                 @if ($item->productImages->count() > 0)
-                                    <a
+                                    <a 
                                         href="{{ url('/collections/' . $item->categoryGetName->slug . '/' . $item->slug) }}">
                                         <img src="{{ asset($item->productImages[0]->image) }}"
                                             alt="{{ $item->name }}">
@@ -63,7 +63,7 @@
                                         {{ $item->name }}
                                     </a>
                                 </h5>
-                                <div>
+                                <div class="price">
                                     <span class="selling-price">{{ number_format($item->selling_price) }} VND</span>
                                     <span class="original-price">{{ number_format($item->original_price) }} VND</span>
                                 </div>
