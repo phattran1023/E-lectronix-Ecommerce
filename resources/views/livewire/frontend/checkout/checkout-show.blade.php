@@ -219,6 +219,8 @@
             }
         }).render('#paypal-button-container');
     </script>
+
+    
     <script>
         document.getElementById('momoPayment').addEventListener('click', function() {
             var amount = {{ $totalProductAmount }};

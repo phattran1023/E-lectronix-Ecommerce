@@ -21,8 +21,11 @@
     {{-- Owl Carousel --}}
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
-    <!-- Bootstrap -->
 
+    {{-- Exzoom product image --}}
+    <link rel="stylesheet" href="{{ asset('assets/exzoom/jquery.exzoom.css') }}">
+
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
@@ -86,9 +89,14 @@
     </script>
     {{-- Owl Script --}}
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+
+    <script src="{{ asset('assets/exzoom/jquery.exzoom.js') }}"></script>
+
+    {{-- Trending carousel --}}
     @yield('script')
 
     @livewireScripts
+    {{-- Alertify vs Exzoom --}}
     @stack('scripts')
 </body>
 
