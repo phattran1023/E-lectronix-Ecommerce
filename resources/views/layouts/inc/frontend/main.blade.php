@@ -1,27 +1,5 @@
 <section class="pt-5 pb-5">
-    {{-- Trending product --}}
-
-    <div class="py-5 bg-white">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <h3>Welcome to E-lectronix.com</h3>
-                <div class="underline">
-
-                </div>
-                Hmmmmmmmmmmmm...
-            </div>
-        </div>
-    </div>
-
-    <div class="py-5 bg-white">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                
-            </div>
-        </div>
-    </div>
-
-    {{-- End Trending product --}}
+    
 
     <div class="container">
         <h1 class="display-6">New Products</h1>

@@ -14,13 +14,14 @@ class FrontendController extends Controller
     public function index()
     {
         $sliders = Slider::where('status', '0')->get();
+        $trendingProducts = Product::where('trending','1')->latest()->take(10)->get();
         $newestProducts = Product::with('productImages')->orderBy('created_at', 'desc')->take(8)->get();
         $discount_Products = Product::selectRaw('*, ((original_price - selling_price) / original_price) * 100 AS discount_percent')
                             ->where('original_price', '>', 0) 
                             ->having('discount_percent', '>', 0)
                             ->orderBy('discount_percent', 'desc')
                             ->get();
-        return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products'));
+        return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products','trendingProducts'));
     }
 
     public function categories()

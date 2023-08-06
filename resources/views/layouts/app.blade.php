@@ -18,7 +18,11 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    {{-- Owl Carousel --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <!-- Bootstrap -->
+
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
 
@@ -49,7 +53,7 @@
     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('assets/js/jquery-3.7.0.min.js') }}"></script>
     {{-- <script src="{{ asset('assets/js/custom.js')}}"></script> --}}
-    
+
     <!-- JavaScript Alertify -->
     <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <script>
@@ -80,6 +84,9 @@
             }
         });
     </script>
+    {{-- Owl Script --}}
+    <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
+    @yield('script')
 
     @livewireScripts
     @stack('scripts')

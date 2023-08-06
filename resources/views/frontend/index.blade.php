@@ -4,7 +4,7 @@
 
 @section('content')
     @include('layouts.inc.frontend.carousel')
-   
+
     @include('layouts.inc.frontend.main')
     @push('scripts')
         <script>
@@ -31,4 +31,27 @@
             }, 1000);
         </script>
     @endpush
+
+@endsection
+
+
+@section('script')
+    <script>
+        $('.trending-product').owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 4
+                }
+            }
+        })
+    </script>
 @endsection
