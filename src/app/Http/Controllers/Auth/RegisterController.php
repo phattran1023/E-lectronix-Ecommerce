@@ -55,15 +55,18 @@ class RegisterController extends Controller
         // Read the CSV file and get bad words
         $badWords = $this->getBadWords();
 
-        // Define the custom validation rule for bad words
-        $badWordRule = Rule::notIn($badWords);
-
         return Validator::make($data, [
             'name' => [
                 'required',
                 'string',
                 'max:255',
-                $badWordRule, // Use the custom validation rule for name
+                function ($attribute, $value, $fail) use ($badWords) {
+                    foreach ($badWords as $badWord) {
+                        if (strpos(strtolower($value), strtolower($badWord)) !== false) {
+                            $fail('The ' . $attribute . ' contains sensitive words.');
+                        }
+                    }
+                },
             ],
             'email' => [
                 'required',
@@ -71,13 +74,15 @@ class RegisterController extends Controller
                 'email',
                 'max:255',
                 'unique:users',
-                $badWordRule, // Use the custom validation rule for email
+                function ($attribute, $value, $fail) use ($badWords) {
+                    foreach ($badWords as $badWord) {
+                        if (strpos(strtolower($value), strtolower($badWord)) !== false) {
+                            $fail('The ' . $attribute . ' contains sensitive words.');
+                        }
+                    }
+                },
             ],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ], [
-            // Custom error message for the bad word validation rule
-            'name.not_in' => 'The :attribute contains sensitive words.',
-            'email.not_in' => 'The :attribute contains sensitive words.',
         ]);
     }
 
