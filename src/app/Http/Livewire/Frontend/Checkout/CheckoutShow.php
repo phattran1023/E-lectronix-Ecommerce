@@ -159,33 +159,37 @@ class CheckoutShow extends Component
         ]);
     }
 
-    public function momoOrder($value)
-    {
-        $this -> payment_id = $value;
-        $this->payment_mode = 'Paid by MoMo';
-        $momoOrder = $this->placeOrder(); 
-
-        if ($momoOrder) {
-            // Khi thanh toán thành công, xóa các mục Cart
-            Cart::where('user_id', auth()->user()->id)->delete();
-            $this->sendInvoiceEmail($momoOrder->id);
-
-            session()->flash('message', 'Placed order successfully');
-
-            $this->dispatchBrowserEvent('message', [
-                'text' => 'Order placed successfully',
-                'type' => 'success',
-                'status' => 200
-            ]);
-
-            return redirect()->to('thank-you');
-        } else {
-            $this->dispatchBrowserEvent('message', [
-                'text' => 'Something went wrong',
-                'type' => 'error',
-                'status' => 500
-            ]);
+    public function placeOrderMomo(){
+        $orderData = [
+            'user_id' => auth()->user()->id,
+            'tracking_no' => 'Order-' . Str::random(6),
+            'fullname' => $this->fullname,
+            'email' => $this->email,
+            'phone' => $this->phone,
+            'pincode' => $this->pincode,
+            'address' => $this->address,
+            'status_message' => 'In Progress...',
+            'payment_mode' => $this->payment_mode,
+            'payment_id' => $this->payment_id,
+            'order_items' => [],
+        ];
+        foreach ($this->carts as $cartItem) {
+            $orderItems = [
+                'product_id' => $cartItem->product->id,
+                'product_color_id' => $cartItem->product_color_id,
+                'quantity' => $cartItem->quantity,
+                'price' => $cartItem->product->selling_price,
+            ];
+            $orderData['order_items'][] = $orderItems;
         }
+        session()->put('pending_order', $orderData);
+    }
+
+    public function momoOrder($orderId)
+    {
+        $this->payment_id = $orderId;
+        $this->payment_mode = 'Paid by MoMo';
+        $momoOrder = $this->placeOrderMomo(); 
     }
     public function execPostRequest($url, $data)
     {
@@ -215,8 +219,8 @@ class CheckoutShow extends Component
         $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
         $orderInfo = "Payment with MoMo";
         $orderId = time() . "";
-        $redirectUrl = "http://127.0.0.1:8000/thank-you";
-        $ipnUrl = "http://127.0.0.1:8000/thank-you";
+        $redirectUrl = Route('paymentCallback');
+        $ipnUrl = Route('paymentCallback');
         $extraData = "";
 
         $amount = $amout;
@@ -246,17 +250,59 @@ class CheckoutShow extends Component
         $resultCode = $jsonResult['resultCode'];
         $resultDescription = $jsonResult['message'];
 
-        if ($resultCode === 0) {
-            $this->momoOrder($orderId);
-            // Redirect người dùng đến trang "Thank You" hoặc trang xác nhận thanh toán thành công
-            return redirect()->away($jsonResult['payUrl']);
-        } else {
-            if($resultCode === 21){
-                return redirect()->away('http://127.0.0.1:8000/error');
-            }
-            // Redirect người dùng đến trang lỗi hoặc trang xử lý lỗi tương ứng
-            return redirect()->away('http://127.0.0.1:8000/error-page');
-        }
+        $this->momoOrder($orderId);
+        return redirect()->away($jsonResult['payUrl']);
+    }
+
+    public function checkoutHadleQR($amout)
+    {
+        $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $requestId = time() . "";
+        $amount = "$amout";
+        $orderId = time() . "";
+        $orderInfo = "order information";
+        $returnUrl = Route('paymentCallbackQR');
+        $notifyUrl = Route('paymentCallbackQR');
+        $extraData = "";
+        $requestType ="captureMoMoWallet";
+        $extraData = "";
+
+        $rawHash =  "partnerCode=".$partnerCode.
+                    "&accessKey=".$accessKey.
+                    "&requestId=".$requestId.
+                    "&amount=".$amount.
+                    "&orderId=".$orderId.
+                    "&orderInfo=".$orderInfo.
+                    "&returnUrl=".$returnUrl.
+                    "&notifyUrl=".$notifyUrl.
+                    "&extraData=".$extraData;
+
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+        $data = array(
+            'accessKey' => $accessKey,
+            'partnerCode' => $partnerCode,
+            'requestType' => $requestType,
+            'notifyUrl' => $notifyUrl,
+            'returnUrl' => $returnUrl,
+            'orderId' => $orderId,
+            'amount' => $amount,
+            'orderInfo' => $orderInfo,
+            'requestId' => $requestId,
+            'extraData' => $extraData,
+            'signature' => $signature
+        );
+
+        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true); 
+
+        $this->momoOrder($orderId);
+        return redirect()->away($jsonResult['payUrl']);
+
     }
 
     public function sendInvoiceEmail($orderId)

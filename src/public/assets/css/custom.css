@@ -144,7 +144,17 @@
     color: #ffffff;
     font-size: 15px;
 }
-
+ .nav-linkmomo{
+    padding: 8px 20px;
+    color: #c12b7e;
+    font-size: 15px;
+}
+.nav-linkmomo:hover{
+    padding: 8px 20px;
+    color: #ffffff;
+    background-color: #c12b7e;
+    font-size: 15px;
+}
 @media only screen and (max-width: 600px) {
     .main-navbar .top-navbar .nav-link{
         font-size: 12px;

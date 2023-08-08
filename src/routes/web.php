@@ -1,11 +1,12 @@
 <?php
 
 use App\Models\Category;
+use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\momoController;
 use App\Http\Controllers\Auth\socialLoginController;
-use FontLib\Table\Type\name;
+use App\Http\Controllers\Frontend\CheckoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);
-
+Route::get('/payment/callback',[CheckoutController::class,'callbackMomo'])->name('paymentCallback');
+Route::get('/payment/callbackQR',[CheckoutController::class,'callbackMomoQR'])->name('paymentCallbackQR');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
