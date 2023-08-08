@@ -87,17 +87,35 @@
             }
         });
     </script>
+
+    {{-- Reset scrollbar --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>
+
+
     {{-- Owl Script --}}
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 
     <script src="{{ asset('assets/exzoom/jquery.exzoom.js') }}"></script>
 
+
+
     {{-- Trending carousel --}}
     @yield('script')
 
+    
     @livewireScripts
     {{-- Alertify vs Exzoom --}}
     @stack('scripts')
+    @yield('commentScript')
 </body>
 
 </html>

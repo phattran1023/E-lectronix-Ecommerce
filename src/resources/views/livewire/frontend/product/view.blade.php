@@ -124,10 +124,249 @@
                 </div>
             </div>
         </div>
+        <div class="py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card" style=" background-color: #5e2fb6;">
+                            <div class="card-header" style=" background-color: #5e2fb6;">
+                                <h4 style="text-align: center;" class="text-white">Comment field</h4>
+                            </div>
+                            <div class="card-body mx-auto " style="width: 100%;">
+                                @if (session('messageComment'))
+                                    <div class="alert alert-warning alert-dismissible">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Fail!</strong>&nbsp; <span>{{ session('messageComment') }}</span>
+                                    </div>
+                                @endif
+                                <h6 class="card card-title bg-white" style="text-align: center">Leave a comment</h6>
+
+
+                                <form action="{{ url('collections/comment') }}" method="post"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="mb-3">
+                                                <input type="hidden" name="post_slug"value="{{ $product->slug }}">
+
+                                                <span>
+                                                    <textarea name="comment_body" required class="form-control" rows="3" placeholder="Comment.....">{{ old('post_slug') }}</textarea>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                        </div>
+                                    </div>
+
+
+
+
+                                </form>
+
+                            </div>
+                            @forelse ($product->comments as $comment)
+                                <div class=" row  d-flex justify-content-center">
+
+                                    <div class="col-md-8">
+
+
+
+
+
+                                        <div class=" comment-container card p-3">
+
+                                            <div class="d-flex justify-content-between align-items-center">
+
+                                                <div class="user d-flex flex-row align-items-center">
+
+                                                    @if (empty(Auth::user()->userAvatar))
+                                                        <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+                                                            width="30px" style="border-radius:  50%">&nbsp;&nbsp;
+                                                    @endif
+                                                    <span><small class="font-weight-bold text-primary">
+                                                            <strong>
+                                                                @if ($comment->user)
+                                                                    {{ $comment->user->name }}
+                                                                @endif
+                                                            </strong>
+                                                        </small>
+                                                    </span>
+                                                    &nbsp; &nbsp;
+                                                    <span> <small
+                                                            class="font-weight-bold">{!! $comment->comment_body !!}</small></span>
+
+                                                </div>
+
+
+                                                &nbsp;&nbsp;<span><small>{{ $comment->created_at->format('d/m/Y') }}</small></span>
+
+                                            </div>
+
+                                            <div class="action d-flex justify-content-between mt-2 align-items-center">
+
+                                                <div>
+
+                                                    <hr>
+                                                    <button type="button" value="{{ $comment->id }}"
+                                                        class="fa fa-flag text-danger" style="text-decoration: none"
+                                                        data-bs-toggle="modal" data-bs-target="#reportModal"></button>
+                                                    &nbsp;&nbsp;
+                                                    <button href="" class="fa fa-comments text-primary"
+                                                        style="text-decoration: none"value="comment"></button>
+                                                    &nbsp;&nbsp;
+
+                                                    @if (Auth::id() == $comment->user_id)
+                                                        <button type="button" value="{{ $comment->id }}"
+                                                            class="fa fa-trash text-danger deleteComment"
+                                                            style="text-decoration: none;"></button>
+                                                    @endif
+
+                                                </div>
+
+                                                <div class="icons align-items-center">
+
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+                                                    <i class="fa fa-star text-warning"></i>
+
+
+                                                </div>
+
+                                            </div>
+
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br>
+                            @empty
+                                <img src="https://t4.ftcdn.net/jpg/03/20/92/07/360_F_320920772_M8Q102D3gpmi3puCH36AjcJ7t9gKaFcm.jpg"
+                                    alt="">
+                            @endforelse
+
+
+
+
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        <img src="https://i.pinimg.com/1200x/a9/45/c6/a945c6580752e972ebbe2e801bd0f543.jpg"
+                            height="300px" width="400px" alt="img">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="background: #5e2fb6">
+                    <div class="row">
+                        <div class="col-sm-8 ">
+                            <div class="card " style="padding-left: 20px">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Spamming comment</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Bad words in</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Bad attitude</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Else</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+                                    width="30px" style="border-radius:  50%"></span>&nbsp;<span
+                                style="color: aliceblue">{{ Auth::user()->name }}</span>
+
+                            <div class="card" style="margin-top: 5px">
+                                @forelse ($product->comments as $comment)
+                                    <span style="padding: 3px 3px 3px 3px">{!! $comment->comment_body !!}</span>
+                                @empty
+                                    No comment yet.
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary reportComment">Commit report</button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </div>
+@section('commentScript')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('click', '.deleteComment', function() {
+                if (confirm('Are you sure deleting this comment?')) {
+                    var thisClicked = $(this);
+                    var comment_id = thisClicked.val();
 
+                    $.ajax({
+                        type: "POST",
+                        url: "/delete-comment",
+                        data: {
+                            'comment_id': comment_id
+                        },
+                        success: function(res) {
+                            if (res.status == 200) {
+                                thisClicked.closest('.comment-container').remove();
+                                alert(res.message);
+                            } else {
+                                alert(res.message);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+    <script>
+       
+    </script>
+@endsection
 {{-- Script call zooom img --}}
 @push('scripts')
     <script>

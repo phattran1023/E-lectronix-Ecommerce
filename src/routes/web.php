@@ -35,6 +35,9 @@ Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->grou
     Route::get('/featured-products', 'featuredProducts');
 });
 
+//comment system - Tien's route
+Route::post('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'store']);
+Route::post('delete-comment',[App\Http\Controllers\Frontend\CommentController::class,'destroy']);
 
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {

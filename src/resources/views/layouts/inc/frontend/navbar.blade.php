@@ -46,10 +46,20 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> {{ Auth::user()->name }}
+                                    @if (empty(Auth::user()->userAvatar))
+                                        <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+                                            width="30px" style="border-radius:  50%">
+                                    @endif {{ Auth::user()->name }}
 
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if (empty(Auth::user()->userAvatar))
+                                        <li>
+
+                                        <li><a class="dropdown-item bg-warning" href="#" data-toggle="modal"
+                                                data-target=".bs-example-modal-sm">Change avatar</a>
+                                        </li>
+                                    @endif
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
                                     <li><a class="dropdown-item" href="{{ url('orders') }}"><i class="fa fa-list"></i> My
                                             Orders</a>
