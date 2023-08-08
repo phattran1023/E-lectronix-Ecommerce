@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\momoController;
 use App\Http\Controllers\Auth\socialLoginController;
+use FontLib\Table\Type\name;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,46 +24,49 @@ use App\Http\Controllers\Auth\socialLoginController;
 
 Auth::routes();
 
-Route::get('/',[App\Http\Controllers\Frontend\FrontendController::class,'index'])->name('homepage');
-Route::get('/collections',[App\Http\Controllers\Frontend\FrontendController::class,'categories']);
-Route::get('collections/{category_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'products']);
-Route::get('collections/{category_slug}/{product_slug}',[App\Http\Controllers\Frontend\FrontendController::class,'productView']);
+Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->group(function () {
+    Route::get('/', 'index')->name('homepage');
+    Route::get('/collections', 'categories');
+    Route::get('/collections/{category_slug}', 'products');
+    Route::get('/collections/{category_slug}/{product_slug}', 'productView');
 
-// User's routes  - Phat's routes
-Route::middleware(['auth'])->group(function() {
-
-    Route::get('wishlist',[App\Http\Controllers\Frontend\WishlistController::class,'index']);
-    Route::get('cart',[App\Http\Controllers\Frontend\CartController::class,'index']);
-    Route::get('checkout',[App\Http\Controllers\Frontend\CheckoutController::class,'index']);
-    Route::get('orders',[App\Http\Controllers\Frontend\OrderController::class,'index']);
-    Route::get('orders/{orderId}',[App\Http\Controllers\Frontend\OrderController::class,'show']);
-
-
+    Route::get('/new-arrivals', 'newArrival');
+    Route::get('/featured-products', 'featuredProducts');
 });
 
-Route::get('thank-you',[App\Http\Controllers\Frontend\FrontendController::class,'thankyou']);
+
+// User's routes  - Phat's routes
+Route::middleware(['auth'])->group(function () {
+
+    Route::get('wishlist', [App\Http\Controllers\Frontend\WishlistController::class, 'index']);
+    Route::get('cart', [App\Http\Controllers\Frontend\CartController::class, 'index']);
+    Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
+    Route::get('orders', [App\Http\Controllers\Frontend\OrderController::class, 'index']);
+    Route::get('orders/{orderId}', [App\Http\Controllers\Frontend\OrderController::class, 'show']);
+});
+
+Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 //Login with social account- Tai's routes
-Route::get('login/google',[socialLoginController::class,'redirectToGoogle'])->name('login.google');
-Route::get('login/google/callback',[socialLoginController::class,'handleGoogleCallback']);
-Route::get('login/twitter',[socialLoginController::class,'redirectToTwitter'])->name('login.twitter');
-Route::get('login/twitter/callback',[socialLoginController::class,'handleTwitterCallback']);
+Route::get('login/google', [socialLoginController::class, 'redirectToGoogle'])->name('login.google');
+Route::get('login/google/callback', [socialLoginController::class, 'handleGoogleCallback']);
+Route::get('login/twitter', [socialLoginController::class, 'redirectToTwitter'])->name('login.twitter');
+Route::get('login/twitter/callback', [socialLoginController::class, 'handleTwitterCallback']);
 
 // Admin routes-Phat's routes
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::controller(App\Http\Controllers\Admin\SliderController::class)->group(function () {
-        Route::get('sliders','index')->name('sliders.index');
-        Route::get('sliders/create','create')->name('sliders.create');
-        Route::post('sliders/create','store')->name('sliders.store');
+        Route::get('sliders', 'index')->name('sliders.index');
+        Route::get('sliders/create', 'create')->name('sliders.create');
+        Route::post('sliders/create', 'store')->name('sliders.store');
         Route::get('sliders/{slider}/edit', 'edit');
         Route::put('sliders/{slider}', 'update');
         Route::get('sliders/{slider}/delete', 'delete');
-
     });
 
     //Category routes-Phat's route
@@ -105,10 +109,9 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('/orders', 'index');
         Route::get('/orders/{orderId}', 'show');
         Route::put('/orders/{orderId}', 'updateOrderStatus');
-        
+
 
         Route::get('/invoice/{orderId}', 'viewInvoice');
         Route::get('/invoice/{orderId}/generate', 'generateInvoice');
-
     });
 });

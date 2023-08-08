@@ -128,7 +128,7 @@
                             <p class="text-center col"><b>OR</b></p>
                             <hr class="hr hr-blurry col">
                         </div>
-                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #3b5998" href="{{Route('login.google')}}" role="button">
+                        <a class="btn btn-primary btn-lg btn-block" style="background-color: #f10707" href="{{Route('login.google')}}" role="button">
                             <i class="fa fa-google me-2"></i>Continue with Gmail
                         </a>
                         <a class="btn btn-primary btn-lg btn-block" style="background-color: #55acee" href="{{Route('login.twitter')}}" role="button">

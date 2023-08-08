@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block">
                     <a class="text-decoration-none" href="{{ route('homepage') }}">
-                        <h5 class="brand-name">My Shopping Site</h5>
+                        <h5 class="brand-name">E-lectronix.com</h5>
                     </a>
                 </div>
                 <div class="col-md-5 my-auto">
@@ -107,7 +107,7 @@
                         <a class="nav-link" href="{{ url('/new-arrivals') }}">New Arrivals</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Featured Products</a>
+                        <a class="nav-link" href="{{ url('featured-products') }}">Featured Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Electronics</a>
