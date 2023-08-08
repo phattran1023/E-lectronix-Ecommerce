@@ -157,10 +157,16 @@
     font-size: 15px;
 }
 @media only screen and (max-width: 600px) {
-    .main-navbar .top-navbar .nav-link{
+    .main-navbar .top-navbar .nav-link {
         font-size: 12px;
         padding: 8px 10px;
+        display: none;
     }
+    
+}
+.navbar-brand {
+    color :#fff;
+    font-weight: 500;
 }
 
 /* Category Start */

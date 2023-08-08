@@ -62,7 +62,7 @@
     <script>
         // Set the notifier defaults before any alerts are shown
         alertify.defaults.notifier.position = 'top-right';
-        alertify.defaults.notifier.delay = 3;
+        alertify.defaults.notifier.delay = 5;
 
         window.addEventListener('message', event => {
             // Get the alert type from the event details
