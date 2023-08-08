@@ -254,6 +254,57 @@ class CheckoutShow extends Component
         return redirect()->away($jsonResult['payUrl']);
     }
 
+    public function checkoutHadleQR($amout)
+    {
+        $endpoint = "https://test-payment.momo.vn/gw_payment/transactionProcessor";
+
+        $partnerCode = 'MOMOBKUN20180529';
+        $accessKey = 'klm05TvNBzhg7h7j';
+        $secretKey = 'at67qH6mk8w5Y1nAyMoYKMWACiEi2bsa';
+        $requestId = time() . "";
+        $amount = "$amout";
+        $orderId = time() . "";
+        $orderInfo = "order information";
+        $returnUrl = Route('paymentCallbackQR');
+        $notifyUrl = Route('paymentCallbackQR');
+        $extraData = "";
+        $requestType ="captureMoMoWallet";
+        $extraData = "";
+
+        $rawHash =  "partnerCode=".$partnerCode.
+                    "&accessKey=".$accessKey.
+                    "&requestId=".$requestId.
+                    "&amount=".$amount.
+                    "&orderId=".$orderId.
+                    "&orderInfo=".$orderInfo.
+                    "&returnUrl=".$returnUrl.
+                    "&notifyUrl=".$notifyUrl.
+                    "&extraData=".$extraData;
+
+        $signature = hash_hmac("sha256", $rawHash, $secretKey);
+
+        $data = array(
+            'accessKey' => $accessKey,
+            'partnerCode' => $partnerCode,
+            'requestType' => $requestType,
+            'notifyUrl' => $notifyUrl,
+            'returnUrl' => $returnUrl,
+            'orderId' => $orderId,
+            'amount' => $amount,
+            'orderInfo' => $orderInfo,
+            'requestId' => $requestId,
+            'extraData' => $extraData,
+            'signature' => $signature
+        );
+
+        $result = $this->execPostRequest($endpoint, json_encode($data));
+        $jsonResult = json_decode($result, true); 
+
+        $this->momoOrder($orderId);
+        return redirect()->away($jsonResult['payUrl']);
+
+    }
+
     public function sendInvoiceEmail($orderId)
     {    
         $order = Order::findOrFail ($orderId);

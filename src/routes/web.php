@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);
 Route::get('/payment/callback',[CheckoutController::class,'callbackMomo'])->name('paymentCallback');
+Route::get('/payment/callbackQR',[CheckoutController::class,'callbackMomoQR'])->name('paymentCallbackQR');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 

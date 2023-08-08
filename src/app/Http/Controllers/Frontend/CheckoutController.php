@@ -33,6 +33,21 @@ class CheckoutController extends Controller
                 return redirect()->to('thank-you')->with('message', 'Inoice had been created yet!');
             }
         }
+    }
+    public function callbackMomoQR () {
+        $pendingOrder = session()->get('pending_order');
+        $orderId = $_GET['orderId'];
+        $errorCode = $_GET['errorCode'];
+        // dd(session('pending_order'),$orderId, $errorCode);
+        if($errorCode==0){
+            if(session('pending_order')){
+                $this->aftercheck();                
+                Session::forget('pending_order');
+                return redirect()->to('thank-you')->with('message', 'Payment momo Successfully!');
+            }else{
+                return redirect()->to('thank-you')->with('message', 'Inoice had been created yet!');
+            }
+        }
     }    
     public function aftercheck(){
         $pendingOrder = session()->get('pending_order');
