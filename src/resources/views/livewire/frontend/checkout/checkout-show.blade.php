@@ -79,17 +79,16 @@
                                             <button wire:loading.attr="disabled" class="nav-link fw-bold"
                                                 id="onlinePayment-tab" data-bs-toggle="pill"
                                                 data-bs-target="#onlinePayment" type="button" role="tab"
-                                                aria-controls="onlinePayment" aria-selected="false">Online
-                                                Payment</button>
+                                                aria-controls="onlinePayment" aria-selected="false"><span><img src="{{asset('assets/img/paypal.png')}}" alt="" width="90px"></span></button>
                                             <button wire:loading.attr="disabled" class="nav-linkmomo fw-bold btn btn-outline-dark"
                                                 id="momoPayment" data-bs-toggle="pill"
                                                 data-bs-target="#momoPayment" type="button" role="tab"
-                                                aria-controls="momoPayment" aria-selected="false">MoMo
+                                                aria-controls="momoPayment" aria-selected="false"><span><img src="{{asset('assets/img/momo.png')}}" alt="" width="25px"></span> MoMo
                                                 Payment</button>
-                                            <button wire:loading.attr="disabled" class="nav-linkmomo fw-bold btn btn-outline-dark"
+                                            <button wire:loading.attr="disabled" class="nav-linkmomo fw-bold btn btn-outline-dark mt-2"
                                             id="momoPaymentQR" data-bs-toggle="pill"
                                             data-bs-target="#momoPaymentQR" type="button" role="tab"
-                                            aria-controls="momoPaymentQR" aria-selected="false">MomoQR
+                                            aria-controls="momoPaymentQR" aria-selected="false"><span><img src="{{asset('assets/img/momo.png')}}" alt="" width="25px"></span> MomoQR
                                             </button>
                                         </div>
                                         <div class="tab-content col-md-9" id="v-pills-tabContent">

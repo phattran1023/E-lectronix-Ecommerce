@@ -148,6 +148,7 @@
     padding: 8px 20px;
     color: #c12b7e;
     font-size: 15px;
+    border-radius: 0;
 }
 .nav-linkmomo:hover{
     padding: 8px 20px;
