@@ -108,7 +108,7 @@
     border-bottom: 1px solid #ccc;
 }
 .main-navbar .top-navbar{
-    background-color: #5e2fb6;
+    background-color: #BA90C6;
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -137,11 +137,11 @@
 }
 .main-navbar {
     padding: 0px;
-    background-color: #ddd;
+    background-color: #374259;
 }
 .main-navbar .nav-item .nav-link{
     padding: 8px 20px;
-    color: #000;
+    color: #ffffff;
     font-size: 15px;
 }
 
@@ -192,6 +192,11 @@
     overflow: hidden;
     border-bottom: 1px solid #ccc;
     padding: 10px 10px;
+    transition: transform 0.25s ease;
+}
+.product-card:hover {
+    transform: scale(1.05); /* Increase the size of the card on hover */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* Add a shadow on hover */
 }
 .product-card a{
     text-decoration: none;
