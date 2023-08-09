@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 08, 2023 at 03:45 PM
+-- Generation Time: Aug 09, 2023 at 03:39 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -201,7 +201,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (18, '2023_07_30_165819_create_order_items_table', 5),
 (19, '2019_03_01_140553_create_word_list_tables', 6),
 (24, '2023_08_08_131859_create_comments_table', 7),
-(25, '2023_08_08_131936_create_user_img', 7);
+(25, '2023_08_08_131936_create_user_img', 7),
+(27, '2023_08_09_080456_creat_settings_table', 8),
+(28, '2023_08_09_080456_create_settings_table', 9);
 
 -- --------------------------------------------------------
 
@@ -422,6 +424,39 @@ INSERT INTO `product_colors` (`id`, `product_id`, `color_id`, `quantity`, `creat
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `website_name` varchar(255) DEFAULT NULL,
+  `website_url` varchar(255) DEFAULT NULL,
+  `page_title` varchar(255) DEFAULT NULL,
+  `meta_keyword` varchar(500) DEFAULT NULL,
+  `meta_description` varchar(500) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `phone1` varchar(255) DEFAULT NULL,
+  `phone2` varchar(255) DEFAULT NULL,
+  `email1` varchar(255) DEFAULT NULL,
+  `email2` varchar(255) DEFAULT NULL,
+  `facebook` varchar(255) DEFAULT NULL,
+  `twitter` varchar(255) DEFAULT NULL,
+  `instagram` varchar(255) DEFAULT NULL,
+  `youtube` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `website_name`, `website_url`, `page_title`, `meta_keyword`, `meta_description`, `address`, `phone1`, `phone2`, `email1`, `email2`, `facebook`, `twitter`, `instagram`, `youtube`, `created_at`, `updated_at`) VALUES
+(2, 'E-lectronix.com', 'http://127.0.0.1:8000/', 'E-lectronix', 'Shopping', 'Shopping', '391 Nam Ky Khoi Nghia, District 3, Ho Chi Minh City', '0354778644', NULL, 'phattran1023@gmail.com', 'phattran1023@gmail.com', 'facebook.com', 'fb.com', 'fb.com', 'youtube.com', '2023-08-09 01:27:39', '2023-08-09 06:28:33');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `slider`
 --
 
@@ -621,6 +656,12 @@ ALTER TABLE `product_colors`
   ADD KEY `product_colors_color_id_foreign` (`color_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slider`
 --
 ALTER TABLE `slider`
@@ -695,7 +736,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -732,6 +773,12 @@ ALTER TABLE `products_images`
 --
 ALTER TABLE `product_colors`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `slider`
