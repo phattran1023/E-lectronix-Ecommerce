@@ -122,4 +122,12 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('/invoice/{orderId}', 'viewInvoice');
         Route::get('/invoice/{orderId}/generate', 'generateInvoice');
     });
+
+    // Users-admin routes-Phat's routes
+    Route::controller(App\Http\Controllers\Admin\UserController::class)->group(function () {
+        Route::get('/users', 'index');
+        Route::get('/users/create', 'create');
+
+    });
+
 });

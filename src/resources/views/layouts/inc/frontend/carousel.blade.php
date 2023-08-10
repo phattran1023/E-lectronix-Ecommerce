@@ -39,12 +39,12 @@
             </main>
             <aside class="col-lg-3">
                 <div class="card-banner h-100 rounded-5 d-flex justify-content-center align-items-center"
-                    style="background-color: #1e04b3;">
+                    style="    background: linear-gradient(to right, #BA90C6, #8B5FBF);">
                     <div class="text-center">
-                        <h1 style="color: #b3040d" class="font-weight-light">COMING SOON</h1>
+                        <h1 style="color: #ffffff" class="font-weight-light">COMING SOON</h1>
                         <hr>
                         <div id="countDownTime" class="tex-center font-weight-light"
-                            style="font-size: 1.5rem; color:#dbc036"></div>
+                            style="font-size: 1.5rem; color:#ffffff"></div>
                     </div>
                 </div>
             </aside>

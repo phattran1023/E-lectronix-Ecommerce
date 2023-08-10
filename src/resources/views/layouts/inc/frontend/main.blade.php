@@ -34,10 +34,10 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Price</span>
-                                    <span class="h5 text-dark font-weight-bold">${{ $product->original_price }}</span>
+                                    <span class="h5 text-dark font-weight-bold">{{ number_format($product->original_price) }}đ</span>
                                 </div>
                                 <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Sale</span> <span
-                                        class="h5 text-dark font-weight-bold">${{ $product->selling_price }}</span>
+                                        class="h5 text-dark font-weight-bold">{{ number_format($product->selling_price) }}đ</span>
                                 </div>
                             </div>
                         </div>
@@ -75,11 +75,11 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <div class="col pl-0"><span class="text-muted font-small d-block mb-2">Price</span>
-                                    <span class="h5 text-dark font-weight-bold">${{ $product->original_price }}</span>
+                                    <span class="h5 text-dark font-weight-bold">{{ number_format($product->original_price) }}đ</span>
                                 </div>
                                 <div class="col pl-0">
                                     <i class="fa fa-certificate"
-                                        style="font-size: 48px; color: yellow; position: relative; display: inline-block;">
+                                        style="font-size: 48px; color: rgb(250, 250, 95); position: relative; display: inline-block;">
                                         <span
                                             style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 12px; color: red;">
                                             {{ number_format($product->discount_percent) }}%
@@ -87,7 +87,7 @@
                                     </i>
                                 </div>
                                 <div class="col pr-0"><span class="text-muted font-small d-block mb-2">Sale</span> <span
-                                        class="h5 text-dark font-weight-bold">${{ $product->selling_price }}</span>
+                                        class="h5 text-dark font-weight-bold">{{ number_format($product->selling_price) }}đ</span>
                                 </div>
                             </div>
                         </div>
