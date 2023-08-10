@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 09, 2023 at 03:39 PM
+-- Generation Time: Aug 10, 2023 at 04:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -475,9 +475,9 @@ CREATE TABLE `slider` (
 --
 
 INSERT INTO `slider` (`id`, `title`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'slider1', 'silder1', 'uploads/slider/1690418817.png', 0, '2023-07-26 17:42:42', '2023-07-26 17:46:57'),
+(1, 'slider1', 'silder1', 'uploads/slider/1691632152.png', 0, '2023-07-26 17:42:42', '2023-08-09 18:49:12'),
 (2, 'slider2', 'slider2 description', 'uploads/slider/1690418835.png', 0, '2023-07-26 17:43:15', '2023-07-26 17:47:15'),
-(3, 'slider3', 'slider3 description', 'uploads/slider/1690418862.png', 0, '2023-07-26 17:47:42', '2023-07-26 17:47:42');
+(3, 'slider3', 'slider3 description', 'uploads/slider/1691632178.png', 0, '2023-07-26 17:47:42', '2023-08-09 18:49:38');
 
 -- --------------------------------------------------------
 
@@ -504,8 +504,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
 (1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$DmplFPO0/F.64Qd0DvaxEus8BkKcfZHvykyE8FgQ9LqtHNC9RkRIG', NULL, '2023-07-25 19:19:17', '2023-07-25 19:19:17', 1),
 (2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$fVGLtBm1o2uNJdFjw4d5XelDSjhDk.lLGhxRm5QrX7Ze0NA2mWq1K', '0Hl71H8IYcZUj7QX3VfKMpPTFA10nuAXiKglRiDrhjxNGNgAMjgAu4BCMTRC', '2023-07-25 19:20:04', '2023-08-08 04:36:41', 0),
-(3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3),
-(4, 'assholePhat', 'ptrnvnh2@gmail.com', NULL, '$2y$10$EWXMmHnK0PMA.H..WfGsLOpbQaDCfPVMzgWG2aJWY/9SKRSNINbb2', NULL, '2023-08-07 04:23:32', '2023-08-07 04:23:32', 0);
+(3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3);
 
 -- --------------------------------------------------------
 
