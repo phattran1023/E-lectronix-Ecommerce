@@ -24,6 +24,17 @@ class FrontendController extends Controller
         return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products','trendingProducts'));
     }
 
+
+    public function searchProduct (Request $request) {
+        if ($request->search) {
+            
+            $search = Product::where('name','LIKE','%'.$request->search.'%')->latest()->paginate(1);
+            return view('frontend.pages.search',compact('search'));
+        }else {
+            return redirect()->back()->with('messsage','There are no products available');
+        }
+    }
+
     public function newArrival () {
         $newArrivalProducts = Product::latest()->take(15)->get();
         return view('frontend.pages.new-arrival', compact('newArrivalProducts'));
