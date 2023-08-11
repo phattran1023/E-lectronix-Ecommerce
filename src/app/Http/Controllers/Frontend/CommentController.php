@@ -11,27 +11,24 @@ use App\Models\UserImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
 
 class CommentController extends Controller
 {
-    public function imgIndex()
-    {
-        $images = UserImage::all();
-        return view(url('collections/comment'), compact('images'));
-    }
+   
     public function store(Request $request)
     {
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 'comment_body' => 'required|string',
-                'images' => 'nullable',
-                'images.*' => 'bail|image|mimes:jpeg,png,jpg|max:2048'
+                
+                
             ]);
             if ($validator->fails()) {
                 return redirect()->back()->with('messageComment', 'Comment area is required.');
             }
             $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
-
+           
             if ($post) {
 
                 Comment::create([
@@ -49,8 +46,6 @@ class CommentController extends Controller
             return redirect()->back()->with('messageComment', 'Login is required for comment');
         }
     }
-
-
 
 
     public function destroy(Request $request)
@@ -79,4 +74,6 @@ class CommentController extends Controller
             ]);
         }
     }
-}
+   
+    }
+

@@ -47,7 +47,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     @if (empty(Auth::user()->userAvatar))
-                                        <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+                                        <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
                                             width="30px" style="border-radius:  50%">
                                     @endif {{ Auth::user()->name }}
 
