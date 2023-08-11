@@ -108,7 +108,7 @@
     border-bottom: 1px solid #ccc;
 }
 .main-navbar .top-navbar{
-    background-color: #BA90C6;
+    background: linear-gradient(to right, #BA90C6, #8B5FBF);
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -126,7 +126,6 @@
 }
 .main-navbar .top-navbar .dropdown-menu .dropdown-item{
     padding: 8px 16px;
-    border-bottom: 1px solid #ccc;
     font-size: 14px;
 }
 .main-navbar .top-navbar .dropdown-menu .dropdown-item i{
@@ -137,7 +136,8 @@
 }
 .main-navbar {
     padding: 0px;
-    background-color: #374259;
+    background: linear-gradient(to right, #5a525c, #2e233b);
+
 }
 .main-navbar .nav-item .nav-link{
     padding: 8px 20px;
@@ -169,11 +169,30 @@
     font-weight: 500;
 }
 
+.navbar-nav.me-auto {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Distribute space evenly between items */
+    align-items: center; /* Vertically align items in the center */
+    width: 100%; /* Make sure the flex container occupies the entire width */
+    padding: 0; /* Remove default padding */
+    list-style: none; /* Remove default list styling */
+}
+
+.navbar-nav.me-auto .nav-item {
+    flex-grow: 1; /* Allow items to grow and distribute space */
+    text-align: center; /* Optionally center align the content within each item */
+}
+.navbar-nav.me-auto .nav-item:hover {
+    background: linear-gradient(to right, #BA90C6, #8B5FBF);
+    transition: background 0.3s ease-in-out;
+    cursor: pointer;
+}
+
 /* Category Start */
 .category-card{
     border: 1px solid #ddd;
     box-shadow: 0 0.125rem 0.25rem rgb(0 0 0 / 8%);
-    margin-bottom: 24px;
+    margin-bottom: 15px;
     background-color: #fff;
 }
 .category-card a{
@@ -198,6 +217,11 @@
 
 
 /* Product Card */
+.card:hover {
+    background-color: #f5f5f5; /* Change to your desired hover background color */
+    transform: translateY(-15px); /* Add a slight lift effect on hover */
+    transition: background-color 0.4s ease, transform 0.25s ease; /* Add smooth transition effects */
+}
 .product-card{
     background-color: #fff;
     border: 1px solid #ccc;
@@ -426,4 +450,40 @@
         width: 80%; 
         margin: auto;
     }
+}
+
+/* Footer */
+.footer-area{
+    padding: 40px 0px;
+    background-color: #BA90C6;
+    color: #fff;
+}
+.footer-area a{
+    text-decoration: none;
+}
+.footer-area .footer-heading{
+    font-size: 24px;
+    color: #fff;
+}
+.footer-area .footer-underline{
+    height: 1px;
+    width: 70px;
+    background-color: #ddd;
+    margin: 10px 0px;
+}
+.copyright-area{
+    padding: 14px 0px;
+    background-color: #262626;
+}
+.copyright-area p{
+    margin-bottom: 0px;
+    color: #fff;
+}
+.copyright-area .social-media{
+    text-align: end;
+}
+.copyright-area .social-media a{
+    margin: 0px 10px;
+    color: #fff;
+    width: 20px;
 }

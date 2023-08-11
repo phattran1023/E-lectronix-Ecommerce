@@ -65,6 +65,9 @@ Route::get('login/twitter/callback', [socialLoginController::class, 'handleTwitt
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
     Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
+    Route::get('settings',[App\Http\Controllers\Admin\SettingController::class, 'index']);
+    Route::post('settings', [App\Http\Controllers\Admin\SettingController::class,'store']);
+
     Route::controller(App\Http\Controllers\Admin\SliderController::class)->group(function () {
         Route::get('sliders', 'index')->name('sliders.index');
         Route::get('sliders/create', 'create')->name('sliders.create');
@@ -119,4 +122,15 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('/invoice/{orderId}', 'viewInvoice');
         Route::get('/invoice/{orderId}/generate', 'generateInvoice');
     });
+
+    // Users-admin routes-Phat's routes
+    Route::controller(App\Http\Controllers\Admin\UserController::class)->group(function () {
+        Route::get('/users', 'index');
+        Route::get('/users/create', 'create');
+        Route::post('users','store');
+        Route::get('users/{user_id}/edit','edit');
+        Route::put('users/{user_id}','update');
+        Route::get('users/{user_id}/delete','delete');
+    });
+
 });

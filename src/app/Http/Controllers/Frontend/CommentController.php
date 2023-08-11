@@ -73,7 +73,6 @@ class CommentController extends Controller
                 'message' => 'Login to Delete this comment'
             ]);
         }
-    }
-   
-    }
+    }}
+
 
