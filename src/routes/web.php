@@ -33,6 +33,9 @@ Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->grou
 
     Route::get('/new-arrivals', 'newArrival');
     Route::get('/featured-products', 'featuredProducts');
+
+    Route::get('search','searchProduct');
+    Route::get('comingsoon','commingsoon');
 });
 
 //comment system - Tien's route
@@ -47,6 +50,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('checkout', [App\Http\Controllers\Frontend\CheckoutController::class, 'index']);
     Route::get('orders', [App\Http\Controllers\Frontend\OrderController::class, 'index']);
     Route::get('orders/{orderId}', [App\Http\Controllers\Frontend\OrderController::class, 'show']);
+
+    Route::get('profile',[App\Http\Controllers\Frontend\UserController::class, 'index']);
+    Route::post('profile',[App\Http\Controllers\Frontend\UserController::class, 'updateUser']);
+
+    Route::get('change-password',[App\Http\Controllers\Frontend\UserController::class, 'passwordCreate']);
+    Route::post('change-password',[App\Http\Controllers\Frontend\UserController::class, 'passwordChange']);
+
 });
 
 Route::get('thank-you', [App\Http\Controllers\Frontend\FrontendController::class, 'thankyou']);

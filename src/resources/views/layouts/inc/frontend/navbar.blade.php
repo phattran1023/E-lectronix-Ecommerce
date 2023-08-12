@@ -8,9 +8,9 @@
                     </a>
                 </div>
                 <div class="col-md-5 my-auto">
-                    <form role="search">
+                    <form action="{{ url('search') }}" method="GET" role="search">
                         <div class="input-group">
-                            <input type="search" placeholder="Search your product" class="form-control" />
+                            <input type="search" name="search" value="{{Request::get('search')}}" placeholder="Search your product" class="form-control" />
                             <button class="btn bg-white" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -60,7 +60,7 @@
                                                 data-target=".bs-example-modal-sm">Change avatar</a>
                                         </li>
                                     @endif
-                                    <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{url('profile')}}"><i class="fa fa-user"></i> Profile</a></li>
                                     <li><a class="dropdown-item" href="{{ url('orders') }}"><i class="fa fa-list"></i> My
                                             Orders</a>
                                     </li>
@@ -120,13 +120,13 @@
                         <a class="nav-link" href="{{ url('featured-products') }}">Featured Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Electronics</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Electronics</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Fashions</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Fashions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Accessories</a>
                     </li>
                     
                     

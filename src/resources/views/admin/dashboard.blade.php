@@ -1,35 +1,60 @@
 @extends('layouts.admin')
 @section('content')
-<div class="row">
-    <div class="col-md-12 grid-margin">
-      @if (session('message'))
-        <h2 class="alert alert-success">{{session('message')}}</h2>
-      @endif
-      <div class="d-flex justify-content-between flex-wrap">
-        <div class="d-flex align-items-end flex-wrap">
-          <div class="me-md-3 me-xl-5">
-            <h2>Welcome</h2>
-            <p class="mb-md-0">Your analytics dashboard template.</p>
-          </div>
-          <div class="d-flex">
-            <i class="mdi mdi-home text-muted hover-cursor"></i>
-            <p class="text-muted mb-0 hover-cursor">&nbsp;/&nbsp;Dashboard&nbsp;/&nbsp;</p>
-            <p class="text-primary mb-0 hover-cursor">Analytics</p>
-          </div>+
+    <div class="row">
+        <div class="col-md-12 grid-margin">
+            @if (session('message'))
+                <h2 class="alert alert-success">{{ session('message') }}</h2>
+            @endif
+            <div class="me-md-3 me-xl-5">
+                <h2>Welcome</h2>
+                <p class="mb-md-0">Your analytics dashboard template.</p>
+                <hr>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card card-body bg-primary text-white mb-3">
+                        <label for=""><a href="{{url('admin/products')}}" class="text-white">Total Products</a></label>
+                        <h1>{{$totalProducts}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-success text-white mb-3">
+                        <label for=""><a href="{{url('admin/orders')}}" class="text-white">Total Orders</a></label>
+                        <h1>{{$totalOrders}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-warning text-white mb-3">
+                        <label for=""><a href="{{url('admin/categories')}}" class="text-white">Total Categories</a></label>
+                        <h1>{{$totalCategories}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-danger text-white mb-3">
+                        <label for=""><a href="{{url('admin/brands')}}" class="text-white">Total Brands</a></label>
+                        <h1>{{$totalBrands}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-warning text-dark mb-3">
+                        <label for=""><a href="{{url('admin/users')}}" class="text-dark">Total Users</a></label>
+                        <h1>{{$totalUsers}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-info text-dark mb-3">
+                        <label for=""><a href="{{url('admin/orders')}}" class="text-dark">Today Orders</a></label>
+                        <h1>{{$todayOrders}}</h1>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-light text-dark mb-3">
+                        <label for=""><a href="{{url('admin/orders')}}" class="text-dark">Month Orders</a></label>
+                        <h1>{{$monthOrders}}</h1>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="d-flex justify-content-between align-items-end flex-wrap">
-          <button type="button" class="btn btn-light bg-white btn-icon me-3 d-none d-md-block ">
-            <i class="mdi mdi-download text-muted"></i>
-          </button>
-          <button type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
-            <i class="mdi mdi-clock-outline text-muted"></i>
-          </button>
-          <button type="button" class="btn btn-light bg-white btn-icon me-3 mt-2 mt-xl-0">
-            <i class="mdi mdi-plus text-muted"></i>
-          </button>
-          <button class="btn btn-primary mt-2 mt-xl-0">Generate report</button>
-        </div>
-      </div>
     </div>
-  </div>
 @endsection

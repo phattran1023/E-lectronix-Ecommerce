@@ -261,15 +261,21 @@
     </div>
     <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
+<<<<<<< HEAD
             <form action="" method="post">
                 @csrf
                 <div class="modal-content">
+=======
+            <div class="modal-content">
+                @if (Auth::user())
+>>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
+<<<<<<< HEAD
                     <div class="modal-body" style="background: #5e2fb6">
                         <div class="row">
                             <div class="col-sm-8 ">
@@ -277,6 +283,18 @@
                                     <div class="form-check form-switch">
                                         <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
                                         <input class="form-check-input" type="checkbox" name="badWord">
+=======
+                @endif
+
+                <div class="modal-body" style="background: #5e2fb6">
+                    <div class="row">
+                        <div class="col-sm-8 ">
+                            <div class="card " style="padding-left: 20px">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
+                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
+                                        value="yes">
+>>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
 
                                     </div>
                                     <div class="form-check form-switch">
@@ -297,10 +315,20 @@
                                     </div>
                                 </div>
                             </div>
+<<<<<<< HEAD
                             <div class="col-md-4">
                                 <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
                                         width="30px" style="border-radius:  50%"></span>&nbsp;<span
                                     style="color: aliceblue">{{ Auth::user()->name }}</span>
+=======
+                        </div>
+                        <div class="col-md-4">
+                            <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+                                    width="30px" style="border-radius:  50%"></span>&nbsp;
+                            @if (Auth::user())
+                                <span style="color: aliceblue">{{ Auth::user()->name }}</span>
+                            @endif
+>>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
 
                                 <div class="card" style="margin-top: 5px">
                                     @forelse ($product->comments as $comment)
