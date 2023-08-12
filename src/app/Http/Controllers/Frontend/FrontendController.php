@@ -88,4 +88,8 @@ class FrontendController extends Controller
         return view( 'frontend.thank-you');
     }
 
+
+    public function commingsoon () {
+        return view('frontend.pages.comingsoon');
+    }
 }

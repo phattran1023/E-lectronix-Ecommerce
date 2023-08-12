@@ -108,7 +108,7 @@
     border-bottom: 1px solid #ccc;
 }
 .main-navbar .top-navbar{
-    background: linear-gradient(to right, #BA90C6, #8B5FBF);
+    background: linear-gradient(to right, #94ADD7   , #7C73C0);
     padding-top: 10px;
     padding-bottom: 10px;
 }
@@ -183,7 +183,7 @@
     text-align: center; /* Optionally center align the content within each item */
 }
 .navbar-nav.me-auto .nav-item:hover {
-    background: linear-gradient(to right, #BA90C6, #8B5FBF);
+    background: linear-gradient(to right, #94ADD7, #7C73C0);
     transition: background 0.3s ease-in-out;
     cursor: pointer;
 }
@@ -221,6 +221,10 @@
     background-color: #f5f5f5; /* Change to your desired hover background color */
     transform: translateY(-15px); /* Add a slight lift effect on hover */
     transition: background-color 0.4s ease, transform 0.25s ease; /* Add smooth transition effects */
+}
+.hmm:hover {
+    transform: translateY(0px); /* Add a slight lift effect on hover */
+    transition: none; /* Add smooth transition effects */
 }
 .product-card{
     background-color: #fff;
@@ -454,7 +458,7 @@
 /* Footer */
 .footer-area{
     padding: 40px 0px;
-    background-color: #BA90C6;
+    background-color: #7C73C0;
     color: #fff;
 }
 .footer-area a{

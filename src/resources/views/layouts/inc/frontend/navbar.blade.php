@@ -120,13 +120,13 @@
                         <a class="nav-link" href="{{ url('featured-products') }}">Featured Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Electronics</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Electronics</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Fashions</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Fashions</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Accessories</a>
+                        <a class="nav-link" href="{{url('comingsoon')}}">Accessories</a>
                     </li>
                     
                     

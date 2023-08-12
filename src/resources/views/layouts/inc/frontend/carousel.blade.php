@@ -44,7 +44,8 @@
                         <h1 style="color: #ffffff" class="font-weight-light">COMING SOON</h1>
                         <hr>
                         <div id="countDownTime" class="tex-center font-weight-light"
-                            style="font-size: 1.5rem; color:#ffffff"></div>
+                            style="font-size: 1.5rem; color:#ffffff">
+                        </div>
                     </div>
                 </div>
             </aside>

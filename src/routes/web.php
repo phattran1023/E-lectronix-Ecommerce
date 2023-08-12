@@ -35,6 +35,7 @@ Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->grou
     Route::get('/featured-products', 'featuredProducts');
 
     Route::get('search','searchProduct');
+    Route::get('comingsoon','commingsoon');
 });
 
 //comment system - Tien's route
@@ -54,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('profile',[App\Http\Controllers\Frontend\UserController::class, 'updateUser']);
 
     Route::get('change-password',[App\Http\Controllers\Frontend\UserController::class, 'passwordCreate']);
+    Route::post('change-password',[App\Http\Controllers\Frontend\UserController::class, 'passwordChange']);
 
 });
 

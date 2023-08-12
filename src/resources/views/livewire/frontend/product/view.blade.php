@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-5 mt-3">
                     {{-- wire:ignore để exzoom ko bể format --}}
-                    <div class="bg-white border" wire:ignore> 
+                    <div class="bg-white border" wire:ignore>
                         @if ($product->productImages)
                             {{-- <img src="{{ asset($product->productImages[0]->image) }}" class="w-100" alt="Img"> --}}
                             <div class="exzoom" id="exzoom">
@@ -267,10 +267,15 @@
     <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+                @if (Auth::user())
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="modal-body" style="background: #5e2fb6">
                     <div class="row">
                         <div class="col-sm-8 ">
@@ -309,8 +314,10 @@
                         </div>
                         <div class="col-md-4">
                             <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
-                                    width="30px" style="border-radius:  50%"></span>&nbsp;<span
-                                style="color: aliceblue">{{ Auth::user()->name }}</span>
+                                    width="30px" style="border-radius:  50%"></span>&nbsp;
+                            @if (Auth::user())
+                                <span style="color: aliceblue">{{ Auth::user()->name }}</span>
+                            @endif
 
                             <div class="card" style="margin-top: 5px">
                                 @forelse ($product->comments as $comment)
@@ -363,9 +370,7 @@
             });
         });
     </script>
-    <script>
-       
-    </script>
+    <script></script>
 @endsection
 {{-- Script call zooom img --}}
 @push('scripts')
