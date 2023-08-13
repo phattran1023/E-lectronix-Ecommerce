@@ -128,8 +128,8 @@
             <div class="container">
                 <div class="row">
                     <div>
-                        <div class="card" style=" background-color: #5e2fb6;">
-                            <div class="card-header" style=" background-color: #5e2fb6;">
+                        <div class="card" style=" background-color: #6489e4;">
+                            <div class="card-header" style=" background-color: #6489e4;">
                                 <h4 style="text-align: center;" class="text-white">Comment field</h4>
                             </div>
                             <div class="card-body mx-auto " style="width: 100%;">
@@ -259,43 +259,28 @@
             </div>
         </div>
     </div>
-    <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-<<<<<<< HEAD
-            <form action="" method="post">
-                @csrf
-                <div class="modal-content">
-=======
+    <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+
+           
+
             <div class="modal-content">
-                @if (Auth::user())
->>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
+               
+
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment
                         </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                     </div>
-<<<<<<< HEAD
-                    <div class="modal-body" style="background: #5e2fb6">
+
+                    <div class="modal-body " style="background: #6489e4">
                         <div class="row">
                             <div class="col-sm-8 ">
-                                <div class="card " style="padding-left: 20px">
+                                <div class="" style="padding-left: 20px">
                                     <div class="form-check form-switch">
                                         <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
                                         <input class="form-check-input" type="checkbox" name="badWord">
-=======
-                @endif
-
-                <div class="modal-body" style="background: #5e2fb6">
-                    <div class="row">
-                        <div class="col-sm-8 ">
-                            <div class="card " style="padding-left: 20px">
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
-                                    <input class="form-check-input" type="checkbox" id="mySwitch" name="darkmode"
-                                        value="yes">
->>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
-
                                     </div>
                                     <div class="form-check form-switch">
                                         <label class="form-check-label" for="mySwitch">Spamming comment</label>
@@ -315,27 +300,20 @@
                                     </div>
                                 </div>
                             </div>
-<<<<<<< HEAD
-                            <div class="col-md-4">
-                                <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
-                                        width="30px" style="border-radius:  50%"></span>&nbsp;<span
-                                    style="color: aliceblue">{{ Auth::user()->name }}</span>
-=======
-                        </div>
-                        <div class="col-md-4">
-                            <span> <img src="{{ asset('/uploads/userImg/avatarDefault/defaultAvatar.jpg') }}"
+
+                            
+                         <div class="col-md-4" style="border-left: solid black">
+                            <span> <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
                                     width="30px" style="border-radius:  50%"></span>&nbsp;
                             @if (Auth::user())
-                                <span style="color: aliceblue">{{ Auth::user()->name }}</span>
+                                <span>{{ Auth::user()->name }}</span>
                             @endif
->>>>>>> 4c1c34230098df3c7254467a86a1794e6b2c68a1
 
-                                <div class="card" style="margin-top: 5px">
-                                    @forelse ($product->comments as $comment)
-                                        <span style="padding: 3px 3px 3px 3px">{!! $comment->comment_body !!}</span>
-                                    @empty
-                                        No comment yet.
-                                    @endforelse
+
+                                <div class="card hmm" style="margin-top: 5px">
+                                   
+                                        <span style="padding: 3px 3px 3px 3px" class="message-comment"></span>
+                                   
                                 </div>
                             </div>
                         </div>
@@ -353,23 +331,29 @@
 @section('reportComment')
     <script>
         $(document).ready(function(){
+            
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $(document).on('click', '.reportComment',function(){
-                var a = $(this);
-                var reportVal = a.val();
-
+                var thisClicked = $(this);
+                var comment_id = thisClicked.val();
                 $.ajax({
                         type: "get",
-                        url: "/displayReport",
+                        url: "/takeCommentInfor",
                         data: {
-                            'reportVal': reportVal
+                            'comment_id': comment_id
                         },
-                        success: function(data) {
-                           
+                        success: function(res) {
+                            if (res.status == 200) {
+                                console.log("res",res.comment);
+                                $(".message-comment").text(res.comment.comment_body);
+                               
+                            } else {
+                                alert(res.message);
+                            }
                         }
                     });
             });

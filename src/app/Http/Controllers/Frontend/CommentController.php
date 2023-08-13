@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\File;
 
+
 class CommentController extends Controller
 {
-   
+    //storing comments
     public function store(Request $request)
     {
         if (Auth::check()) {
@@ -47,7 +48,7 @@ class CommentController extends Controller
         }
     }
 
-
+    //Use for deleting comments
     public function destroy(Request $request)
     {
         if (Auth::check()) {
@@ -73,6 +74,29 @@ class CommentController extends Controller
                 'message' => 'Login to Delete this comment'
             ]);
         }
-    }}
+
+
+    }
+
+    //display information on reporting.
+   public function index(Request $request){
+        if(Auth::check()){
+            $comment = Comment::where('id', $request->comment_id)
+            ->where('user_id', Auth::user()->id)
+            ->first();
+            if($comment){
+                return response()->json([
+                    'comment'=> $comment,
+                    'status' =>200,
+                ]);
+               
+            }
+        }
+   }
+
+}
+
+      
+
 
 

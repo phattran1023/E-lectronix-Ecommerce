@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2023 at 10:49 AM
+-- Generation Time: Aug 12, 2023 at 02:07 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -129,6 +129,28 @@ INSERT INTO `colors` (`id`, `name`, `code`, `status`, `created_at`, `updated_at`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `comments`
+--
+
+CREATE TABLE `comments` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `comment_body` mediumtext NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `comments`
+--
+
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `comment_body`, `created_at`, `updated_at`) VALUES
+(1, 1, 2, 'Hello world', '2023-08-08 06:30:20', '2023-08-08 06:30:20');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -176,7 +198,13 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (15, '2023_07_26_145239_create_wishlists_table', 3),
 (16, '2023_07_29_020240_create_carts_table', 4),
 (17, '2023_07_30_165517_create_orders_table', 5),
-(18, '2023_07_30_165819_create_order_items_table', 5);
+(18, '2023_07_30_165819_create_order_items_table', 5),
+(19, '2019_03_01_140553_create_word_list_tables', 6),
+(24, '2023_08_08_131859_create_comments_table', 7),
+(25, '2023_08_08_131936_create_user_img', 7),
+(27, '2023_08_09_080456_creat_settings_table', 8),
+(28, '2023_08_09_080456_create_settings_table', 9),
+(29, '2023_08_12_020319_create_user_details_table', 10);
 
 -- --------------------------------------------------------
 
@@ -205,14 +233,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `tracking_no`, `fullname`, `email`, `phone`, `pincode`, `address`, `status_message`, `payment_mode`, `payment_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Order-nUdbgg', 'Admin', 'admin@gmail.com', '0354778644', '444555', '45445', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-31 09:38:22', '2023-07-31 09:38:22'),
-(2, 2, 'Order-Rpmd1v', 'Phat', 'ptrnvnh@gmail.com', '555666999', '444555', 'ds45sd54sd', 'In Progress...', 'Paid by Paypal', '6GN47496C76511637', '2023-07-31 19:16:35', '2023-07-31 19:16:35'),
-(3, 2, 'Order-u6yLgX', 'Phat', 'ptrnvnh@gmail.com', '444555666', '444555', '4d4d4d4đ', 'In Progress...', 'Paid by Paypal', '7KE013707B844702W', '2023-07-31 19:20:42', '2023-07-31 19:20:42'),
-(4, 2, 'Order-dHhU8p', 'Phat', 'ptrnvnh@gmail.com', '555666555', '555444', 'đ4d4d44d4d', 'In Progress...', 'Paid by Paypal', '53T321370H150273W', '2023-07-31 19:27:50', '2023-07-31 19:27:50'),
-(5, 1, 'Order-DVEbol', 'Admin', 'admin@gmail.com', '555666999', '555666', '55', 'In Progress...', 'Paid by Paypal', '70E917815H9745017', '2023-08-01 04:56:30', '2023-08-01 04:56:30'),
-(6, 1, 'Order-ZUpXZC', 'Admin', 'admin@gmail.com', '555666999', '444555', '444ssss', 'In Progress...', 'Paid by Paypal', '25U99130S3065762Y', '2023-08-01 11:15:17', '2023-08-01 11:15:17'),
-(7, 1, 'Order-YqgrjW', 'Admin', 'admin@gmail.com', '444555666', '556666', '555666', 'In Progress...', 'Paid by MoMo', '1690965482', '2023-08-02 01:38:02', '2023-08-02 01:38:02'),
-(8, 1, 'Order-zyLsdd', 'Admin', 'admin@gmail.com', '0354778644', '555666', '5s55ss', 'In Progress...', 'Paid by MoMo', '1690965799', '2023-08-02 01:43:20', '2023-08-02 01:43:20');
+(1, 1, 'Order-bwVCeZ', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(2, 1, 'Order-3i3e4A', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
+(3, 1, 'Order-fWv8O3', 'Admin', 'admin@gmail.com', '4444555555', '555444', 'Hmmmmm', 'In Progress...', 'Paid by Paypal', '9CY582208G4243915', '2023-08-06 02:06:35', '2023-08-06 02:06:35'),
+(4, 1, 'Order-2WczEP', 'Admin', 'admin@gmail.com', '666666555', '555666', '5555555', 'In Progress...', 'Paid by MoMo', '1691312832', '2023-08-06 02:07:13', '2023-08-06 02:07:13'),
+(5, 1, 'Order-sf6RzX', 'Admin', 'admin@gmail.com', '555666999', '555666', 'đ5d55d5đ', 'out-for-delivery', 'Paid by Paypal', '14S28890HR4550005', '2023-08-06 07:33:13', '2023-08-07 04:02:09'),
+(6, 1, 'Order-nr8ujw', 'Admin', 'admin@gmail.com', '555666999', '555666', '666', 'In Progress...', 'Paid by MoMo', '1691491595', '2023-08-08 03:47:10', '2023-08-08 03:47:10'),
+(7, 2, 'Order-2kW8Qh', 'Phat', 'ptrnvnh@gmail.com', '565566999', '555666', '555666', 'In Progress...', 'Paid by Paypal', '9NT05650S4389643T', '2023-08-08 06:35:28', '2023-08-08 06:35:28');
 
 -- --------------------------------------------------------
 
@@ -236,16 +263,15 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_color_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, 2, NULL, 9, 1400, '2023-07-31 09:38:22', '2023-07-31 09:38:22'),
-(2, 1, 1, NULL, 2, 1200, '2023-07-31 09:38:22', '2023-07-31 09:38:22'),
-(3, 2, 6, NULL, 3, 1000, '2023-07-31 19:16:35', '2023-07-31 19:16:35'),
-(4, 3, 1, NULL, 1, 1120000, '2023-07-31 19:20:42', '2023-07-31 19:20:42'),
-(5, 4, 1, NULL, 1, 1120000, '2023-07-31 19:27:50', '2023-07-31 19:27:50'),
-(6, 5, 1, NULL, 1, 1120000, '2023-08-01 04:56:30', '2023-08-01 04:56:30'),
-(7, 6, 1, 11, 1, 1120000, '2023-08-01 11:15:17', '2023-08-01 11:15:17'),
-(8, 6, 1, 15, 1, 1120000, '2023-08-01 11:15:17', '2023-08-01 11:15:17'),
-(9, 7, 1, 15, 1, 1120000, '2023-08-02 01:38:02', '2023-08-02 01:38:02'),
-(10, 8, 1, 17, 1, 1120000, '2023-08-02 01:43:20', '2023-08-02 01:43:20');
+(1, 1, 1, NULL, 5, 1200, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(2, 1, 2, 1, 4, 1400, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(3, 2, 1, NULL, 5, 1200, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
+(4, 2, 2, 1, 4, 1400, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
+(5, 3, 1, 10, 1, 1200000, '2023-08-06 02:06:35', '2023-08-06 02:06:35'),
+(6, 4, 1, 10, 1, 1200000, '2023-08-06 02:07:13', '2023-08-06 02:07:13'),
+(7, 5, 1, 10, 1, 1200000, '2023-08-06 07:33:13', '2023-08-06 07:33:13'),
+(8, 6, 1, 10, 1, 1200000, '2023-08-08 03:47:10', '2023-08-08 03:47:10'),
+(9, 7, 1, 9, 1, 1200000, '2023-08-08 06:35:29', '2023-08-08 06:35:29');
 
 -- --------------------------------------------------------
 
@@ -308,6 +334,7 @@ CREATE TABLE `products` (
   `selling_price` int(11) NOT NULL,
   `quantity` int(11) NOT NULL,
   `trending` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=trending,0=not-trending',
+  `featured` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=featured,0=not featured',
   `status` tinyint(4) NOT NULL DEFAULT 0 COMMENT '1=hidden, 0=visible',
   `meta_title` varchar(255) DEFAULT NULL,
   `meta_keyword` mediumtext NOT NULL,
@@ -320,17 +347,17 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `brand`, `small_description`, `description`, `original_price`, `selling_price`, `quantity`, `trending`, `status`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Samsung S23 Ultra', 's23-ultra', 'Nokia', '5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 1000000, 1120000, 24, 0, 0, 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', '2023-07-25 20:17:05', '2023-08-01 04:56:30'),
-(2, 1, 'iPhone 14 Pro Max 128GB', 'iphone-14-pro-max', 'Nokia', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 1200, 1400, 13, 0, 0, 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', '2023-07-25 20:32:04', '2023-08-01 04:20:31'),
-(3, 3, 'Samsung Galaxy Tab S9 WiFi 128GB', 'galaxy-tab-s9-wifi', 'Nokia', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 1500, 1000, 20, 0, 0, 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', '2023-07-26 01:15:29', '2023-07-31 02:21:50'),
-(4, 1, 'Samsung Galaxy Z Fold4 5G 256GB', 'samsung-galaxy-z-fold4-5g-256gb', 'Nokia', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 1600, 900, 30, 0, 0, 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', '2023-07-26 01:18:01', '2023-07-26 01:18:58'),
-(5, 3, 'iPad 9 Wifi 64GB', 'ipad-9-wifi', 'Apple Tablet', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 1000, 2000, 20, 0, 0, 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', '2023-07-27 04:55:11', '2023-07-30 21:18:00'),
-(6, 1, 'Xiaomi 13 5G', 'xiaomi-13-5g', 'Xiaomi', 'xiaomi 13 5G', 'xiaomi 13 5G', 1200, 1000, 97, 0, 0, 'xiaomi 13 5G', 'xiaomi 13 5G', 'xiaomi 13 5G', '2023-07-27 05:05:30', '2023-07-31 19:16:35'),
-(7, 1, 'Xiaomi 12T 5G 256GB', 'xiaomi-12t-5g-256gb', 'Xiaomi', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 1100, 1300, 10, 0, 0, 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', '2023-07-27 05:08:26', '2023-07-27 05:08:26'),
-(8, 2, 'Lenovo Ideapad Gaming 3 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050/120Hz/Win11', 'lenovo-ideapad-gaming-3', 'Nokia', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 1200, 980, 10, 0, 0, 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', '2023-07-27 05:16:02', '2023-07-27 05:19:10'),
-(9, 2, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'laptop-lenovo-legion-5', 'Lenovo', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 1200, 1000, 15, 0, 0, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', '2023-07-27 05:17:48', '2023-07-27 05:18:54'),
-(10, 3, 'Samsung Galaxy Tab A8 (2022)', 'samsung-galaxy-tab-a8-2022', 'Samsung Tablet', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 1000, 650, 10, 0, 0, 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', '2023-07-27 05:22:20', '2023-07-27 05:23:33');
+INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `brand`, `small_description`, `description`, `original_price`, `selling_price`, `quantity`, `trending`, `featured`, `status`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Samsung S23 Ultra', 's23-ultra', 'Nokia', '5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 1000000, 1200000, 4, 1, 1, 0, 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', '2023-07-25 20:17:05', '2023-08-06 02:32:39'),
+(2, 1, 'iPhone 14 Pro Max 128GB', 'iphone-14-pro-max', 'Nokia', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 1200, 1400, 5, 1, 1, 0, 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', '2023-07-25 20:32:04', '2023-08-06 02:36:05'),
+(3, 3, 'Samsung Galaxy Tab S9 WiFi 128GB', 'galaxy-tab-s9-wifi', 'Nokia', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 1500, 1000, 0, 1, 0, 0, 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', '2023-07-26 01:15:29', '2023-08-06 02:36:13'),
+(4, 1, 'Samsung Galaxy Z Fold4 5G 256GB', 'samsung-galaxy-z-fold4-5g-256gb', 'Nokia', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 1600, 900, 30, 1, 0, 0, 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', '2023-07-26 01:18:01', '2023-07-26 01:18:58'),
+(5, 3, 'iPad 9 Wifi 64GB', 'ipad-9-wifi', 'Apple', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 1000, 2000, 20, 1, 0, 0, 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', '2023-07-27 04:55:11', '2023-07-27 04:55:11'),
+(6, 1, 'Xiaomi 13 5G', 'xiaomi-13-5g', 'Xiaomi', 'xiaomi 13 5G', 'xiaomi 13 5G', 1200, 1000, 100, 1, 0, 0, 'xiaomi 13 5G', 'xiaomi 13 5G', 'xiaomi 13 5G', '2023-07-27 05:05:30', '2023-07-27 05:05:30'),
+(7, 1, 'Xiaomi 12T 5G 256GB', 'xiaomi-12t-5g-256gb', 'Xiaomi', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 1100, 1300, 10, 1, 0, 0, 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', '2023-07-27 05:08:26', '2023-07-27 05:08:26'),
+(8, 2, 'Lenovo Ideapad Gaming 3 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050/120Hz/Win11', 'lenovo-ideapad-gaming-3', 'Nokia', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 1200, 980, 10, 0, 0, 0, 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', '2023-07-27 05:16:02', '2023-07-27 05:19:10'),
+(9, 2, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'laptop-lenovo-legion-5', 'Lenovo', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 1200, 1000, 15, 0, 0, 0, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', '2023-07-27 05:17:48', '2023-07-27 05:18:54'),
+(10, 3, 'Samsung Galaxy Tab A8 (2022)', 'samsung-galaxy-tab-a8-2022', 'Samsung Tablet', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 1000, 650, 10, 0, 0, 0, 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', '2023-07-27 05:22:20', '2023-07-27 05:23:33');
 
 -- --------------------------------------------------------
 
@@ -360,7 +387,9 @@ INSERT INTO `products_images` (`id`, `product_id`, `image`, `created_at`, `updat
 (8, 7, 'uploads/products/16904597061.jpg', '2023-07-27 05:08:26', '2023-07-27 05:08:26'),
 (9, 8, 'uploads/products/16904601621.jpg', '2023-07-27 05:16:02', '2023-07-27 05:16:02'),
 (10, 9, 'uploads/products/16904602681.jpg', '2023-07-27 05:17:48', '2023-07-27 05:17:48'),
-(11, 10, 'uploads/products/16904605401.jpg', '2023-07-27 05:22:20', '2023-07-27 05:22:20');
+(11, 10, 'uploads/products/16904605401.jpg', '2023-07-27 05:22:20', '2023-07-27 05:22:20'),
+(15, 1, 'uploads/products/16913319221.jpg', '2023-08-06 07:25:22', '2023-08-06 07:25:22'),
+(16, 1, 'uploads/products/16913319222.jpg', '2023-08-06 07:25:22', '2023-08-06 07:25:22');
 
 -- --------------------------------------------------------
 
@@ -382,18 +411,49 @@ CREATE TABLE `product_colors` (
 --
 
 INSERT INTO `product_colors` (`id`, `product_id`, `color_id`, `quantity`, `created_at`, `updated_at`) VALUES
-(1, 2, 3, 8, '2023-07-26 07:06:34', '2023-08-01 04:20:28'),
+(1, 2, 3, 5, '2023-07-26 07:06:34', '2023-07-26 07:06:34'),
+(2, 2, 2, 0, '2023-07-26 07:34:35', '2023-07-26 07:34:35'),
 (3, 5, 4, 5, '2023-07-27 04:55:11', '2023-07-27 04:55:11'),
 (4, 6, 2, 5, '2023-07-27 05:05:30', '2023-07-27 05:05:30'),
 (5, 7, 3, 15, '2023-07-27 05:08:26', '2023-07-27 05:08:26'),
 (6, 8, 4, 3, '2023-07-27 05:16:02', '2023-07-27 05:16:02'),
 (7, 9, 3, 3, '2023-07-27 05:17:48', '2023-07-27 05:17:48'),
 (8, 10, 4, 5, '2023-07-27 05:22:20', '2023-07-27 05:22:20'),
-(11, 1, 3, 9, '2023-07-31 02:18:16', '2023-08-01 11:15:17'),
-(12, 3, 3, 10, '2023-07-31 02:21:50', '2023-07-31 02:21:50'),
-(13, 2, 1, 5, '2023-08-01 04:18:41', '2023-08-01 04:20:13'),
-(15, 1, 1, 8, '2023-08-01 04:27:05', '2023-08-02 01:38:02'),
-(17, 1, 2, 4, '2023-08-01 04:55:50', '2023-08-02 01:43:20');
+(9, 1, 1, 0, '2023-08-06 02:05:44', '2023-08-08 06:35:29'),
+(10, 1, 2, 1, '2023-08-06 02:05:44', '2023-08-08 03:47:10');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `website_name` varchar(255) DEFAULT NULL,
+  `website_url` varchar(255) DEFAULT NULL,
+  `page_title` varchar(255) DEFAULT NULL,
+  `meta_keyword` varchar(500) DEFAULT NULL,
+  `meta_description` varchar(500) DEFAULT NULL,
+  `address` varchar(500) DEFAULT NULL,
+  `phone1` varchar(255) DEFAULT NULL,
+  `phone2` varchar(255) DEFAULT NULL,
+  `email1` varchar(255) DEFAULT NULL,
+  `email2` varchar(255) DEFAULT NULL,
+  `facebook` varchar(255) DEFAULT NULL,
+  `twitter` varchar(255) DEFAULT NULL,
+  `instagram` varchar(255) DEFAULT NULL,
+  `youtube` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `website_name`, `website_url`, `page_title`, `meta_keyword`, `meta_description`, `address`, `phone1`, `phone2`, `email1`, `email2`, `facebook`, `twitter`, `instagram`, `youtube`, `created_at`, `updated_at`) VALUES
+(2, 'E-lectronix.com', 'http://127.0.0.1:8000/', 'E-lectronix', 'Shopping', 'Shopping', '391 Nam Ky Khoi Nghia, District 3, Ho Chi Minh City', '0354778644', NULL, 'phattran1023@gmail.com', 'phattran1023@gmail.com', 'facebook.com', 'fb.com', 'fb.com', 'youtube.com', '2023-08-09 01:27:39', '2023-08-09 06:28:33');
 
 -- --------------------------------------------------------
 
@@ -416,9 +476,9 @@ CREATE TABLE `slider` (
 --
 
 INSERT INTO `slider` (`id`, `title`, `description`, `image`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'slider1', 'silder1', 'uploads/slider/1690418817.png', 0, '2023-07-26 17:42:42', '2023-07-26 17:46:57'),
+(1, 'slider1', 'silder1', 'uploads/slider/1691632152.png', 0, '2023-07-26 17:42:42', '2023-08-09 18:49:12'),
 (2, 'slider2', 'slider2 description', 'uploads/slider/1690418835.png', 0, '2023-07-26 17:43:15', '2023-07-26 17:47:15'),
-(3, 'slider3', 'slider3 description', 'uploads/slider/1690418862.png', 0, '2023-07-26 17:47:42', '2023-07-26 17:47:42');
+(3, 'slider3', 'slider3 description', 'uploads/slider/1691632178.png', 0, '2023-07-26 17:47:42', '2023-08-09 18:49:38');
 
 -- --------------------------------------------------------
 
@@ -443,9 +503,59 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$DmplFPO0/F.64Qd0DvaxEus8BkKcfZHvykyE8FgQ9LqtHNC9RkRIG', NULL, '2023-07-25 19:19:17', '2023-07-25 19:19:17', 1),
-(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$zwH7d5.a6AflIasiFO/Fxu18b.lwPNc4ETiT56v8q.DRo6By9WHIO', NULL, '2023-07-25 19:20:04', '2023-07-25 19:20:04', 0),
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$ct6iH8A1hy4VsKf./AYwZOOUlfYvjT4txoQV0wqIaAUNFlerjk9na', NULL, '2023-07-25 19:19:17', '2023-08-12 04:46:34', 1),
+(2, 'Phat2', 'ptrnvnh@gmail.com', NULL, '$2y$10$fVGLtBm1o2uNJdFjw4d5XelDSjhDk.lLGhxRm5QrX7Ze0NA2mWq1K', '0Hl71H8IYcZUj7QX3VfKMpPTFA10nuAXiKglRiDrhjxNGNgAMjgAu4BCMTRC', '2023-07-25 19:20:04', '2023-08-11 19:39:15', 0),
 (3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_details`
+--
+
+CREATE TABLE `user_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `phone` varchar(255) NOT NULL,
+  `zip_code` varchar(255) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user_details`
+--
+
+INSERT INTO `user_details` (`id`, `user_id`, `phone`, `zip_code`, `address`, `created_at`, `updated_at`) VALUES
+(1, 2, '999666999', '666555', '5555ssss', '2023-08-11 19:36:33', '2023-08-11 19:36:33'),
+(2, 1, '035477864', '444555', '444aaa', '2023-08-12 01:21:43', '2023-08-12 01:21:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_img`
+--
+
+CREATE TABLE `user_img` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `user_img_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `whitelist_words`
+--
+
+CREATE TABLE `whitelist_words` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `word` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -460,6 +570,13 @@ CREATE TABLE `wishlists` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `wishlists`
+--
+
+INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
+(9, 2, 1, '2023-08-08 06:35:45', '2023-08-08 06:35:45');
 
 --
 -- Indexes for dumped tables
@@ -487,6 +604,12 @@ ALTER TABLE `categories`
 -- Indexes for table `colors`
 --
 ALTER TABLE `colors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `comments`
+--
+ALTER TABLE `comments`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -557,6 +680,12 @@ ALTER TABLE `product_colors`
   ADD KEY `product_colors_color_id_foreign` (`color_id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slider`
 --
 ALTER TABLE `slider`
@@ -568,6 +697,25 @@ ALTER TABLE `slider`
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
+
+--
+-- Indexes for table `user_details`
+--
+ALTER TABLE `user_details`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_details_user_id_unique` (`user_id`);
+
+--
+-- Indexes for table `user_img`
+--
+ALTER TABLE `user_img`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `whitelist_words`
+--
+ALTER TABLE `whitelist_words`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `wishlists`
@@ -589,7 +737,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -604,6 +752,12 @@ ALTER TABLE `colors`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -613,19 +767,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -643,13 +797,19 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products_images`
 --
 ALTER TABLE `products_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `slider`
@@ -661,13 +821,31 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `user_details`
+--
+ALTER TABLE `user_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `user_img`
+--
+ALTER TABLE `user_img`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `whitelist_words`
+--
+ALTER TABLE `whitelist_words`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
@@ -691,6 +869,12 @@ ALTER TABLE `products_images`
 ALTER TABLE `product_colors`
   ADD CONSTRAINT `product_colors_color_id_foreign` FOREIGN KEY (`color_id`) REFERENCES `colors` (`id`) ON DELETE SET NULL,
   ADD CONSTRAINT `product_colors_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `user_details`
+--
+ALTER TABLE `user_details`
+  ADD CONSTRAINT `user_details_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

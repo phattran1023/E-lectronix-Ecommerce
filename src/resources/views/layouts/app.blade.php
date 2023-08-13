@@ -115,7 +115,9 @@
     @livewireScripts
     {{-- Alertify vs Exzoom --}}
     @stack('scripts')
+    {{-- Comment --}}
     @yield('commentScript')
+    @yield('reportComment')
 </body>
 
 </html>
