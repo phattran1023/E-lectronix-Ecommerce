@@ -272,7 +272,9 @@
 
 
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Reporting 's comment
+                    <h5 class="modal-title" id="exampleModalLabel">Reporting @if (Auth::user())
+                            <span class="comment-name text-primary"></span>'s comment
+                        @endif
                     </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
@@ -331,6 +333,7 @@
     </div>
 </div>
 </div>
+{{-- Report script --}}
 @section('reportComment')
     <script>
         $(document).ready(function() {
@@ -351,11 +354,12 @@
                     },
                     success: function(res) {
                         if (res.status == 200) {
-                            
+
                             $(".comment-content").text(res.comment.comment_body);
                             $(".comment-name").text(res.user.name);
                         } else {
                             alert(res.message);
+                            $(".modal").modal('hide');
                         }
                     }
                 });
@@ -363,6 +367,7 @@
         });
     </script>
 @endsection
+{{-- Deleting script --}}
 @section('commentScript')
     <script>
         $(document).ready(function() {

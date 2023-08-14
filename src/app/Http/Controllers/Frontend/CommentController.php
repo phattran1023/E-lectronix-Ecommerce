@@ -95,7 +95,10 @@ class CommentController extends Controller
 
             }
         } else {
-            return redirect()->back()->with('messageComment', 'Login to report this comment');
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to Report this comment'
+            ]);
         }
     }
 
