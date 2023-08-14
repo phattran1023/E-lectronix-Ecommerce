@@ -22,14 +22,14 @@ class CommentController extends Controller
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 'comment_body' => 'required|string',
-                
-                
+
+
             ]);
             if ($validator->fails()) {
                 return redirect()->back()->with('messageComment', 'Comment area is required.');
             }
             $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
-           
+
             if ($post) {
 
                 Comment::create([
@@ -79,24 +79,24 @@ class CommentController extends Controller
     }
 
     //display information on reporting.
-   public function index(Request $request){
-        if(Auth::check()){
+    public function index(Request $request)
+    {
+        if (Auth::check()) {
             $comment = Comment::where('id', $request->comment_id)
-            ->where('user_id', Auth::user()->id)
-            ->first();
-            if($comment){
+
+                ->first();
+            $user = User::where('id', $comment->user_id)->first();
+            if ($comment && $user) {
                 return response()->json([
-                    'comment'=> $comment,
-                    'status' =>200,
+                    'comment' => $comment,
+                    'user' => $user,
+                    'status' => 200,
                 ]);
-               
+
             }
+        } else {
+            return redirect()->back()->with('messageComment', 'Login to report this comment');
         }
-   }
+    }
 
 }
-
-      
-
-
-

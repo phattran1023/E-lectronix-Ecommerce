@@ -169,7 +169,7 @@
                             @forelse ($product->comments as $comment)
                                 <div class=" row  d-flex justify-content-center">
 
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
 
 
 
@@ -208,11 +208,13 @@
 
                                                 <div>
 
-
                                                     <button type="button" value="{{ $comment->id }}"
                                                         class="fa fa-flag text-danger reportComment"
                                                         style="text-decoration: none; border: none"
                                                         data-bs-toggle="modal" data-bs-target="#reportModal"></button>
+
+
+
                                                     &nbsp;&nbsp;
                                                     <button href="" class="fa fa-comments text-primary"
                                                         style="text-decoration: none; border: none"></button>
@@ -223,6 +225,7 @@
                                                             class="fa fa-trash text-danger deleteComment"
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
+
 
                                                 </div>
 
@@ -246,7 +249,7 @@
                                 </div>
                                 <br>
                             @empty
-                               No comment yet!
+                                No comment yet!
                             @endforelse
 
 
@@ -254,75 +257,75 @@
 
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
 
-           
+
 
             <div class="modal-content">
-               
-
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Reporting {{ Auth::user()->name }}'s comment
-                        </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body " style="background: #6489e4">
-                        <div class="row">
-                            <div class="col-sm-8 ">
-                                <div class="" style="padding-left: 20px">
-                                    <div class="form-check form-switch">
-                                        <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
-                                        <input class="form-check-input" type="checkbox" name="badWord">
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        <label class="form-check-label" for="mySwitch">Spamming comment</label>
-                                        <input class="form-check-input" type="checkbox" name="spamming">
-
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        <label class="form-check-label" for="mySwitch">Bad attitude</label>
-                                        <input class="form-check-input" type="checkbox" name="badAttitude">
-
-                                    </div>
-
-                                    <div class="form-check form-switch">
-                                        <label class="form-check-label" for="mySwitch">Else</label>
 
 
-                                    </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Reporting 's comment
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body " style="background: #6489e4">
+                    <div class="row">
+                        <div class="col-sm-8 ">
+                            <div class="" style="padding-left: 20px">
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
+                                    <input class="form-check-input" type="checkbox" name="badWord">
                                 </div>
-                            </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Spamming comment</label>
+                                    <input class="form-check-input" type="checkbox" name="spamming">
 
-                            
-                         <div class="col-md-4" style="border-left: solid black">
-                            <span> <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
-                                    width="30px" style="border-radius:  50%"></span>&nbsp;
-                            @if (Auth::user())
-                                <span>{{ Auth::user()->name }}</span>
-                            @endif
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Bad attitude</label>
+                                    <input class="form-check-input" type="checkbox" name="badAttitude">
+
+                                </div>
+
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch">Else</label>
 
 
-                                <div class="card hmm" style="margin-top: 5px">
-                                   
-                                        <span style="padding: 3px 3px 3px 3px" class="message-comment"></span>
-                                   
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Commit report</button>
+
+
+                        <div class="col-md-4" style="border-left: solid black">
+                            <span> <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
+                                    width="30px" style="border-radius:  50%"></span>&nbsp;
+                            @if (Auth::user())
+                                <span class="comment-name"></span>
+                            @endif
+
+
+                            <div class="card hmm" style="margin-top: 5px">
+
+                                <span style="padding: 3px 3px 3px 3px" class="comment-content"></span>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Commit report</button>
+                </div>
+            </div>
             </form>
         </div>
     </div>
@@ -330,32 +333,32 @@
 </div>
 @section('reportComment')
     <script>
-        $(document).ready(function(){
-            
+        $(document).ready(function() {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('click', '.reportComment',function(){
-                var thisClicked = $(this);
-                var comment_id = thisClicked.val();
+            $(document).on('click', '.reportComment', function() {
+                var reportClick = $(this);
+                var comment_id = reportClick.val();
                 $.ajax({
-                        type: "get",
-                        url: "/takeCommentInfor",
-                        data: {
-                            'comment_id': comment_id
-                        },
-                        success: function(res) {
-                            if (res.status == 200) {
-                                console.log("res",res.comment);
-                                $(".message-comment").text(res.comment.comment_body);
-                               
-                            } else {
-                                alert(res.message);
-                            }
+                    type: "get",
+                    url: "/takeCommentInfor",
+                    data: {
+                        'comment_id': comment_id
+                    },
+                    success: function(res) {
+                        if (res.status == 200) {
+                            
+                            $(".comment-content").text(res.comment.comment_body);
+                            $(".comment-name").text(res.user.name);
+                        } else {
+                            alert(res.message);
                         }
-                    });
+                    }
+                });
             });
         });
     </script>
@@ -370,8 +373,8 @@
             });
             $(document).on('click', '.deleteComment', function() {
                 if (confirm('Are you sure deleting this comment?')) {
-                    var thisClicked = $(this);
-                    var comment_id = thisClicked.val();
+                    var deleteClick = $(this);
+                    var comment_id = deleteClick.val();
 
                     $.ajax({
                         type: "POST",
@@ -381,8 +384,8 @@
                         },
                         success: function(res) {
                             if (res.status == 200) {
-                                thisClicked.closest('.comment-container').remove();
-                               
+                                deleteClick.closest('.comment-container').remove();
+
                             } else {
                                 alert(res.message);
                             }
