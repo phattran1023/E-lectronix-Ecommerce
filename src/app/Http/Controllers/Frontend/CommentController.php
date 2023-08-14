@@ -11,21 +11,19 @@ use App\Models\UserImage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\File;
+
 
 class CommentController extends Controller
 {
-    public function imgIndex()
-    {
-        $images = UserImage::all();
-        return view(url('collections/comment'), compact('images'));
-    }
+    //storing comments
     public function store(Request $request)
     {
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
                 'comment_body' => 'required|string',
-                'images' => 'nullable',
-                'images.*' => 'bail|image|mimes:jpeg,png,jpg|max:2048'
+
+
             ]);
             if ($validator->fails()) {
                 return redirect()->back()->with('messageComment', 'Comment area is required.');
@@ -50,9 +48,7 @@ class CommentController extends Controller
         }
     }
 
-
-
-
+    //Use for deleting comments
     public function destroy(Request $request)
     {
         if (Auth::check()) {
@@ -78,6 +74,32 @@ class CommentController extends Controller
                 'message' => 'Login to Delete this comment'
             ]);
         }
+
+
     }
-    
+
+    //display information on reporting.
+    public function index(Request $request)
+    {
+        if (Auth::check()) {
+            $comment = Comment::where('id', $request->comment_id)
+
+                ->first();
+            $user = User::where('id', $comment->user_id)->first();
+            if ($comment && $user) {
+                return response()->json([
+                    'comment' => $comment,
+                    'user' => $user,
+                    'status' => 200,
+                ]);
+
+            }
+        } else {
+            return response()->json([
+                'status' => 401,
+                'message' => 'Login to Report this comment'
+            ]);
+        }
+    }
+
 }
