@@ -35,7 +35,32 @@
     <!-- Default theme -->
     <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css" />
 
+    <style>
+        /* styles.css */
+        .back-to-top {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 99;
+            width: 50px;
+            height: 50px;
+            background-color: #6868d8;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
 
+        .back-to-top:hover {
+            background-color: #0056b3;
+        }
+    </style>
     @livewireStyles
 </head>
 
@@ -48,6 +73,9 @@
         <main>
             @yield('content')
         </main>
+        <button id="backToTopBtn" class="back-to-top">
+            <span>&#8593;</span>
+        </button>
     </div>
     @include('layouts.inc.frontend.footer')
 
@@ -100,7 +128,27 @@
         };
     </script>
 
+    <script>
+        // script.js
+        document.addEventListener("DOMContentLoaded", function() {
+            const backToTopButton = document.getElementById("backToTopBtn");
 
+            window.addEventListener("scroll", () => {
+                if (window.scrollY > 100) {
+                    backToTopButton.style.display = "block";
+                } else {
+                    backToTopButton.style.display = "none";
+                }
+            });
+
+            backToTopButton.addEventListener("click", () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+            });
+        });
+    </script>
     {{-- Owl Script --}}
     <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 
@@ -111,7 +159,7 @@
     {{-- Trending carousel --}}
     @yield('script')
 
-    
+
     @livewireScripts
     {{-- Alertify vs Exzoom --}}
     @stack('scripts')
