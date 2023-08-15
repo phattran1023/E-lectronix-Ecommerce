@@ -108,28 +108,31 @@
                         </p>
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 mt-3">
-                <div class="card">
-                    <div class="card-header bg-white">
-                        <h4>Description</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>
-                            {!! $product->description !!}
-                        </p>
+                <div class="row mt-3 mx-auto ">
+                    <div class="col-md-12 mt-3" style="padding: 0;">
+                        <div class="card">
+                            <div class="card-header bg-white ">
+                                <h4>Description</h4>
+                            </div>
+                            <div class="card-body">
+                                <p class="">
+                                    {!! $product->description !!}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="py-4">
+
+        
+
+        <div class="py-5">
             <div class="container">
                 <div class="row">
                     <div>
-                        <div class="card" style=" background-color: #6489e4;">
-                            <div class="card-header" style=" background-color: #6489e4;">
+                        <div class="card" style=" background-color: #7C73C0;">
+                            <div class="card-header" style=" background-color: #7C73C0;">
                                 <h4 style="text-align: center;" class="text-white">Comment field</h4>
                             </div>
                             <div class="card-body mx-auto " style="width: 100%;">
@@ -146,7 +149,7 @@
                                     enctype="multipart/form-data">
                                     @csrf
                                     <div class="row">
-                                        <div class="col-sm-8">
+                                        <div class="col-md-12">
                                             <div class="mb-3">
                                                 <input type="hidden" name="post_slug"value="{{ $product->slug }}">
 
@@ -155,26 +158,15 @@
                                                 </span>
                                             </div>
                                         </div>
-                                        <div class="col-sm-2">
-                                            <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                                        </div>
                                     </div>
-
-
-
-
+                                    <div class="col-md-4">
+                                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
+                                    </div>
                                 </form>
-
                             </div>
                             @forelse ($product->comments as $comment)
                                 <div class=" row  d-flex justify-content-center">
-
                                     <div class="col-md-6">
-
-
-
-
-
                                         <div class=" comment-container card p-3">
 
                                             <div class="d-flex justify-content-between align-items-center">
@@ -196,25 +188,16 @@
                                                     &nbsp; &nbsp;
                                                     <span> <small
                                                             class="font-weight-bold">{!! $comment->comment_body !!}</small></span>
-
                                                 </div>
-
-
                                                 &nbsp;&nbsp;<span><small>{{ $comment->created_at->format('d/m/Y') }}</small></span>
 
                                             </div>
-
                                             <div class="action d-flex justify-content-between mt-2 align-items-center">
-
                                                 <div>
-
                                                     <button type="button" value="{{ $comment->id }}"
                                                         class="fa fa-flag text-danger reportComment"
                                                         style="text-decoration: none; border: none"
                                                         data-bs-toggle="modal" data-bs-target="#reportModal"></button>
-
-
-
                                                     &nbsp;&nbsp;
                                                     <button href="" class="fa fa-comments text-primary"
                                                         style="text-decoration: none; border: none"></button>
@@ -225,39 +208,24 @@
                                                             class="fa fa-trash text-danger deleteComment"
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
-
-
                                                 </div>
-
                                                 <div class="icons align-items-center">
-
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
-
                                                 </div>
-
                                             </div>
-
-
-
                                         </div>
                                     </div>
-
                                 </div>
                                 <br>
                             @empty
-                                No comment yet!
+                                <div class="col-md-12">No comment yet!</div>
                             @endforelse
-
-
-
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

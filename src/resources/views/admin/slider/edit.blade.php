@@ -25,7 +25,7 @@
                         </div>
                         <div class="mb-3">
                             <label>Description</label>
-                            <textarea name="description" rows="4" class="form-control">{{ $slider->description }}</textarea>
+                            <textarea id="editor" name="description" rows="4" class="form-control">{{ $slider->description }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label>Image</label>
@@ -45,4 +45,16 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    
+<script>
+    ClassicEditor
+        .create( document.querySelector( '#editor' ) )
+        .catch( error => {
+            console.error( error );
+        } );
+</script>
 @endsection

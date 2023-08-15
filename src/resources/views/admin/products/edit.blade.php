@@ -92,11 +92,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="">Small Description</label>
-                                    <textarea type="text" name="small_description" class="form-control" rows="4">{{ $product->small_description }}</textarea>
+                                    <textarea type="text" id="editor1" name="small_description" class="form-control" rows="4">{{ $product->small_description }}</textarea>
                                 </div>
-                                <div class="mb-3">
+                                <div class="mb-3" >
                                     <label for="">Description</label>
-                                    <textarea type="text" name="description" class="form-control" rows="4">{{ $product->description }}</textarea>
+                                    <textarea type="text" id="editor2" name="description" class="form-control" rows="4">{{ $product->description }}</textarea>
                                 </div>
                             </div>
 
@@ -342,6 +342,21 @@
                         alert(response.message);
                     }
                 });
+            });
+        });
+    </script>
+    {{-- CK Editor --}}
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const divIds = ["editor1", "editor2"];
+
+            divIds.forEach(divId => {
+                ClassicEditor
+                    .create(document.querySelector(`#${divId}`))
+                    .catch(error => {
+                        console.error(error);
+                    });
             });
         });
     </script>

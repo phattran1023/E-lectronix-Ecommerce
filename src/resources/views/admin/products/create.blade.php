@@ -83,11 +83,11 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="">Small Description</label>
-                                    <textarea type="text" name="small_description" class="form-control" rows="4"></textarea>
+                                    <textarea id="editor1" type="text" name="small_description" class="form-control" rows="4"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="">Description</label>
-                                    <textarea type="text" name="description" class="form-control" rows="4"></textarea>
+                                    <textarea id="editor2" type="text" name="description" class="form-control" rows="4"></textarea>
                                 </div>
                             </div>
 
@@ -162,7 +162,8 @@
                             <div class="tab-pane fade border d-3" id="color-tab-pane" role="tabpanel"
                                 aria-labelledby="color-tab" tabindex="0">
                                 <div class="mb-3">
-                                    <label for="">Select Color</label><hr>
+                                    <label for="">Select Color</label>
+                                    <hr>
 
                                     <div class="row">
                                         @forelse ($colors as $item)
@@ -171,9 +172,10 @@
                                                 <div class="p-2 border mb-3">
 
                                                     Color : <input type="checkbox" name="colors[{{ $item->id }}]"
-                                                        value="{{ $item->id }}" />{{' '. $item->name }}
+                                                        value="{{ $item->id }}" />{{ ' ' . $item->name }}
                                                     <br>
-                                                    Quantity : <input type="number" name="colorquantity[{{ $item->id }}]"
+                                                    Quantity : <input type="number"
+                                                        name="colorquantity[{{ $item->id }}]"
                                                         style="width: 70px; border: 1px solid">
                                                 </div>
                                             </div>
@@ -195,5 +197,21 @@
             </div>
         </div>
     </div>
-    </div>
+@endsection
+
+@section('scripts')
+<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const divIds = ["editor1", "editor2"];
+
+            divIds.forEach(divId => {
+                ClassicEditor
+                    .create(document.querySelector(`#${divId}`))
+                    .catch(error => {
+                        console.error(error);
+                    });
+            });
+        });
+    </script>
 @endsection
