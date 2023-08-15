@@ -51,11 +51,16 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    @if (empty(Auth::user()->userAvatar))
+                                    @if (session('avatar'))
+                                        <img src="{{session('avatar')}}" alt="" width="30px" style="border-radius:  10%">
+                                    @else
+                                        <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}" width="30px" style="border-radius:  50%">
+                                    @endif
+                                    {{-- @if (empty(Auth::user()->userAvatar))
                                         <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
                                             width="30px" style="border-radius:  50%">
-                                    @endif {{ Auth::user()->name }}
-
+                                    @endif {{ Auth::user()->name }} --}}
+                                    {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     @if (empty(Auth::user()->userAvatar))

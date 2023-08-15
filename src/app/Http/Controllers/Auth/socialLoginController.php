@@ -36,6 +36,7 @@ class socialLoginController extends Controller
                 $newUser->save();
                 Auth::login($newUser);
             }
+            session()->put('avatar',$user->getAvatar().'?sz=50');
             return redirect('/'); 
         }
     }
@@ -67,6 +68,8 @@ class socialLoginController extends Controller
                 $newUser->save();
                 Auth::login($newUser);
             }
+            
+            session()->put('avatar',$user->getAvatar());
             return redirect('/'); 
         }
     }

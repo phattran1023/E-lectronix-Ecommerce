@@ -44,6 +44,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        session()->forget('avatar');
         $this->middleware('guest')->except('logout');
     }
 }
