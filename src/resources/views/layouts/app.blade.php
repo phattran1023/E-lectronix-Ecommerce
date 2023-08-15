@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> @yield('title')</title>
+    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/kisspng-letter-computer-icons-letter-e-5abfa798001415.6134645015225097200004.png')}}">
 
     <meta name="description" content="@yield('meta_description')">
     <meta name="keywords" content="@yield('meta_keyword')">

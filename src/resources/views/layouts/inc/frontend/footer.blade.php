@@ -3,7 +3,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
-                    <h4 class="footer-heading">{{ $appSetting->website_name }}</h4>
+                    <h4 class="footer-heading">E-lectronix.com</h4>
+                    {{-- {{ $appSetting->website_name }} --}}
                     <div class="footer-underline"></div>
                     <p>
                         Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -13,20 +14,20 @@
                 <div class="col-md-3">
                     <h4 class="footer-heading">Quick Links</h4>
                     <div class="footer-underline"></div>
-                    <div class="mb-2"><a href="" class="text-white">Home</a></div>
-                    <div class="mb-2"><a href="" class="text-white">About Us</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Sitemaps</a></div>
+                    <div class="mb-2"><a href="{{url('/')}}" class="text-white">Home</a></div>
+                    <div class="mb-2"><a href="{{url('comingsoon')}}" class="text-white">About Us</a></div>
+                    <div class="mb-2"><a href="{{url('comingsoon')}}" class="text-white">Contact Us</a></div>
+                    <div class="mb-2"><a href="{{url('comingsoon')}}" class="text-white">Blogs</a></div>
+                    <div class="mb-2"><a href="{{url('comingsoon')}}" class="text-white">Sitemaps</a></div>
                 </div>
                 <div class="col-md-3">
                     <h4 class="footer-heading">Shop Now</h4>
                     <div class="footer-underline"></div>
-                    <div class="mb-2"><a href="" class="text-white">Collections</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Trending Products</a></div>
-                    <div class="mb-2"><a href="" class="text-white">New Arrivals Products</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Featured Products</a></div>
-                    <div class="mb-2"><a href="" class="text-white">Cart</a></div>
+                    <div class="mb-2"><a href="{{ url('/collections') }}" class="text-white">Collections</a></div>
+                    <div class="mb-2"><a href="{{url('comingsoon')}}" class="text-white">Trending Products</a></div>
+                    <div class="mb-2"><a href="{{ url('/new-arrivals') }}" class="text-white">New Arrivals Products</a></div>
+                    <div class="mb-2"><a href="{{ url('featured-products') }}" class="text-white">Featured Products</a></div>
+                    <div class="mb-2"><a href="{{ url('cart') }}" class="text-white">Cart</a></div>
                 </div>
                 <div class="col-md-3">
                     <h4 class="footer-heading">Reach Us</h4>
