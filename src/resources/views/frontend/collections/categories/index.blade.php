@@ -21,7 +21,7 @@
                                 <img src="{{asset("$item->image")}}" class="w-100" alt="Laptop">
                             </div>
                             <div class="category-card-body">
-                                <h5>{{$item->name}}</h5>
+                                <h5 class="text-center">{{$item->name}}</h5>
                             </div>
                         </a>
                     </div>
