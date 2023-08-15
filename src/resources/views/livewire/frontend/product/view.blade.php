@@ -331,8 +331,76 @@
             </form>
         </div>
     </div>
+    {{-- Related Products --}}
+    <div class="py-3 py-md-5 bg-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <h4>Realted
+                        @if ($category)
+                            {{ $category->name }}
+                        @endif
+                        Products
+                    </h4>
+                    <div class="underline"></div>
+                </div>
+
+                @if ($category->relatedProducts)
+                    <div class="col-md-12">
+                        {{-- Carousel trending products --}}
+                        <div class="owl-carousel owl-theme trending-product">
+                            @foreach ($category->relatedProducts as $item)
+                                <div class="item">
+                                    <div class="product-card">
+                                        <div class="product-card-img">
+                                            <label class="stock bg-danger">New</label>
+
+                                            @if ($item->productImages->count() > 0)
+                                                <a
+                                                    href="{{ url('/collections/' . $item->categoryGetName->slug . '/' . $item->slug) }}">
+                                                    <img src="{{ asset($item->productImages[0]->image) }}"
+                                                        alt="{{ $item->name }}">
+                                            @endif
+                                        </div>
+
+
+                                        <div class="product-card-body">
+                                            <p class="product-brand">{{ $item->brand }}</p>
+                                            <h5 class="product-name">
+                                                {{-- categoryGetName là method link category_id trên bảng products đến bảng categories để lấy slug  --}}
+                                                <a
+                                                    href="{{ url('/collections/' . $item->categoryGetName->slug . '/' . $item->slug) }}">
+                                                    {{ $item->name }}
+                                                </a>
+                                            </h5>
+                                            <div class="price">
+                                                <span class="selling-price">{{ number_format($item->selling_price) }}
+                                                    VND</span>
+                                                <span
+                                                    class="original-price">{{ number_format($item->original_price) }}
+                                                    VND</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        {{-- Carousel trending products --}}
+
+                    </div>
+                @else
+                    <div class="col-md-12">
+                        <div class="p-2">
+                            <h3>No Related Product Available for {{ $category->name }}</h3>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
 {{-- Report script --}}
 @section('reportComment')
     <script>
@@ -401,6 +469,28 @@
         });
     </script>
     <script></script>
+@endsection
+
+{{-- Realted Product Carousel Script --}}
+@section('script')
+    <script>
+        $('.owl-carousel').owlCarousel({
+            loop: true,
+            margin: 15,
+            nav: true,
+            responsive: {
+                0: {
+                    items: 1
+                },
+                600: {
+                    items: 3
+                },
+                1000: {
+                    items: 5
+                }
+            }
+        })
+    </script>
 @endsection
 
 {{-- Script call zooom img --}}

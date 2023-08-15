@@ -218,13 +218,12 @@
 
 /* Product Card */
 .card:hover {
+   
+}
+.hmm:hover {
     background-color: #f5f5f5; /* Change to your desired hover background color */
     transform: translateY(-15px); /* Add a slight lift effect on hover */
     transition: background-color 0.4s ease, transform 0.25s ease; /* Add smooth transition effects */
-}
-.hmm:hover {
-    transform: translateY(0px) !important; /* Add a slight lift effect on hover */
-    transition: background-color 0s ease, transform 0s ease !important; /* Add smooth transition effects */
 }
 .product-card{
     background-color: #fff;

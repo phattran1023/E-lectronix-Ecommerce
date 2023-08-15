@@ -127,9 +127,8 @@
             localStorage.setItem('scrollpos', window.scrollY);
         };
     </script>
-
+    {{-- Back to top --}}
     <script>
-        // script.js
         document.addEventListener("DOMContentLoaded", function() {
             const backToTopButton = document.getElementById("backToTopBtn");
 
