@@ -53,7 +53,7 @@ class UserController extends Controller
     {
         $request->validate([
             'current_password' => ['required', 'string', 'min:8'],
-            'password' => ['required', 'string', 'min:8', 'confirmed']
+            'password' => ['required', 'string', 'min:8', 'confirmed', 'different:current_password']
         ]);
 
         $currentPasswordStatus = Hash::check($request->current_password, auth()->user()->password);
