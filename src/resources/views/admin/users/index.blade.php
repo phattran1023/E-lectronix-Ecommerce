@@ -36,7 +36,7 @@
                                     @elseif ($item->role_as == '1')
                                         <label class="badge rounded-pill bg-success">Admin</label>
                                     @else
-                                        <label class="badge rounded-pill bg-danger">Social User</label>
+                                        <label class="badge rounded-pill bg-danger">Google/Twitter User</label>
                                     @endif</td>
                                     <td><a href="{{ url('admin/users/' . $item->id . '/edit') }}"
                                             class="btn btn-sm btn-success">Edit</a>
