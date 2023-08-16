@@ -26,7 +26,7 @@
                 @endif
 
 
-                <div class="card shadow hmm">
+                <div class="card shadow">
                     <div class="card-header bg-primary">
                         <h4 class="mb-0 text-white">User Details</h4>
                     </div>
@@ -37,7 +37,7 @@
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label>Username</label>
-                                        <input type="text" name="username" value="" class="form-control" autofocus>
+                                        <input type="text" name="username" value="{{Auth::user()->name}}" class="form-control" autofocus>
                                     </div>
                                 </div>
                                 <div class="col-md-6">

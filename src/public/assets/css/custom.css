@@ -218,9 +218,7 @@
 
 
 /* Product Card */
-.card:hover {
-   
-}
+
 .hmm:hover {
     background-color: #f5f5f5; /* Change to your desired hover background color */
     transform: translateY(-15px); /* Add a slight lift effect on hover */
