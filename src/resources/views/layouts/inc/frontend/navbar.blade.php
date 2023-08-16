@@ -52,7 +52,7 @@
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     @if (session('avatar'))
-                                        <img src="{{session('avatar')}}" alt="" width="30px" style="border-radius:  10%">
+                                        <img src="{{session('avatar')}}" alt="" width="30px" style="border-radius:  50%">
                                     @else
                                         <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}" width="30px" style="border-radius:  50%">
                                     @endif

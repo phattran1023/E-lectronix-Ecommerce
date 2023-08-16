@@ -73,8 +73,12 @@ class FrontendController extends Controller
 
             $product = $category->products()->where('slug', $product_slug)->where('status', '0')->first();
             $product_id = Product::where('slug',$product_slug)->first()->id;
-            $checkWishlist = Wishlist::where('user_id', auth()->user()->id)->where('product_id', $product_id)->exists();
-            session()->put('checkWishlist', $checkWishlist);
+            If(auth()->user()){
+                $checkWishlist = Wishlist::where('user_id', auth()->user()->id)->where('product_id', $product_id)->exists();
+                session()->put('checkWishlist', $checkWishlist);
+                }
+           
+           
             if ($product) {
                 return view('frontend.collections.products.view', compact('product','category'));
             }else {

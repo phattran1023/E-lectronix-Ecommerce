@@ -21,7 +21,7 @@ class CommentController extends Controller
     {
         if (Auth::check()) {
             $validator = Validator::make($request->all(), [
-                'comment_body' => 'required|string',
+                'comment_body' => 'required|string|max:50',
 
 
             ]);

@@ -93,7 +93,7 @@
                             </button>
                             <button type="button" wire:click="addToWishList( {{ $product->id }} )" class="btn btn1">
                                 <span wire:loading.remove wire:target="addToWishList">
-                                    @if (session('checkWishlist')===true)
+                                    @if (session('checkWishlist') === true)
                                         <i class="fa fa-heart" style="color: rgb(169, 14, 0)"></i>
                                     @else
                                         <i class="fa fa-heart"></i> Add To Wishlist
@@ -128,7 +128,7 @@
             </div>
         </div>
 
-        
+
 
         <div class="py-5">
             <div class="container">
@@ -136,7 +136,7 @@
                     <div>
                         <div class="card" style=" background-color: #7C73C0;">
                             <div class="card-header" style=" background-color: #7C73C0;">
-                                <h4 style="text-align: center;" class="text-white">Comment field</h4>
+                                <h4 style="text-align: center;" class="text-white">Comment Here</h4>
                             </div>
                             <div class="card-body mx-auto " style="width: 100%;">
                                 @if (session('messageComment'))
@@ -145,61 +145,98 @@
                                         <strong>Fail!</strong>&nbsp; <span>{{ session('messageComment') }}</span>
                                     </div>
                                 @endif
-                                <h6 class="card card-title bg-white" style="text-align: center">Leave a comment</h6>
 
 
-                                <form action="{{ url('collections/comment') }}" method="post"
-                                    enctype="multipart/form-data">
+                                <form action="{{ url('collections/comment') }}" method="post">
                                     @csrf
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="mb-3">
+
+
+                                    <div class="row ">
+                                        <div>
+                                            <div>
+
+
+                                                @if (session('avatar'))
+                                                    <img src="{{ session('avatar') }}" width="30px"
+                                                        style="border-radius:  50%; padding-bottom: 3px">&nbsp;
+                                                @else
+                                                    <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
+                                                        width="30px" style="border-radius:  50%">&nbsp;
+                                                @endif
+                                                @if (Auth::user())
+                                                    <strong class="text-warning">{{ Auth::user()->name }}</strong>
+                                                @else
+                                                    Unknow user
+                                                @endif
+
+
+                                            </div>
+                                            <div>
                                                 <input type="hidden" name="post_slug"value="{{ $product->slug }}">
 
                                                 <span>
-                                                    <textarea name="comment_body" required class="form-control" rows="3" placeholder="Comment.....">{{ old('post_slug') }}</textarea>
+                                                    <input id="inputText" name="comment_body" style="width: 60%"
+                                                        class="form-control" value="{{ old('comment_body') }}"
+                                                        placeholder="Comment....." oninput="updateCharacterCountdown()">
+
+
+                                                </span>
+                                                <span>
+                                                    <div>
+                                                        <p class="text-white " style="font-weight: 20px">Characters
+                                                            remaining: <span id="countdown">50&nbsp;</span></p>
+                                                    </div>
                                                 </span>
                                             </div>
                                         </div>
+
                                     </div>
-                                    
+
+
+
                                 </form>
                             </div>
                             @forelse ($product->comments as $comment)
-                                <div class=" row  d-flex justify-content-center">
-                                    <div class="col-md-6">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-8">
                                         <div class=" comment-container card p-3">
 
                                             <div class="d-flex justify-content-between align-items-center">
 
                                                 <div class="user d-flex flex-row align-items-center">
 
-                                                    @if (empty(Auth::user()->userAvatar))
+                                                    @if (session('avatar'))
+                                                        <img src="{{ session('avatar') }}" alt=""
+                                                            width="30px" style="border-radius:  50%">
+                                                    @else
                                                         <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
-                                                            width="30px" style="border-radius:  50%">&nbsp;&nbsp;
+                                                            width="30px" style="border-radius:  50%">
                                                     @endif
-                                                    <span><small class="font-weight-bold text-primary">
-                                                            <strong>
-                                                                @if ($comment->user)
-                                                                    {{ $comment->user->name }}
-                                                                @endif
-                                                            </strong>
-                                                        </small>
-                                                    </span>
                                                     &nbsp; &nbsp;
-                                                    <span> <small
-                                                            class="font-weight-bold">{!! $comment->comment_body !!}</small></span>
+                                                    <small class="font-weight-bold text-primary">
+                                                        <strong>
+                                                            @if ($comment->user)
+                                                                {{ $comment->user->name }}
+                                                            @endif
+                                                        </strong>
+                                                    </small>
+                                                    &nbsp; &nbsp;
+                                                    <small class="font-weight-bold">{!! $comment->comment_body !!}</small>
                                                 </div>
-                                                &nbsp;&nbsp;<span><small>{{ $comment->created_at->format('d/m/Y') }}</small></span>
+                                                &nbsp;&nbsp;<small>{{ $comment->created_at->format('d/m/Y') }}</small>
 
                                             </div>
-                                            <div class="action d-flex justify-content-between mt-2 align-items-center">
+                                            <div class="action d-flex justify-content-between mt-2 ">
                                                 <div>
-                                                    <button type="button" value="{{ $comment->id }}"
-                                                        class="fa fa-flag text-danger reportComment"
-                                                        style="text-decoration: none; border: none"
-                                                        data-bs-toggle="modal" data-bs-target="#reportModal"></button>
-                                                    &nbsp;&nbsp;
+                                                    @if (Auth::id() != $comment->user_id)
+                                                        <button type="button" value="{{ $comment->id }}"
+                                                            class="fa fa-flag text-danger reportComment"
+                                                            style="text-decoration: none; border: none"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#reportModal"></button>
+                                                        &nbsp;&nbsp;
+                                                    @endif
+
                                                     <button href="" class="fa fa-comments text-primary"
                                                         style="text-decoration: none; border: none"></button>
                                                     &nbsp;&nbsp;
@@ -210,7 +247,7 @@
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
                                                 </div>
-                                                <div class="icons align-items-center">
+                                                <div class=" align-items-center">
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
                                                     <i class="fa fa-star text-warning"></i>
@@ -405,7 +442,7 @@
     </script>
 @endsection
 {{-- Deleting script --}}
-@section('commentScript')
+@section('deleteComment')
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
@@ -439,7 +476,43 @@
     </script>
     <script></script>
 @endsection
+{{-- Coutn maximum word script --}}
+@section('countMaximumWords')
+    <script>
+       
+        function updateCharacterCountdown() {
+            const maxCharacters = 50; // Change this to your desired maximum character count
+            const inputText = document.getElementById("inputText").value;
+            const remainingCharacters = maxCharacters - inputText.length;
+            
+            const minus10 = "Bro pay attention to your comment maximum words";
+            const minus20 = "Hey you need to stop!";
+            const minus25 = "Bro you letting me no choice!";
+            const countdownElement = document.getElementById("countdown");
+            countdownElement.textContent = remainingCharacters;
 
+            if (remainingCharacters < 0) {
+                countdownElement.textContent = minus10;
+                countdownElement.style.color = "red";
+                
+                if (remainingCharacters < -20) {
+                    countdownElement.textContent = minus20;
+                    countdownElement.style.color = "red";
+                   
+                }
+                if(remainingCharacters < -25){
+                    countdownElement.textContent = minus25;
+                    countdownElement.style.color = "red";
+                }if(remainingCharacters < -30){
+                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                }
+            } else {
+                countdownElement.style.color = "hsl(144, 70%, 64%)";
+            }
+        }
+    </script>
+@endsection
+{{-- End  Coutn maximum word script --}}
 {{-- Realted Product Carousel Script --}}
 @section('script')
     <script>
