@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Slider;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Livewire\Frontend\Checkout\CheckoutShow;
@@ -57,7 +58,6 @@ class FrontendController extends Controller
         $category = Category::where('slug', $category_slug)->first();
 
         if ($category) {
-
             return view('frontend.collections.products.index', compact('category'));
         } else {
             return redirect()->back();
@@ -68,10 +68,13 @@ class FrontendController extends Controller
     public function productView(string  $category_slug,  string $product_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
-
+        
         if ($category) {
 
             $product = $category->products()->where('slug', $product_slug)->where('status', '0')->first();
+            $product_id = Product::where('slug',$product_slug)->first()->id;
+            $checkWishlist = Wishlist::where('user_id', auth()->user()->id)->where('product_id', $product_id)->exists();
+            session()->put('checkWishlist', $checkWishlist);
             if ($product) {
                 return view('frontend.collections.products.view', compact('product','category'));
             }else {

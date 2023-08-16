@@ -205,9 +205,11 @@ class View extends Component
 
     public function render()
     {
+        $checkWishlist = session()->get('checkWishlist');
         return view('livewire.frontend.product.view', [
             'category' => $this->category,
-            'product' => $this->product
+            'product' => $this->product,
+            'checkWishlist' => $checkWishlist
         ]);
     }
 }

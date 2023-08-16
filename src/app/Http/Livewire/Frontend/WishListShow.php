@@ -11,6 +11,7 @@ class WishListShow extends Component
     public function removeWishlistItem(int $wishlistId)
     {
         Wishlist::where('user_id', auth()->user()->id)->where('id',$wishlistId)->delete();
+        session()->forget('checkWishlist');
 
         //Livewire firing event for wishlist
         $this->emit('wishlistAddedUpdated');

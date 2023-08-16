@@ -91,10 +91,13 @@
                             <button type="button" wire:click="addToCart({{ $product->id }})" class="btn btn1">
                                 <i class="fa fa-shopping-cart"></i> Add To Cart
                             </button>
-
                             <button type="button" wire:click="addToWishList( {{ $product->id }} )" class="btn btn1">
                                 <span wire:loading.remove wire:target="addToWishList">
-                                    <i class="fa fa-heart"></i> Add To Wishlist
+                                    @if (session('checkWishlist')===true)
+                                        <i class="fa fa-heart" style="color: rgb(169, 14, 0)"></i>
+                                    @else
+                                        <i class="fa fa-heart"></i> Add To Wishlist
+                                    @endif
                                 </span>
                                 <span wire:loading wire:target="addToWishList">Adding ... </span>
                             </button>

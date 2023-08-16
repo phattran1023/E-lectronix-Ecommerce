@@ -48,7 +48,7 @@
                                             </a>
                                         </div>
                                         <div class="col-md-4 my-auto">
-                                            <label class="price">${{ $wishlistItem->product->selling_price }} </label>
+                                            <label class="price">{{ number_format($wishlistItem->product->selling_price) }}đ </label>
                                         </div>
 
                                         <div class="col-md-2 col-12 my-auto">

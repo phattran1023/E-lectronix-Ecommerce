@@ -45,7 +45,7 @@
                                             <span class="original-price">{{ number_format($item->original_price) }}
                                                 đ</span>
                                         </div>
-                                        <p style="height: 45px; ">
+                                        <p style="height: 45px; white-space: nowrap; white-space: nowrap; text-overflow: ellipsis;">
                                             <b>Description:</b>{{ $item->description }}
                                         </p>
                                         <a href="{{ url('/collections/' . $item->categoryGetName->slug . '/' . $item->slug) }}"
@@ -57,14 +57,13 @@
                     </div>
                 @empty
                     <div class="p-2 col-md-12">
-                        <h3>No Product Available for {{ $category->name }}</h3>
+                        <h3 class="text-center" style="height: 26.5vh">No Product Available</h3>
                     </div>
                 @endforelse
                 {{-- Carousel trending products --}}
                 <div>
                     {{ $search->appends(request()->input())->links() }}
                 </div>
-
 
             </div>
         </div>

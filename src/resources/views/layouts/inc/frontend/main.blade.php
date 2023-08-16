@@ -51,7 +51,7 @@
         <div class="row mb-md-2">
             @foreach ($discount_Products as $product)
                 <div class="col-md-4 col-lg-3">
-                    <div class="card shadow-sm border-light mb-4">
+                    <div class="card hmm shadow-sm border-light mb-4">
                         <a href="{{ url('collections/' . $product->categoryGetName->slug . '/' . $product->slug) }}"
                             class="position-relative">
                             <img src="{{ asset($product->productImages->first()->image) }}" class="card-img-top"
