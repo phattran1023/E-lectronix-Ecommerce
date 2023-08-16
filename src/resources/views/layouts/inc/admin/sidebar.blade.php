@@ -83,6 +83,12 @@
                     
                     </li>
                 </ul>
+                <ul class="nav flex-column sub-menu">
+                    {{-- <li class="nav-item"> <a class="nav-link" href="{{url('admin/users/create')}}"> Add user </a></li> --}}
+                    <li class="nav-item"> <a class="nav-link" href="{{url('admin/comments/')}}"> Reported comments </a></li>
+                    
+                    </li>
+                </ul>
             </div>
         </li>
 

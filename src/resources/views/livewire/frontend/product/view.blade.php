@@ -159,9 +159,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <button type="submit" class="btn btn-primary mt-3">Submit</button>
-                                    </div>
+                                    
                                 </form>
                             </div>
                             @forelse ($product->comments as $comment)
