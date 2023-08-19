@@ -18,35 +18,43 @@ class CommentController extends Controller
 {
     //storing comments
     public function store(Request $request)
-    {
-        if (Auth::check()) {
-            $validator = Validator::make($request->all(), [
-                'comment_body' => 'required|string|max:50',
+{
+    $badWords = $this->getBadWords();
 
+    if (Auth::check()) {
+        $validator = Validator::make($request->all(), [
+            'comment_body' => 'required|string|max:50',
+        ]);
 
-            ]);
-            if ($validator->fails()) {
-                return redirect()->back()->with('messageComment', 'Comment area is required.');
-            }
-            $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
-
-            if ($post) {
-
-                Comment::create([
-                    'post_id' => $post->id,
-                    'user_id' => Auth::user()->id,
-                    'comment_body' => $request->comment_body,
-
-                ]);
-
-            } else {
-                return redirect()->back()->with('messageComment', 'No Such Post found');
-            }
-            return redirect(url('collections/comment'));
-        } else {
-            return redirect()->back()->with('messageComment', 'Login is required for comment');
+        if ($validator->fails()) {
+            return redirect()->back()->with('messageComment', 'Comment area is required.');
         }
+
+        // Check for bad words in the comment body
+        foreach ($badWords as $badWord) {
+            if (stripos($request->comment_body, $badWord) !== false) {
+                return redirect()->back()->with('messageComment', 'The comment contains sensitive words.');
+            }
+        }
+
+        $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
+
+        if ($post) {
+            Comment::create([
+                'post_id' => $post->id,
+                'user_id' => Auth::user()->id,
+                'comment_body' => $request->comment_body,
+            ]);
+        } else {
+            return redirect()->back()->with('messageComment', 'No Such Post found');
+        }
+
+        return redirect(url('collections/comment'));
+    } else {
+        return redirect()->back()->with('messageComment', 'Login is required for comment');
     }
+}
+
 
     //Use for deleting comments
     public function destroy(Request $request)
@@ -76,6 +84,25 @@ class CommentController extends Controller
         }
 
 
+    }
+    // read BadWords contents
+    protected function getBadWords()
+    {
+        $path = public_path('badWords.csv');
+
+        if (File::exists($path)) {
+            $badWords = [];
+            if (($handle = fopen($path, 'r')) !== false) {
+                while (($data = fgetcsv($handle, 1000, ',')) !== false) {
+                    $badWords[] = $data[0]; // Assuming the bad words are in the first column of the CSV file
+                }
+                fclose($handle);
+}
+            return $badWords;
+        } else {
+            // Return an empty array if the file is not found
+            return [];
+        }
     }
 
     //display information on reporting.
