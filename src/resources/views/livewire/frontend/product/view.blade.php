@@ -338,7 +338,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary commitReport" >Commit report</button>
+                    <button type="button" class="btn btn-primary commitReport">Commit report</button>
                 </div>
             </div>
             </form>
@@ -416,56 +416,64 @@
 
 {{-- Report script --}}
 @section('commitReport')
-<script>
-    $(document).ready(function() {
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $(document).on('click', '.commitReport', function(e) {
-            e.preventDefault();
-            
-
-            if ($('.badwords').is(":checked")) {
-                const badwords = $(this).val
-              
-            };
-            if ($('.spamming').is(":checked")) {
-                const spamming = $(this).val
-            };
-            if ($('.attitude').is(":checked")) {
-                const attitude = $(this).val
-            };
-            var elseContent = $('.elseContent').val();
-            var user = $user;
-            var comment = $comment;
-            
-            $.ajax({
-                type: "post",
-                url: "/commitReport",
-                data: {
-                    'badwords': badwords;
-                    'spamming': spamming;
-                    'attitude': attiude;
-                    'elseContent': elseContent;
-                    
-                },
-                success: function(res) {
-                    if (res.status == 200) {
-
-                    } else {
-
-
-                    }
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
+            $(document).on('click', '.commitReport', function(e) {
+                e.preventDefault();
+                var alertMessage ='';
+                var badwords = 0;
+                var spamming = 0;
+                var attitude = 0;
+
+                if ($('.badwords').is(":checked")) {
+                    badwords = $(this).val();
+                    alertMessage += "hello badwords /n";
+                }
+
+                if ($('.spamming').is(":checked")) {
+                    spamming = $(this).val();
+                    alertMessage += "hello spamming /n";
+                }
+
+                if ($('.attitude').is(":checked")) {
+                    attitude = $(this).val();
+                    alertMessage += "hello attitude /n";
+                }
+                if ($('.elseContent').length) {
+                    elseContent = $('.elseContent').val(); // Get the value from the input field if it exists
+                    alertMessage += elseContent;
+                }
+                alert(alertMessage);
+
+
+                $.ajax({
+                    type: "post",
+                    url: "/commitReport",
+                    data: {
+                        'badwords': badwords,
+                        'spamming': spamming,
+                        'attitude': attitude,
+                        'elseContent': elseContent
+                    },
+                    success: function(res) {
+                        if (res.status == 200) {
+
+                        } else {
+
+
+                        }
+                    }
+                });
+            });
         });
-    });
-</script>
+    </script>
 @endsection
 @section('reportComment')
-   
     <script>
         $(document).ready(function() {
 
@@ -576,13 +584,18 @@
 {{-- Script for else btn --}}
 @section('elseBtn')
     <script>
+        var formContainer = document.getElementById("formContainer");
+        var inputElementCreated = false;
         document.getElementById("createFormButton").addEventListener("click", function() {
-            var formContainer = document.getElementById("formContainer");
-            var inputElement = document.createElement("input");
-            inputElement.type = "text";
-            inputElement.className = "elseContent";
-            inputElement.placeholder = "Enter text...";
-            formContainer.appendChild(inputElement);
+            if (!inputElementCreated) {
+
+                var inputElement = document.createElement("input");
+                inputElement.type = "text";
+                inputElement.className = "elseContent";
+                inputElement.placeholder = "Enter text...";
+                formContainer.appendChild(inputElement);
+                inputElementCreated = true;
+            }
         });
     </script>
 @endsection
