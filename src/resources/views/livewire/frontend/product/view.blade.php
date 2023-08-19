@@ -268,6 +268,7 @@
             </div>
         </div>
     </div>
+    {{-- Pop up modal --}}
     <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -290,38 +291,44 @@
                         <div class="col-sm-8 ">
                             <div class="" style="padding-left: 20px">
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Ngôn ngữ lăng mạ</label>
-                                    <input class="form-check-input" type="checkbox" name="badWord">
+                                    <label class="form-check-label" for="mySwitch">Contain bad words</label>
+                                    <input class="form-check-input badwords" type="checkbox" value="1">
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch">Spamming comment</label>
-                                    <input class="form-check-input" type="checkbox" name="spamming">
+                                    <input class="form-check-input spamming" type="checkbox" value="1">
 
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch">Bad attitude</label>
-                                    <input class="form-check-input" type="checkbox" name="badAttitude">
+                                    <input class="form-check-input attitude" type="checkbox" value="1">
 
                                 </div>
 
-                                <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Else</label>
 
 
-                                </div>
+                                <button id="createFormButton" style="border-radius: 25%">Else</button>
+                                <span id="formContainer"></span>
+
+
                             </div>
                         </div>
 
 
                         <div class="col-md-4" style="border-left: solid black">
-                            <span> <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
-                                    width="30px" style="border-radius:  50%"></span>&nbsp;
+                            @if (session('avatar'))
+                                <img src="{{ session('avatar') }}" width="30px"
+                                    style="border-radius:  50%; padding-bottom: 3px">&nbsp;
+                            @else
+                                <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}" width="30px"
+                                    style="border-radius:  50%">
+                            @endif
                             @if (Auth::user())
                                 <span class="comment-name"></span>
                             @endif
 
 
-                            <div class="card hmm" style="margin-top: 5px">
+                            <div class="card" style="margin-top: 5px">
 
                                 <span style="padding: 3px 3px 3px 3px" class="comment-content"></span>
 
@@ -331,7 +338,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Commit report</button>
+                    <button type="button" class="btn btn-primary commitReport" >Commit report</button>
                 </div>
             </div>
             </form>
@@ -408,7 +415,57 @@
 </div>
 
 {{-- Report script --}}
+@section('commitReport')
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $(document).on('click', '.commitReport', function(e) {
+            e.preventDefault();
+            
+
+            if ($('.badwords').is(":checked")) {
+                const badwords = $(this).val
+              
+            };
+            if ($('.spamming').is(":checked")) {
+                const spamming = $(this).val
+            };
+            if ($('.attitude').is(":checked")) {
+                const attitude = $(this).val
+            };
+            var elseContent = $('.elseContent').val();
+            var user = $user;
+            var comment = $comment;
+            
+            $.ajax({
+                type: "post",
+                url: "/commitReport",
+                data: {
+                    'badwords': badwords;
+                    'spamming': spamming;
+                    'attitude': attiude;
+                    'elseContent': elseContent;
+                    
+                },
+                success: function(res) {
+                    if (res.status == 200) {
+
+                    } else {
+
+
+                    }
+                }
+            });
+        });
+    });
+</script>
+@endsection
 @section('reportComment')
+   
     <script>
         $(document).ready(function() {
 
@@ -437,7 +494,10 @@
                         }
                     }
                 });
+
             });
+
+
         });
     </script>
 @endsection
@@ -479,12 +539,11 @@
 {{-- Coutn maximum word script --}}
 @section('countMaximumWords')
     <script>
-       
         function updateCharacterCountdown() {
             const maxCharacters = 50; // Change this to your desired maximum character count
             const inputText = document.getElementById("inputText").value;
             const remainingCharacters = maxCharacters - inputText.length;
-            
+
             const minus10 = "Bro pay attention to your comment maximum words";
             const minus20 = "Hey you need to stop!";
             const minus25 = "Bro you letting me no choice!";
@@ -494,16 +553,17 @@
             if (remainingCharacters < 0) {
                 countdownElement.textContent = minus10;
                 countdownElement.style.color = "red";
-                
+
                 if (remainingCharacters < -20) {
                     countdownElement.textContent = minus20;
                     countdownElement.style.color = "red";
-                   
+
                 }
-                if(remainingCharacters < -25){
+                if (remainingCharacters < -25) {
                     countdownElement.textContent = minus25;
                     countdownElement.style.color = "red";
-                }if(remainingCharacters < -30){
+                }
+                if (remainingCharacters < -30) {
                     window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
                 }
             } else {
@@ -513,6 +573,20 @@
     </script>
 @endsection
 {{-- End  Coutn maximum word script --}}
+{{-- Script for else btn --}}
+@section('elseBtn')
+    <script>
+        document.getElementById("createFormButton").addEventListener("click", function() {
+            var formContainer = document.getElementById("formContainer");
+            var inputElement = document.createElement("input");
+            inputElement.type = "text";
+            inputElement.className = "elseContent";
+            inputElement.placeholder = "Enter text...";
+            formContainer.appendChild(inputElement);
+        });
+    </script>
+@endsection
+{{-- End  Script for else btn --}}
 {{-- Realted Product Carousel Script --}}
 @section('script')
     <script>

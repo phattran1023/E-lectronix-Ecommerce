@@ -168,6 +168,8 @@
     @yield('deleteComment')
     @yield('reportComment')
     @yield('countMaximumWords')
+    @yield('elseBtn')
+    @yield('commitReport')
 </body>
 
 </html>

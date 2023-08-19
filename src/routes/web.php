@@ -44,6 +44,7 @@ Route::post('collections/comment',[App\Http\Controllers\Frontend\CommentControll
 Route::post('delete-comment',[App\Http\Controllers\Frontend\CommentController::class,'destroy']);
 Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::class,'index']);
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
+Route::post('commitReport',[App\Http\Controllers\Frontend\ReportedComment::class,'store']);
 
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
