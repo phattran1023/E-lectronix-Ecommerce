@@ -86,6 +86,9 @@
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My
                                             Cart</a></li>
                                     <li>
+                                        <a class="dropdown-item" href="{{Route('coupon.couponUser')}}"><i class="fas fa-gift"></i> Coupon</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                             onclick="event.preventDefault();document.getElementById('logout-form').submit();">
                                             <i class="fa fa-sign-out"></i>

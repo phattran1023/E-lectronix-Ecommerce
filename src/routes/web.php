@@ -5,6 +5,7 @@ use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\momoController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Auth\socialLoginController;
 use App\Http\Controllers\Frontend\CheckoutController;
 
@@ -73,6 +74,19 @@ Route::get('login/google', [socialLoginController::class, 'redirectToGoogle'])->
 Route::get('login/google/callback', [socialLoginController::class, 'handleGoogleCallback']);
 Route::get('login/twitter', [socialLoginController::class, 'redirectToTwitter'])->name('login.twitter');
 Route::get('login/twitter/callback', [socialLoginController::class, 'handleTwitterCallback']);
+
+//Coupon- Tai's routes
+Route::get('coupon', [CouponController::class, 'index'])->name('coupon.index');
+Route::get('coupon/user', [CouponController::class, 'couponUser'])->name('coupon.couponUser');
+Route::get('coupon/add', [CouponController::class, 'add'])->name('coupon.add');
+Route::post('coupon/add', [CouponController::class, 'store'])->name('coupon.store');
+Route::get('coupon/edit/{coupon}', [CouponController::class, 'edit'])->name('coupon.edit');
+Route::put('coupon/update/{coupon}', [CouponController::class, 'update'])->name('coupon.update');
+Route::get('coupon/{id}', [CouponController::class, 'delete'])->name('coupon.delete');
+Route::get('coupon/get', [CouponController::class, 'getRandomCoupon'])->name('coupon.getRandomCoupon');
+Route::post('coupon/send/', [CouponController::class, 'send'])->name('coupon.send');
+//Coupon - checkout
+Route::post('coupon/add/', [CheckoutController::class, 'addCoupon'])->name('coupon.addCoupon');
 
 // Admin routes-Phat's routes
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
