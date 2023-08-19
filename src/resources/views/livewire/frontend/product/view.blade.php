@@ -291,8 +291,8 @@
                         <div class="col-sm-8 ">
                             <div class="" style="padding-left: 20px">
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Contain bad words</label>
-                                    <input class="form-check-input badwords" type="checkbox" value="1">
+                                    <label class="form-check-label" for="mySwitch">Given link</label>
+                                    <input class="form-check-input link" type="checkbox" value="1">
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch">Spamming comment</label>
@@ -425,37 +425,37 @@
             });
             $(document).on('click', '.commitReport', function(e) {
                 e.preventDefault();
-                var alertMessage ='';
+                
                 var badwords = 0;
                 var spamming = 0;
                 var attitude = 0;
 
-                if ($('.badwords').is(":checked")) {
+                if ($('.link').is(":checked")) {
                     badwords = $(this).val();
-                    alertMessage += "hello badwords /n";
+              
                 }
 
                 if ($('.spamming').is(":checked")) {
                     spamming = $(this).val();
-                    alertMessage += "hello spamming /n";
+                 
                 }
 
                 if ($('.attitude').is(":checked")) {
                     attitude = $(this).val();
-                    alertMessage += "hello attitude /n";
+                   
                 }
                 if ($('.elseContent').length) {
                     elseContent = $('.elseContent').val(); // Get the value from the input field if it exists
                     alertMessage += elseContent;
                 }
-                alert(alertMessage);
+              
 
 
                 $.ajax({
                     type: "post",
                     url: "/commitReport",
                     data: {
-                        'badwords': badwords,
+                        'link': link,
                         'spamming': spamming,
                         'attitude': attitude,
                         'elseContent': elseContent

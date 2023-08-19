@@ -14,7 +14,7 @@ class ReportedComment extends Model
         'report_id',
         'reporter_id',
         'user_comment',
-        'badwords',
+        'link',
         'spamming',
         'attitude',
         'else',
