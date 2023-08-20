@@ -91,6 +91,29 @@
                 </ul>
             </div>
         </li>
+        
+        {{-- <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="{{ url('admin/coupon') }}" aria-expanded="false"
+                aria-controls="ui-basic">
+                <i class="mdi mdi-gift menu-icon"></i>
+                <span class="menu-title">Coupon</span>
+                <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+                <ul class="nav flex-column sub-menu">
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('coupon.index') }}">View Coupon</a>
+                    </li>
+                    <li class="nav-item"> <a class="nav-link" href="{{ route('coupon.add') }}">add Coupon</a>
+                    </li>
+                </ul>
+            </div>
+        </li> --}}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/coupon') }}">
+                <i class="mdi mdi-gift menu-icon"></i>
+                <span class="menu-title">Coupon</span>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/settings') }}">

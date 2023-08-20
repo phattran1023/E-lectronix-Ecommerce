@@ -9,11 +9,19 @@ use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Livewire\Frontend\Checkout\CheckoutShow;
+use App\Models\Coupon;
 
 class FrontendController extends Controller
 {
     public function index()
     {
+        $couponList = Coupon::where('status', 'Free')
+            ->where('date_expires', '>', now())
+            ->pluck('code')
+            ->toArray();
+        if($couponList===null){
+            $couponList = ['See you again'];
+        }
         $sliders = Slider::where('status', '0')->get();
         $trendingProducts = Product::where('trending','1')->latest()->take(15)->get();
         $newestProducts = Product::with('productImages')->orderBy('created_at', 'desc')->take(8)->get();
@@ -22,7 +30,7 @@ class FrontendController extends Controller
                             ->having('discount_percent', '>', 0)
                             ->orderBy('discount_percent', 'desc')
                             ->get();
-        return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products','trendingProducts'));
+        return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products','trendingProducts','couponList'));
     }
 
 

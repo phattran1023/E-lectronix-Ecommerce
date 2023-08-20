@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Admin Coupon List')
 
 @section('content')
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -40,28 +42,32 @@
 
     <div class="container mt-3">
     <h2 class="text-center">Coupon list</h2>
+    <hr class="hr" />
     @if (session('message'))
         <div class="alert alert-success">
             <p>{{ session('message') }}</p>
         </div>
     @endif
-    <!--test-->
-    <div class="gift-container row">
-        <div class="gift-box col-1" id="giftBox">
-            <span class="gift-icon">&#127873;</span>
-            <span class="open-icon">&#127873;</span>
-        </div>
-        <div class="col" id="couponCode" style="display: none;"></div>
-    </div>
 
-    
-    <!--test-->
-    <a href="{{Route('coupon.add')}}" class="btn btn-success">Add</a>        
-    <table class="table table-hover">
+    <div class="row">
+        <div class="col">   
+            <a href="{{Route('coupon.add')}}" class="btn btn-success btn-lg ">Add Coupon</a>
+        </div>
+        <form class="col" action="{{Route('coupon.search')}}" method="post">
+        @csrf
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="searchCoupon">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            </div>
+        </form>
+        
+    </div>
+           
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Code</th>
+                <th style="width:100%">Code</th>
                 <th>Applies</th>
                 <th>Type</th>
                 <th>Value</th>
@@ -70,7 +76,7 @@
                 <th>Date Created</th>
                 <th>Date Expires</th>
                 <th>Status</th>
-                <th colspan="3">Aplication</th>
+                <th colspan="3" class="text-center">Aplication</th>
             </tr>
         </thead>
         <tbody>
@@ -84,12 +90,21 @@
                 <td>{{$coupon->max_value."VND"}}</td>
                 <td>{{$coupon->description}}</td>
                 <td>{{$coupon->date_created}}</td>
-                <td>{{$coupon->date_expires}}</td>
+                <td style="color: 
+                    @if(Carbon\Carbon::parse($coupon->date_expires)->isPast())
+                        #FF0000
+                    @elseif(Carbon\Carbon::parse($coupon->date_expires)->diffInDays(now()) < 3)
+                        #FFA500
+                    @else
+                        #006400
+                    @endif;">
+                    {{ $coupon->date_expires }}
+                </td>
                 <td>{{$coupon->status=="free"?"Free":$coupon->status}}</td>
                 <td><a href="{{Route('coupon.edit',$coupon)}}" class="btn btn-primary">Edit</a></td>
                 <td><a href="{{Route('coupon.delete',$coupon->id)}}" class="btn btn-danger">Delete</a></td>
                 <td>
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal" data-coupon-code="{{$coupon->code}}">
+                    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#myModal" data-coupon-code="{{$coupon->code}}">
                         Send
                     </button>
                 </td>
@@ -97,6 +112,7 @@
             @endforeach
         </tbody>
     </table>
+    {{ $coupons->links() }}
     </div>
     <!-- The Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -110,8 +126,8 @@
                     @csrf
                     <div class="modal-body">
                         <input type="hidden" name="sendCodeInput" id="sendCodeInput">
-                        <p><b>Coupon Code: </b><span id="couponCodePlaceholder"></span></p>
-                        <label for="id" class="form-label">Choose User from the list:</label>
+                        <p style="font-size: 14pt"><b>Coupon Code: </b><span id="couponCodePlaceholder"></span></p>
+                        <label for="id" class="form-label text-center text-bold">Choose User from the list:</label>
                         <input class="form-control" list="ids" name="id" id="id">
                         <datalist id="ids">
                             @foreach ($users as $user)
@@ -129,30 +145,6 @@
     </div>
 
     <script>
-        const giftBox = document.getElementById('giftBox');
-        const couponCode = document.getElementById('couponCode');
-
-        giftBox.addEventListener('click', async () => {
-            try {
-                const response = await fetch('coupon/get');
-                const data = await response.json();
-
-                if (data.randomCode) {
-                    couponCode.innerText = 'Your coupon: ' + data.randomCode;
-                    couponCode.style.display = 'block';
-
-                    giftBox.classList.add('open');
-                    setTimeout(() => {
-                        giftBox.querySelector('.gift-icon').style.opacity = 0;
-                        giftBox.querySelector('.open-icon').style.opacity = 1;
-                    }, 300);
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        });
-    </script>
-    <script>
         $(document).ready(function() {
             $('button[data-bs-target="#myModal"]').on('click', function() {
                 var sendCode = $(this).data('coupon-code');
@@ -161,5 +153,4 @@
             });
         });
     </script>
-    
 @endsection

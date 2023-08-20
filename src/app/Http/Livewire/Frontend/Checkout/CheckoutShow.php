@@ -4,11 +4,14 @@ namespace App\Http\Livewire\Frontend\Checkout;
 
 use App\Models\Cart;
 use App\Models\Order;
-use App\Models\Orderitem;
+use App\Models\Coupon;
 use Livewire\Component;
+use App\Models\Orderitem;
+use App\Models\CouponOrder;
 use Illuminate\Support\Str;
 use App\Mail\MailController;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class CheckoutShow extends Component
 {
@@ -33,8 +36,14 @@ class CheckoutShow extends Component
 
             // When checkout is successful, delete the Cart items
             Cart::where('user_id', auth()->user()->id)->delete();
+            $this->addCouponOrder($codOrder->id);
             $this->sendInvoiceEmail($codOrder->id);
-
+            
+            if(session('couponCode')){
+                $this->delCoupon(session('couponCode'));
+                Session::forget('couponCode');            
+            }  
+            
             session()->flash('message', 'Placed order successfully');
 
             $this->dispatchBrowserEvent('message', [
@@ -311,5 +320,24 @@ class CheckoutShow extends Component
         // Gửi email
         Mail::to($order->email)->send(new MailController($order));
 
+    }
+    public function delCoupon($couponCode){
+        $coupon = new Coupon;
+        $coupon = Coupon::where('code', $couponCode)->first();;
+        if($coupon){
+            $coupon->delete();
+        }
+    }
+    public function addCouponOrder($order_id){
+        if(session('couponCode')){
+            $couponCode = session('couponCode');
+            $discount = session('discount');
+            $couponOrder = new CouponOrder;
+        
+            $couponOrder->order_id = $order_id;
+            $couponOrder->code = $couponCode;
+            $couponOrder->discount_amount = $discount;
+            $couponOrder->save();
+        }
     }
 }

@@ -2,19 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Product;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
 {
     public function index(){
-        $coupons = Coupon::all();
+        // $coupons = Coupon::all();
+        $coupons = Coupon::paginate(15);
         $users = User::all();
         return view('admin.coupon.index',compact('coupons','users'));
     }
+
+    public function search(Request $request){
+        $searchCoupon = $request->input('searchCoupon');
+        $users = User::all();
+        if ($searchCoupon) {
+            $coupons = Coupon::where(function($query) use ($searchCoupon) {
+                $query->where('code', 'like', '%'.$searchCoupon.'%')
+                      ->orWhere('status', 'like', '%'.$searchCoupon.'%');
+            })->paginate(15);
+        } else {
+            $coupons = Coupon::paginate(15);
+        }
+        
+        return view('admin.coupon.index',compact('coupons','users'));
+    }
+
     public function couponUser(){
         $user=auth()->user();
         if($user){
@@ -29,12 +46,14 @@ class CouponController extends Controller
             return view('admin.coupon.coupon')->with('message','Please login first!');
         }
     }
+
     public function add(){
         $products = Product::orderBy('name', 'asc')->get();
         $generatedCode = $this->generateCoupon();
 
         return view('admin.coupon.add', compact('products','generatedCode'));
     }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             "description" => "required",
@@ -101,7 +120,7 @@ class CouponController extends Controller
                 $coupon->status = $status;
                 $coupon->save();
             }
-            return redirect('coupon')->with('message','Added many coupon successfully!');
+            return redirect('admin/coupon')->with('message','Added many coupon successfully!');
         }
     }
     public function edit(Coupon $coupon){
@@ -114,13 +133,17 @@ class CouponController extends Controller
             "description" => "required",
             "value" => "required|min:0",
             "max_value" => "required|min:0",
-            "date_created" => "required|date|after_or_equal:" . now()->format('Y-m-d\TH:i'),
-            "date_expires" => "required|date|after:date_created",
+            // "date_created" => "required|date|after_or_equal:" . now()->format('Y-m-d\TH:i'),
+            // "date_expires" => "required|date|after:date_created",
             "type" => "required|in:percent,amount",
         ]);
     
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator);
+        }
+
+        if($request->date_expires<=$request->date_created){
+            return redirect()->back()->withErrors(['value' => 'The Exp Date must geater than create date']);
         }
     
         if ($request->input('type') === 'percent' && $request->input('value') > 100) {
@@ -158,7 +181,7 @@ class CouponController extends Controller
         $coupon->date_expires = $request->input('date_expires');
         $coupon->status = $status;
         $coupon->save();
-        return redirect('coupon')->with('message','Update coupon '. $coupon->code .' successfully!');
+        return redirect('admin/coupon')->with('message','Update coupon '. $coupon->code .' successfully!');
     }
     public function generateCoupon(){
         $prefix = "gift-";

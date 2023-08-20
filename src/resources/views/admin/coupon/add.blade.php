@@ -1,4 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.admin')
+
+@section('title', 'Admin Add Coupon')
 
 @section('content')
 <style>
@@ -81,7 +83,7 @@
             </div>
         </div>
 
-        <div class="input-group mb-3">
+        <div class="input-group mb-3 mx-5">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="status" name="status" {{ old('status') ? 'checked' : '' }}>
                 <label class="form-check-label" for="status">Show on Home panel</label>
