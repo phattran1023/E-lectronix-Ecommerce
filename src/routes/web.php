@@ -84,7 +84,7 @@ Route::post('coupon/add/', [CheckoutController::class, 'addCoupon'])->name('coup
 
 // Admin routes-Phat's routes
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index','getOrdersChartData'])->name('dashboard');
 
     Route::get('settings',[App\Http\Controllers\Admin\SettingController::class, 'index']);
     Route::post('settings', [App\Http\Controllers\Admin\SettingController::class,'store']);

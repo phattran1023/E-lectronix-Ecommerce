@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -49,6 +50,7 @@
 
     <!-- Plugin js for this page-->
     <script src="{{ asset('admin/vendors/chart.js/Chart.min.js') }}"></script>
+
     <script src="{{ asset('admin/vendors/datatables.net/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('admin/vendors/datatables.net-bs4/dataTables.bootstrap4.js') }}"></script>
     <!-- End plugin js for this page-->
