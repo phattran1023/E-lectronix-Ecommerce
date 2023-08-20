@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<br><br><br>
     <section class="vh-100">
 
         <div class="container ">
@@ -74,4 +75,5 @@
             <br>
         </div>
     </section>
+    <br><br><br>
 @endsection
