@@ -10,10 +10,51 @@
                 <div class="row">
                     <div class="col-md-12 mb-4">
                         <div class="shadow bg-white p-3">
-                            <h4 class="text-primary">
-                                Item Total Amount :
-                                <span class="float-end">{{ number_format($this->totalProductAmount) }}đ</span>
-                            </h4>
+                            <div>
+                                <form action="{{Route('coupon.addCoupon')}}" method="Post">
+                                    @csrf
+                                    <div class="row mb-4">
+                                        <div class="input-group flex-nowrap col">
+                                            <input type="hidden" name="totalProductAmount" value="{{ number_format($this->totalProductAmount) }}">
+                                            <span class="input-group-text" id="addon-wrapping">Coupon:</span>
+                                            <input type="text" class="form-control" name="couponCode" placeholder="Enter coupon" aria-label="coupon" aria-describedby="addon-wrapping">
+                                          </div>
+                                        <div class="col">
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                @if (session('errorCoupon'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{session('errorCoupon')}}
+                                    </div>
+                                @endif
+                                @if (session('successCoupon'))
+                                    <div class="alert alert-success" role="alert">
+                                        {{session('successCoupon')}}
+                                    </div>
+                                @endif
+                            </div>
+                            @if (session('discountAmount') && session('totalProductAmount'))
+                                <h5 class="text-primary fw-light">
+                                    Products Total Amount :
+                                    <span class="float-end">{{ session('totalProductAmount') }}đ</span>
+                                </h5>
+                                <h5 class="text-primary fw-light">
+                                    Discount Amount :
+                                    <span class="float-end">{{ session('discountAmount') }}đ</span>
+                                </h5>
+                                <h4 class="text-primary">
+                                    Total Amount :
+                                    <span class="float-end">{{ session('totalAmount')}}đ</span>
+                                </h4>
+                            @else
+                                <h4 class="text-primary">
+                                    Total Amount :
+                                    <span class="float-end">{{ number_format($this->totalProductAmount) }}đ</span>
+                                </h4>
+                            @endif
+                            
                             <hr>
                             <small>* Items will be delivered in 3 - 5 days.</small>
                             <br />
@@ -173,6 +214,9 @@
             createOrder: function(data, actions) {
                 var exchangerate = 23688;
                 var amountVND = "{{ $this->totalProductAmount }}";
+                var discountAmount = {{ session('discountAmount')? session('discountAmount'):0 }};
+                amountVND = amountVND - discountAmount;
+                
                 var amountUSD = amountVND / exchangerate;
                 return actions.order.create({
                     purchase_units: [{
@@ -228,6 +272,8 @@
     <script>
         document.getElementById('momoPayment').addEventListener('click', function() {
             var amount = {{ $totalProductAmount }};
+            var discountAmount = {{ session('discountAmount')? session('discountAmount'):0 }};
+            amount = amount - discountAmount;
             
             // Show a validation error if any required field is not filled
             if (!document.getElementById('fullname').value ||
@@ -254,7 +300,9 @@
     <script>
         document.getElementById('momoPaymentQR').addEventListener('click', function() {
             var amount = {{ $totalProductAmount }};
-            
+            var discountAmount = {{ session('discountAmount')? session('discountAmount'):0 }};
+            amount = amount - discountAmount;
+
             // Show a validation error if any required field is not filled
             if (!document.getElementById('fullname').value ||
                 !document.getElementById('phone').value ||

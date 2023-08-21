@@ -41,6 +41,11 @@
                 <div class="card-banner h-100 rounded-5 d-flex justify-content-center align-items-center"
                     style="    background: linear-gradient(to right, #BA90C6, #8B5FBF);">
                     <div class="text-center">
+                        <h3 style="color: #ffffff" class="font-weight-light fw-bold">Free Coupon:</h3>
+                        <div id="couponCode" class="tex-center font-weight-light"
+                            style="font-size: 1.5rem; color:#ffffff">
+                        </div>
+                        <hr class="hr">
                         <h1 style="color: #ffffff" class="font-weight-light">COMING SOON</h1>
                         <hr>
                         <div id="countDownTime" class="tex-center font-weight-light"
@@ -137,5 +142,20 @@
         </div>
     </div>
 </div>
+<script>
+    // Sử dụng Blade để truyền giá trị từ biến $couponList vào JavaScript
+    var couponList = @json($couponList);
 
+    // Function để hiển thị coupon code ngẫu nhiên và tự đổi sau 10 giây
+    function displayRandomCoupon() {
+        var randomCoupon = couponList[Math.floor(Math.random() * couponList.length)];
+        document.getElementById("couponCode").textContent = randomCoupon;
+    }
+
+    // Gọi function đầu tiên
+    displayRandomCoupon();
+
+    // Tự đổi coupon code sau mỗi 10 giây
+    setInterval(displayRandomCoupon, 15000);
+</script>
 {{-- End Trending product --}}

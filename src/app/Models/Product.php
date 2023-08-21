@@ -49,4 +49,8 @@ class Product extends Model
     public function comments(){
         return $this->hasMany(Comment::class,'post_id','id');
     }
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class);
+    }
 }

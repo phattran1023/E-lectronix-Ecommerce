@@ -5,6 +5,7 @@ use FontLib\Table\Type\name;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\momoController;
+use App\Http\Controllers\CouponController;
 use App\Http\Controllers\Auth\socialLoginController;
 use App\Http\Controllers\Frontend\CheckoutController;
 
@@ -75,9 +76,15 @@ Route::get('login/google/callback', [socialLoginController::class, 'handleGoogle
 Route::get('login/twitter', [socialLoginController::class, 'redirectToTwitter'])->name('login.twitter');
 Route::get('login/twitter/callback', [socialLoginController::class, 'handleTwitterCallback']);
 
+//Coupon user- Tai's routes
+Route::get('coupon/user', [CouponController::class, 'couponUser'])->name('coupon.couponUser');
+
+//Coupon - checkout
+Route::post('coupon/add/', [CheckoutController::class, 'addCoupon'])->name('coupon.addCoupon');
+
 // Admin routes-Phat's routes
 Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
-    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index','getOrdersChartData'])->name('dashboard');
 
     Route::get('settings',[App\Http\Controllers\Admin\SettingController::class, 'index']);
     Route::post('settings', [App\Http\Controllers\Admin\SettingController::class,'store']);
@@ -155,5 +162,25 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::put('users/{user_id}','update');
         Route::get('users/{user_id}/delete','delete');
     });
+    //Coupon-admin routes-Tai's routes
+    Route::controller(App\Http\Controllers\CouponController::class)->group(function () {
+        Route::get('coupon','index')->name('coupon.index');
+        Route::post('coupon/search','search')->name('coupon.search');
+        Route::get('coupon/add','add')->name('coupon.add');
+        Route::post('coupon/store','store')->name('coupon.store');
+        Route::get('coupon/edit/{coupon}','edit')->name('coupon.edit');
+        Route::put('coupon/update/{coupon}','update')->name('coupon.update');
+        Route::get('coupon/{id}','delete')->name('coupon.delete');
+        Route::get('coupon/get','getRandomCoupon')->name('coupon.getRandomCoupon');
+        Route::post('coupon/send/','send')->name('coupon.send');
+    });
 
+    // Route::get('coupon', [CouponController::class, 'index'])->name('coupon.index');
+    // Route::get('coupon/add', [CouponController::class, 'add'])->name('coupon.add');
+    // Route::post('coupon/store', [CouponController::class, 'store'])->name('coupon.store');
+    // Route::get('coupon/edit/{coupon}', [CouponController::class, 'edit'])->name('coupon.edit');
+    // Route::put('coupon/update/{coupon}', [CouponController::class, 'update'])->name('coupon.update');
+    // Route::get('coupon/{id}', [CouponController::class, 'delete'])->name('coupon.delete');
+    // Route::get('coupon/get', [CouponController::class, 'getRandomCoupon'])->name('coupon.getRandomCoupon');
+    // Route::post('coupon/send/', [CouponController::class, 'send'])->name('coupon.send');
 });

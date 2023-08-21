@@ -16,7 +16,9 @@ class MailController extends Mailable
 
     public function build()
     {
-        // return $this->view('admin.mail.cf_template')->with(['order' => $this->order]);
+        // $couponCode = session('couponCode');
+        // $discount = session('discount');
+        // dd($couponCode, $discount);
         return $this->view('admin.mail.cf_template')
         ->from($this->order->email, 'E-lectronix.com') // Điều chỉnh tên người gửi ở đây
         ->with(['order' => $this->order]);

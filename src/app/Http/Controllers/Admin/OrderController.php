@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Http\Controllers\Controller;
+use App\Models\CouponOrder;
 use Illuminate\Support\Facades\Session;
 
 class OrderController extends Controller
@@ -51,11 +52,11 @@ class OrderController extends Controller
     public function show(int $orderId)
     {
         $order = Order::where('id', $orderId)->first();
-
+        $couponOrder = CouponOrder::Where('order_id', $orderId)->first();
         if ($order) {
             $dateFilter = request()->query('date'); // Retrieve the 'date' query parameter
 
-            return view('admin.orders.view', compact('order', 'dateFilter'));
+            return view('admin.orders.view', compact('order', 'dateFilter', 'couponOrder'));
         } else {
             return redirect('admin/orders')->with('message', 'Order not found');
         }
@@ -80,7 +81,8 @@ class OrderController extends Controller
     public function viewInvoice(int $orderId)
     {
         $order = Order::findOrFail($orderId);
-        return view('admin.invoice.generate-invoice', compact('order'));
+        $couponOrder = CouponOrder::Where('order_id', $orderId)->first();
+        return view('admin.invoice.generate-invoice', compact('order', 'couponOrder'));
     }
 
     public function generateInvoice(int $orderId)

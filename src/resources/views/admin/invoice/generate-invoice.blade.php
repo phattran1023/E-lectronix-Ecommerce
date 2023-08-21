@@ -196,10 +196,26 @@
 
             </tr>
         @endforeach
-        <tr>
-            <td colspan="4" class="total-heading">Total Amount </td>
-            <td colspan="1" class="total-heading">{{ number_format($totalPrice) }} đ</td>
-        </tr>
+        @if ($couponOrder!==null)
+            <tr>
+                <td colspan="4" class="fw-light">Total Products Amount </td>
+                <td colspan="1" class="fw-light">{{ number_format($totalPrice) }} đ</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="fw-light">Total Discount Amount(Coupon Code: {{$couponOrder->code}}) </td>
+                <td colspan="1" class="fw-light">{{ number_format($couponOrder->discount_amount) }} đ</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="total-heading">Total Amount </td>
+                <td colspan="1" class="total-heading">{{ number_format($totalPrice - ($couponOrder->discount_amount)) }} đ</td>
+            </tr>
+        @else 
+            <tr>
+                <td colspan="4" class="total-heading">Total Amount </td>
+                <td colspan="1" class="total-heading">{{ number_format($totalPrice) }} đ</td>
+            </tr> 
+        @endif
+        
         </tbody>
     </table>
 

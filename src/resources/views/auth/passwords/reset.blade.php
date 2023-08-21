@@ -1,6 +1,8 @@
 @extends('layouts.app')
+@section('title', 'Reset New Password')
 
 @section('content')
+<br><br><br>
     <section class="vh-100">
 
         <div class="container ">
@@ -74,4 +76,5 @@
             <br>
         </div>
     </section>
+    <br><br><br>
 @endsection
