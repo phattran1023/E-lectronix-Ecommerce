@@ -168,10 +168,10 @@
     @yield('deleteComment')
     @yield('reportComment')
     @yield('countMaximumWords')
-<<<<<<< HEAD
+
     @yield('elseBtn')
     @yield('commitReport')
-=======
+
 
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
@@ -203,7 +203,7 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
->>>>>>> 38528a0d604702d6ea36e34396acad47b135b593
+
 </body>
 
 </html>

@@ -292,7 +292,8 @@
                             <div class="" style="padding-left: 20px">
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch">Given link</label>
-                                    <input class="form-check-input link" type="checkbox" value="1">
+                                    <input class="form-check-input link" name="" type="checkbox"
+                                        value="1">
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch">Spamming comment</label>
@@ -309,7 +310,13 @@
 
                                 <button id="createFormButton" style="border-radius: 25%">Else</button>
                                 <span id="formContainer"></span>
-
+                                <form id="form-report" action="{{ route('storeReportComment') }}" method="post" style="display: none">
+                                    @csrf
+                                    <input class="form-check-input link" type="checkbox" id="re-link" name="link" >
+                                    <input class="form-check-input spamming" type="checkbox" id="re-spamming" name="spamming">
+                                    <input class="form-check-input attitude" type="checkbox" id="re-attitude" name="attitude">
+                                    <input class="form-check-input attitude" type="text" id="re-else" name="else">
+                                </form>
 
                             </div>
                         </div>
@@ -338,7 +345,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary commitReport">Commit report</button>
+                    <button type="button" class="btn btn-primary commitReport" value="{{ $comment->id }}">Commit
+                        report</button>
                 </div>
             </div>
             </form>
@@ -412,65 +420,111 @@
             </div>
         </div>
     </div>
+
 </div>
 
 {{-- Report script --}}
 @section('commitReport')
     <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).on('click', '.commitReport', function(e) {
-                e.preventDefault();
+        let elseabc = document.getElementById("re-else");
+        let link = document.querySelector(".link");
+        
+        let commitReport = document.querySelector(".commitReport");
+        commitReport.addEventListener('click',function(){
+            elseabc.value = link.value;
+            console.log("elseabc", elseabc.value);
+        })
+        // $(document).ready(function() {
+        //     $(".commitReport").click(function(e) {
+        //         e.preventDefault();
                 
-                var badwords = 0;
-                var spamming = 0;
-                var attitude = 0;
+        //         let else =  $('#re-else').val();
+        //         // let link = $('#re-link');
+        //         // let spamming = $('#re-spamming');
+        //         // let attitude = $('#re-attitude');
+        //         // let formReport = $('#form-report');
+        //         // if ($('.link').is(":checked")) {
+        //         //     link.val() = $(this).val();
 
-                if ($('.link').is(":checked")) {
-                    badwords = $(this).val();
-              
-                }
+        //         // }
 
-                if ($('.spamming').is(":checked")) {
-                    spamming = $(this).val();
-                 
-                }
-
-                if ($('.attitude').is(":checked")) {
-                    attitude = $(this).val();
-                   
-                }
-                if ($('.elseContent').length) {
-                    elseContent = $('.elseContent').val(); // Get the value from the input field if it exists
-                    alertMessage += elseContent;
-                }
-              
+        //         // if ($('.spamming').is(":checked")) {
+        //         //     spamming.val()  = $(this).val();
 
 
-                $.ajax({
-                    type: "post",
-                    url: "/commitReport",
-                    data: {
-                        'link': link,
-                        'spamming': spamming,
-                        'attitude': attitude,
-                        'elseContent': elseContent
-                    },
-                    success: function(res) {
-                        if (res.status == 200) {
+        //         // }
 
-                        } else {
+        //         // if ($('.attitude').is(":checked")) {
+        //         //     attitude.val()  = $(this).val();
 
 
-                        }
-                    }
-                });
-            });
-        });
+        //         // }
+        //         // if ($('.elseContent').length) {
+        //         //     else.val() = $(this).val(); // Get the value from the input field if it exists
+
+
+        //         // }
+        //         console.log(else);
+        //         // formrReport.submit();
+        //     });
+        // });
+        // $(document).ready(function() {
+        //     $('.commitReport').click(function() {
+
+        //        // let else =  $('#reelse');
+        //         // let link = $('#re-link');
+        //         // let spamming = $('#re-spamming');
+        //         // let attitude = $('#re-attitude');
+        //         // // let commitReportClick = $(this);
+        //         // let formReport = $('#form-report');
+        //         // let commitReport = commitReportClick.val();
+
+        //         // if ($('.link').is(":checked")) {
+        //         //     link = $(this).val();
+
+        //         // }
+
+        //         // if ($('.spamming').is(":checked")) {
+        //         //     spamming = $(this).val();
+
+
+        //         // }
+
+        //         // if ($('.attitude').is(":checked")) {
+        //         //     attitude = $(this).val();
+
+
+        //         // }
+        //         // if ($('.elseContent').length) {
+        //         //     elseContent = $(this).val(); // Get the value from the input field if it exists
+
+
+        //         // }
+        //         console.log("da nhan su kien");
+
+        //         // formrReport.submit();
+
+        //         // $.ajax({
+        //         //     type: "post",
+        //         //     url: "/commitReport",
+        //         //     data: {
+        //         //         'link': link,
+        //         //         'spamming': spamming,
+        //         //         'attitude': attitude,
+        //         //         'elseContent': elseContent,
+        //         //         'comment_id': comment_id
+        //         //     },
+        //         //     success: function(res) {
+        //         //         if (res.status == 200) {
+        //         //             alert(res.messageComment);
+        //         //         } else {
+
+
+        //         //         }
+        //         //     }
+        //         // });
+        //     });
+        // });
     </script>
 @endsection
 @section('reportComment')
