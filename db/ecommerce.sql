@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 19, 2023 at 02:15 PM
+-- Generation Time: Aug 20, 2023 at 06:21 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -71,6 +71,15 @@ CREATE TABLE `carts` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `carts`
+--
+
+INSERT INTO `carts` (`id`, `user_id`, `product_id`, `product_color_id`, `quantity`, `created_at`, `updated_at`) VALUES
+(13, 1, 7, NULL, 1, '2023-08-19 05:29:49', '2023-08-19 05:29:49'),
+(15, 1, 1, 9, 1, '2023-08-19 05:43:49', '2023-08-19 05:43:49'),
+(16, 1, 1, 10, 1, '2023-08-19 05:43:57', '2023-08-19 05:43:57');
+
 -- --------------------------------------------------------
 
 --
@@ -97,7 +106,7 @@ CREATE TABLE `categories` (
 
 INSERT INTO `categories` (`id`, `name`, `slug`, `description`, `image`, `meta_title`, `meta_keyword`, `meta_description`, `status`, `created_at`, `updated_at`) VALUES
 (1, 'Mobile', 'mobile', 'This is a mobile description', 'uploads/category/1690338527.jpg', 'Mobile', 'This is a mobile description', 'This is a mobile description', 0, '2023-07-25 19:28:47', '2023-07-25 19:28:47'),
-(2, 'Laptop', 'laptop', 'This is a laptop description', 'uploads/category/1690339183.jpg', 'Laptop', 'This is a laptop description', 'This is a laptop description', 0, '2023-07-25 19:39:43', '2023-07-25 19:39:43'),
+(2, 'Laptop', 'laptop', 'This is a laptop description', 'uploads/category/1692146522.jpg', 'Laptop', 'This is a laptop description', 'This is a laptop description', 0, '2023-07-25 19:39:43', '2023-08-15 17:42:02'),
 (3, 'Tablet', 'tablet', 'discription tablet', 'uploads/category/1690359264.jpeg', 'Tablet', 'meta keyword tablet', 'meta description tablet', 0, '2023-07-26 01:14:24', '2023-07-26 01:14:24');
 
 -- --------------------------------------------------------
@@ -147,12 +156,43 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `post_id`, `user_id`, `comment_body`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 'Hello world', '2023-08-08 06:30:20', '2023-08-08 06:30:20'),
-(4, 7, 7, 'ajkshdaksdj', '2023-08-12 07:12:11', '2023-08-12 07:12:11'),
-(5, 7, 7, 'hhssh', '2023-08-12 07:18:35', '2023-08-12 07:18:35'),
-(10, 6, 7, 'Phone này rẽ v ??', '2023-08-13 22:12:03', '2023-08-13 22:12:03'),
-(17, 7, 8, 'wa sup', '2023-08-15 04:48:53', '2023-08-15 04:48:53'),
-(18, 6, 8, 'alo', '2023-08-15 05:45:24', '2023-08-15 05:45:24'),
-(24, 6, 7, 'ok con de', '2023-08-19 05:10:02', '2023-08-19 05:10:02');
+(3, 8, 2, 'hmm', '2023-08-15 04:19:49', '2023-08-15 04:19:49');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupons`
+--
+
+CREATE TABLE `coupons` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `applies` varchar(255) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  `value` int(11) NOT NULL,
+  `max_value` int(11) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `date_created` datetime NOT NULL,
+  `date_expires` datetime NOT NULL,
+  `status` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `coupon_orders`
+--
+
+CREATE TABLE `coupon_orders` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `order_id` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `discount_amount` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -211,7 +251,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (27, '2023_08_09_080456_creat_settings_table', 8),
 (28, '2023_08_09_080456_create_settings_table', 9),
 (29, '2023_08_12_020319_create_user_details_table', 10),
-(31, '2023_08_15_124610_create_reported_comment', 11);
+(30, '2023_08_15_124610_create_reported_comment', 11),
+(31, '2023_08_17_133437_create_coupons_table', 11),
+(32, '2023_08_19_141904_create_coupon_orders_table', 11);
 
 -- --------------------------------------------------------
 
@@ -240,13 +282,14 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `tracking_no`, `fullname`, `email`, `phone`, `pincode`, `address`, `status_message`, `payment_mode`, `payment_id`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Order-bwVCeZ', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(1, 1, 'Order-bwVCeZ', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-04-30 10:32:22', '2023-07-30 10:32:22'),
 (2, 1, 'Order-3i3e4A', 'Admin', 'admin@gmail.com', '0354778644', '555555', 'asssaassa', 'In Progress...', 'Cash On Delivery', NULL, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
-(3, 1, 'Order-fWv8O3', 'Admin', 'admin@gmail.com', '4444555555', '555444', 'Hmmmmm', 'In Progress...', 'Paid by Paypal', '9CY582208G4243915', '2023-08-06 02:06:35', '2023-08-06 02:06:35'),
-(4, 1, 'Order-2WczEP', 'Admin', 'admin@gmail.com', '666666555', '555666', '5555555', 'In Progress...', 'Paid by MoMo', '1691312832', '2023-08-06 02:07:13', '2023-08-06 02:07:13'),
-(5, 1, 'Order-sf6RzX', 'Admin', 'admin@gmail.com', '555666999', '555666', 'đ5d55d5đ', 'out-for-delivery', 'Paid by Paypal', '14S28890HR4550005', '2023-08-06 07:33:13', '2023-08-07 04:02:09'),
-(6, 1, 'Order-nr8ujw', 'Admin', 'admin@gmail.com', '555666999', '555666', '666', 'In Progress...', 'Paid by MoMo', '1691491595', '2023-08-08 03:47:10', '2023-08-08 03:47:10'),
-(7, 2, 'Order-2kW8Qh', 'Phat', 'ptrnvnh@gmail.com', '565566999', '555666', '555666', 'In Progress...', 'Paid by Paypal', '9NT05650S4389643T', '2023-08-08 06:35:28', '2023-08-08 06:35:28');
+(3, 1, 'Order-fWv8O3', 'Admin', 'admin@gmail.com', '4444555555', '555444', 'Hmmmmm', 'In Progress...', 'Paid by Paypal', '9CY582208G4243915', '2023-06-06 02:06:35', '2023-08-06 02:06:35'),
+(4, 1, 'Order-2WczEP', 'Admin', 'admin@gmail.com', '666666555', '555666', '5555555', 'In Progress...', 'Paid by MoMo', '1691312832', '2023-05-06 02:07:13', '2023-08-06 02:07:13'),
+(5, 1, 'Order-sf6RzX', 'Admin', 'admin@gmail.com', '555666999', '555666', 'đ5d55d5đ', 'out-for-delivery', 'Paid by Paypal', '14S28890HR4550005', '2023-07-06 07:33:13', '2023-08-07 04:02:09'),
+(6, 1, 'Order-nr8ujw', 'Admin', 'admin@gmail.com', '555666999', '555666', '666', 'In Progress...', 'Paid by MoMo', '1691491595', '2023-07-08 03:47:10', '2023-08-08 03:47:10'),
+(7, 2, 'Order-2kW8Qh', 'Phat', 'ptrnvnh@gmail.com', '565566999', '555666', '555666', 'In Progress...', 'Paid by Paypal', '9NT05650S4389643T', '2023-08-08 06:35:28', '2023-08-08 06:35:28'),
+(8, 2, 'Order-IaYa3A', 'Phat2', 'ptrnvnh@gmail.com', '333666555', '555666', 'hmmmmm', 'completed', 'Paid by Paypal', '32847685V2819653S', '2023-05-15 04:15:35', '2023-08-15 04:16:37');
 
 -- --------------------------------------------------------
 
@@ -270,15 +313,16 @@ CREATE TABLE `order_items` (
 --
 
 INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_color_id`, `quantity`, `price`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, NULL, 5, 1200, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
-(2, 1, 2, 1, 4, 1400, '2023-07-30 10:32:22', '2023-07-30 10:32:22'),
+(1, 1, 1, NULL, 5, 1200, '2023-07-30 10:32:22', '2023-05-30 10:32:22'),
+(2, 1, 2, 1, 4, 1400, '2023-07-30 10:32:22', '2023-06-30 10:32:22'),
 (3, 2, 1, NULL, 5, 1200, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
 (4, 2, 2, 1, 4, 1400, '2023-07-30 10:36:46', '2023-07-30 10:36:46'),
-(5, 3, 1, 10, 1, 1200000, '2023-08-06 02:06:35', '2023-08-06 02:06:35'),
-(6, 4, 1, 10, 1, 1200000, '2023-08-06 02:07:13', '2023-08-06 02:07:13'),
-(7, 5, 1, 10, 1, 1200000, '2023-08-06 07:33:13', '2023-08-06 07:33:13'),
-(8, 6, 1, 10, 1, 1200000, '2023-08-08 03:47:10', '2023-08-08 03:47:10'),
-(9, 7, 1, 9, 1, 1200000, '2023-08-08 06:35:29', '2023-08-08 06:35:29');
+(5, 3, 1, 10, 1, 1200000, '2023-06-06 02:06:35', '2023-05-06 02:06:35'),
+(6, 4, 1, 10, 1, 1200000, '2023-06-06 02:07:13', '2023-06-06 02:07:13'),
+(7, 5, 1, 10, 1, 1200000, '2023-08-06 07:33:13', '2023-06-06 07:33:13'),
+(8, 6, 1, 10, 1, 1200000, '2023-07-08 03:47:10', '2023-08-08 03:47:10'),
+(9, 7, 1, 9, 1, 1200000, '2023-08-08 06:35:29', '2023-08-08 06:35:29'),
+(10, 8, 1, 10, 1, 1200000, '2023-08-15 04:15:35', '2023-08-15 04:15:35');
 
 -- --------------------------------------------------------
 
@@ -303,6 +347,13 @@ CREATE TABLE `password_reset_tokens` (
   `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_reset_tokens`
+--
+
+INSERT INTO `password_reset_tokens` (`email`, `token`, `created_at`) VALUES
+('ptrnvnh@gmail.com', '$2y$10$vTPFRwCmBh/jvfx/d.PRJe9tl1c4Xu29UqqFkQv70NXxLr9BRomlm', '2023-08-20 08:35:21');
 
 -- --------------------------------------------------------
 
@@ -355,14 +406,14 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `category_id`, `name`, `slug`, `brand`, `small_description`, `description`, `original_price`, `selling_price`, `quantity`, `trending`, `featured`, `status`, `meta_title`, `meta_keyword`, `meta_description`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Samsung S23 Ultra', 's23-ultra', 'Nokia', '5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 1000000, 1200000, 4, 1, 1, 0, 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', '2023-07-25 20:17:05', '2023-08-06 02:32:39'),
-(2, 1, 'iPhone 14 Pro Max 128GB', 'iphone-14-pro-max', 'Nokia', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 1200, 1400, 5, 1, 1, 0, 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', '2023-07-25 20:32:04', '2023-08-06 02:36:05'),
-(3, 3, 'Samsung Galaxy Tab S9 WiFi 128GB', 'galaxy-tab-s9-wifi', 'Nokia', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 1500, 1000, 0, 1, 0, 0, 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', '2023-07-26 01:15:29', '2023-08-06 02:36:13'),
-(4, 1, 'Samsung Galaxy Z Fold4 5G 256GB', 'samsung-galaxy-z-fold4-5g-256gb', 'Nokia', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 1600, 900, 30, 1, 0, 0, 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', '2023-07-26 01:18:01', '2023-07-26 01:18:58'),
+(1, 1, 'Samsung S23 Ultra', 's23-ultra', 'Samsung', '<p>5G 256GB</p>', '<h3><a href=\"https://www.thegioididong.com/dtdd/samsung-galaxy-s23-ultra-5g-512gb\">Samsung Galaxy S23 Ultra 5G 512GB</a>&nbsp;là một sản phẩm công nghệ không còn xa lạ với những người yêu công nghệ. Máy vừa được giới thiệu với nhiều tính năng và công nghệ nổi bật, đánh dấu một bước tiến đột phá của Samsung trong năm 2023, nhằm tạo nên một thương hiệu hàng đầu trong ngành.</h3><h3>Thiết kế sang trọng cùng những đường nét tinh xảo</h3><p>Galaxy S23 Ultra sẽ được sử dụng lối thiết kế bo cong ở mặt lưng cùng kiểu màn hình vô cực ở hai bên, thân máy thì sẽ được làm chủ yếu từ vật liệu cao cấp như mặt lưng kính phủ nhám vì, thế Galaxy S23 Ultra trông mạnh mẽ, cá tính hơn đồng thời mang đến khả năng chống xước, chống bám vân tay, hạn chế bám bụi tốt.</p><p>Thiết kế cụm camera sau trên <a href=\"https://www.thegioididong.com/dtdd/samsung-galaxy-s23-ultra\">Galaxy S23 Ultra</a> được làm đơn giản nhưng tinh tế, tạo cảm giác không rối mắt cho người dùng nhưng vẫn toát lên vẻ quyến rũ và sang trọng.</p><figure class=\"image\"><img src=\"https://cdn.tgdd.vn/2023/02/timerseo/1-1020x570-1.jpg\" alt=\"Thiết kế mặt lưng - Samsung Galaxy S23 Ultra 5G\"></figure><p>Điểm nổi bật là bút S Pen thế hệ mới trên Galaxy S23 Ultra được cải tiến giúp người dùng thao tác nhanh hơn, nhạy hơn so với các thế hệ trước trong các tác vụ thường ngày như: Ghi chú nhanh, nút bấm hỗ trợ chụp ảnh, hỗ trợ thuyết trình, vẽ,...</p><h3>Màn hình chất lượng hiển thị rõ nét và chân thật</h3><p>Màn hình của <a href=\"https://www.thegioididong.com/dtdd\">điện thoại</a> có thước 6.8 inch cùng với tấm nền Dynamic AMOLED 2X có khả năng hiển thị hình ảnh một cách chân thật và rực rỡ, mang đến cho người dùng không gian màn ảnh rộng chỉ trong tầm tay - thỏa sức trải nghiệm.</p><p>Màn hình trên Galaxy S23 Ultra được đánh giá là xuất sắc, rõ nét với độ phân giải 2K+, hỗ trợ tần số quét 120 Hz cho người dùng trải nghiệm xem phim, hay chơi game và lướt web,... vô cùng mượt mà.</p><figure class=\"image\"><img src=\"https://cdn.tgdd.vn/2023/02/timerseo/2-1020x570-1.jpg\" alt=\"Màn hình chất lượng - Samsung Galaxy S23 Ultra 5G\"></figure><p>Màn hình cong tràn viền trên Galaxy S23 Ultra 5G được trang bị kính cường lực Corning Gorilla Glass Victus 2, giúp nâng cao khả năng chống trầy xước từ đó mang lại cảm giác an toàn cho người dùng khi sử dụng thiết bị một thời gian dài.</p><h3>Bắt trọn từng khoảnh khắc với camera 200 MP chất lượng cao</h3><p>Galaxy S23 Ultra được trang bị camera chính có độ phân giải lên đến 200 MP cùng với đó là một ống kính tiềm vọng 10 MP với khả năng zoom quang học 10X, một ống kính tele 10 MP với khả năng zoom quang học 3X và cuối cùng là một camera góc siêu rộng độ phân giải 12 MP.</p><figure class=\"image\"><img src=\"https://cdn.tgdd.vn/2023/02/timerseo/4-1020x570-1.jpg\" alt=\"Cụm camera nổi bật - Samsung Galaxy S23 Ultra 5G\"></figure><p>Ngoài ra, camera trước cũng có độ phân giải 12 MP được cải tiến nhờ thuật toán xử lý chụp ảnh mới giúp người dùng bắt trọn từng khoảnh khắc khi chụp ảnh selfie cá nhân hay tập thể với chất lượng tốt nhất cũng như thuận tiện trong việc gọi điện video.</p><h3>Bộ vi xử lý Snapdragon 8 Gen 2 for Galaxy mạnh mẽ</h3><p>Là một trong những flagship hàng đầu giới <a href=\"https://www.thegioididong.com/dtdd?g=android\">điện thoại Android</a>, vì thế không có gì đáng ngạc nhiên khi Galaxy S23 Ultra sở hữu hiệu năng từ bộ vi xử lý Snapdragon 8 Gen 2 for Galaxy được sản xuất trên tiến trình 4 nm hiện đại. Đây cũng là một trong những chiến lược hợp tác giữa Samsung và Qualcomm nhằm mang đến trải nghiệm hiệu năng tốt nhất cho người dùng khi sử dụng Galaxy S23 Ultra 5G và các thiết bị khác thuộc dòng Galaxy S23.</p><p>Galaxy S23 Ultra 5G còn sở hữu dung lượng RAM khủng lên đến 12 GB và bộ nhớ trong 512 GB để người dùng thoải mái lưu trữ các tệp, hình ảnh, video,... dung lượng lớn với tốc độ lưu trữ cực nhanh và bảo mật tốt.</p><p>Với mức đồ họa cao cũng không thể \"cản bước\" được Galaxy S23 Ultra khi \"chiến\" các tựa game mobile HOT trên thị trường như Genshin Impact, PUBG Mobile, Call of Duty Mobile, Tốc Chiến,... nếu bạn là một tín đồ chơi game thì Galaxy S23 Ultra là <a href=\"https://www.thegioididong.com/dtdd-choi-game\">điện thoại chơi game</a> rất đáng để cân nhắc, đồng thời dung lượng 512 GB cũng sẽ giúp bạn thỏa sức tải tất cả tựa game \"nặng\" mà bạn yêu thích.</p><h3>Dung lượng pin lớn đáp ứng mọi nhu cầu cho ngày dài làm việc và giải trí</h3><p>Về dung lượng pin thì chiếc <a href=\"https://www.thegioididong.com/dtdd-samsung\">điện thoại Samsung</a> này được trang bị viên pin 5000 mAh và hỗ trợ sạc nhanh 45 W. Galaxy S23 Ultra vẫn có thể trụ được liên tục loanh quanh 8 tiếng và chỉ cần khoảng 1 giờ là sạc đầy, đáp ứng được nhu cầu sử dụng gần cả một ngày cho người dùng mà không lo bị gián đoạn công việc hay giải trí xem phim, lướt web, đọc báo, chơi game,...</p><figure class=\"image\"><img src=\"https://cdn.tgdd.vn/2023/02/timerseo/3-1020x570-1.jpg\" alt=\"Dung lượng pin dài lâu - Samsung Galaxy S23 Ultra\"></figure><p>Mẫu flagship trong năm 2023 - Galaxy S23 Ultra 5G là một thiết bị mà người dùng không nên bỏ qua, đặc biệt là tín đồ đam mê chụp ảnh và chơi game. Thiết bị không chỉ sở hữu cấu hình mạnh mẽ mà còn khoác lên mình bộ cánh sang trọng quyến rũ, nhờ đó mà bạn có thể tự tin cầm nắm trong các buổi họp hay tối ưu công việc của bạn thông qua bút S Pen cực kỳ tiện lợi.</p>', 1000000, 1200000, 10, 1, 1, 0, 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', 'Samsung Galaxy S23 Ultra 5G 256GB', '2023-07-25 20:17:05', '2023-08-20 07:37:45'),
+(2, 1, 'iPhone 14 Pro Max 128GB', 'iphone-14-pro-max', 'Apple', '<p>iPhone 14 Pro Max 128GB</p>', '<p>iPhone 14 Pro Max 128GB</p>', 1200, 1400, 5, 1, 1, 0, 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', 'iPhone 14 Pro Max 128GB', '2023-07-25 20:32:04', '2023-08-20 07:40:58'),
+(3, 3, 'Samsung Galaxy Tab S9 WiFi 128GB', 'galaxy-tab-s9-wifi', 'Samsung', '<p>galaxy tab s9 wifi</p>', '<p>galaxy tab s9 wifi</p>', 1500, 1000, 0, 1, 0, 0, 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', 'galaxy tab s9 wifi', '2023-07-26 01:15:29', '2023-08-20 07:37:37'),
+(4, 1, 'Samsung Galaxy Z Fold4 5G 256GB', 'samsung-galaxy-z-fold4-5g-256gb', 'Samsung', '<p>Samsung Galaxy Z Fold4 5G 256GB</p>', '<p>Samsung Galaxy Z Fold4 5G 256GB</p>', 1600, 900, 0, 1, 0, 0, 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', 'Samsung Galaxy Z Fold4 5G 256GB', '2023-07-26 01:18:01', '2023-08-20 07:41:12'),
 (5, 3, 'iPad 9 Wifi 64GB', 'ipad-9-wifi', 'Apple', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 1000, 2000, 20, 1, 0, 0, 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', 'iPad 9 Wifi 64GB', '2023-07-27 04:55:11', '2023-07-27 04:55:11'),
 (6, 1, 'Xiaomi 13 5G', 'xiaomi-13-5g', 'Xiaomi', 'xiaomi 13 5G', 'xiaomi 13 5G', 1200, 1000, 100, 1, 0, 0, 'xiaomi 13 5G', 'xiaomi 13 5G', 'xiaomi 13 5G', '2023-07-27 05:05:30', '2023-07-27 05:05:30'),
 (7, 1, 'Xiaomi 12T 5G 256GB', 'xiaomi-12t-5g-256gb', 'Xiaomi', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 1100, 1300, 10, 1, 0, 0, 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', 'Xiaomi 12T 5G 256GB', '2023-07-27 05:08:26', '2023-07-27 05:08:26'),
-(8, 2, 'Lenovo Ideapad Gaming 3 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050/120Hz/Win11', 'lenovo-ideapad-gaming-3', 'Nokia', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 1200, 980, 10, 0, 0, 0, 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', '2023-07-27 05:16:02', '2023-07-27 05:19:10'),
+(8, 2, 'Lenovo Ideapad Gaming 3 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050/120Hz/Win11', 'lenovo-ideapad-gaming-3', 'Lenovo', '<p>Lenovo Ideapad Gaming 3</p>', '<p>Lenovo Ideapad Gaming 3</p>', 1200, 980, 3, 0, 0, 0, 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', 'Lenovo Ideapad Gaming 3', '2023-07-27 05:16:02', '2023-08-20 07:37:09'),
 (9, 2, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'laptop-lenovo-legion-5', 'Lenovo', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 1200, 1000, 15, 0, 0, 0, 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', 'Laptop Lenovo Legion 5 15IAH7 i5 12500H/8GB/512GB/4GB RTX3050Ti/165Hz/Win11', '2023-07-27 05:17:48', '2023-07-27 05:18:54'),
 (10, 3, 'Samsung Galaxy Tab A8 (2022)', 'samsung-galaxy-tab-a8-2022', 'Samsung Tablet', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 1000, 650, 10, 0, 0, 0, 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', 'Samsung Galaxy Tab A8 (2022)', '2023-07-27 05:22:20', '2023-07-27 05:23:33');
 
@@ -426,8 +477,8 @@ INSERT INTO `product_colors` (`id`, `product_id`, `color_id`, `quantity`, `creat
 (6, 8, 4, 3, '2023-07-27 05:16:02', '2023-07-27 05:16:02'),
 (7, 9, 3, 3, '2023-07-27 05:17:48', '2023-07-27 05:17:48'),
 (8, 10, 4, 5, '2023-07-27 05:22:20', '2023-07-27 05:22:20'),
-(9, 1, 1, 0, '2023-08-06 02:05:44', '2023-08-08 06:35:29'),
-(10, 1, 2, 1, '2023-08-06 02:05:44', '2023-08-08 03:47:10');
+(9, 1, 1, 5, '2023-08-06 02:05:44', '2023-08-19 05:30:23'),
+(10, 1, 2, 5, '2023-08-06 02:05:44', '2023-08-19 05:30:25');
 
 -- --------------------------------------------------------
 
@@ -479,7 +530,7 @@ CREATE TABLE `settings` (
 --
 
 INSERT INTO `settings` (`id`, `website_name`, `website_url`, `page_title`, `meta_keyword`, `meta_description`, `address`, `phone1`, `phone2`, `email1`, `email2`, `facebook`, `twitter`, `instagram`, `youtube`, `created_at`, `updated_at`) VALUES
-(2, 'E-lectronix.com', 'http://127.0.0.1:8000/', 'E-lectronix', 'Shopping', 'Shopping', '391 Nam Ky Khoi Nghia, District 3, Ho Chi Minh City', '0354778644', NULL, 'phattran1023@gmail.com', 'phattran1023@gmail.com', 'facebook.com', 'fb.com', 'fb.com', 'youtube.com', '2023-08-09 01:27:39', '2023-08-09 06:28:33');
+(2, '-lectronix.com', 'http://127.0.0.1:8000/', 'E-lectronix.com', 'Shopping', 'Shopping', '391 Nam Ky Khoi Nghia, District 3, Ho Chi Minh City', '0354778644', NULL, 'phattran1023@gmail.com', 'phattran1023@gmail.com', 'facebook.com', 'fb.com', 'fb.com', 'youtube.com', '2023-08-09 01:27:39', '2023-08-15 17:40:32');
 
 -- --------------------------------------------------------
 
@@ -529,11 +580,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$ct6iH8A1hy4VsKf./AYwZOOUlfYvjT4txoQV0wqIaAUNFlerjk9na', NULL, '2023-07-25 19:19:17', '2023-08-12 04:46:34', 1),
-(2, 'Phat2', 'ptrnvnh@gmail.com', NULL, '$2y$10$fVGLtBm1o2uNJdFjw4d5XelDSjhDk.lLGhxRm5QrX7Ze0NA2mWq1K', '0Hl71H8IYcZUj7QX3VfKMpPTFA10nuAXiKglRiDrhjxNGNgAMjgAu4BCMTRC', '2023-07-25 19:20:04', '2023-08-11 19:39:15', 0),
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$xh4uMnrLrYonVbsFRVLvKeMDua1MYF9Iu0E/UeN0Ucf3ZXN88jt.6', 'KxLyW5u0aWKXwE00YDJb1Drd2MVDsD6q5ym9Zksili01PsqVO2eQYeagHBEc', '2023-07-25 19:19:17', '2023-08-15 04:09:35', 1),
+(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$o/rRsllzFo6ZoS.hnTXGFujDEehgZiXu0DtYnKALoubvz75jtsDda', 'ixCWSmVZMhuF7MIplts7tkHCfdKESasXGE6am9uCfy6UDz1vpSV4MzimNmIT', '2023-07-25 19:20:04', '2023-08-19 04:42:19', 0),
 (3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3),
-(7, 'TIẾN TRẦN', 'anhtienb237@gmail.com', NULL, '$2y$10$bN2C5M.urvvh82EhGdbv9.aWXrhbfmgcizkBkd0AkJgRaXZyVo6nS', NULL, '2023-08-12 05:22:55', '2023-08-12 05:22:55', 3),
-(8, 'Tran Anh Tien', 'nedpet11@gmail.com', NULL, '$2y$10$fUgvxqnnw0.im98T7e8yE.YwZndbC/3bOQucFsgbsFojKZR/Md3tu', NULL, '2023-08-13 03:11:52', '2023-08-13 03:11:52', 3);
+(7, 'Phat3', 'ptrnvnh3@gmail.com', NULL, '$2y$10$vnk0BsEoaDicz8hTTzfXGu1QjcCDm6YKOQHe58OpgCeT.4hdXwxzG', NULL, '2023-08-15 04:27:40', '2023-08-15 04:27:40', 0);
 
 -- --------------------------------------------------------
 
@@ -604,7 +654,9 @@ CREATE TABLE `wishlists` (
 --
 
 INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_at`) VALUES
-(9, 2, 1, '2023-08-08 06:35:45', '2023-08-08 06:35:45');
+(9, 2, 1, '2023-08-08 06:35:45', '2023-08-08 06:35:45'),
+(10, 2, 8, '2023-08-15 04:18:07', '2023-08-15 04:18:07'),
+(12, 1, 1, '2023-08-15 06:53:33', '2023-08-15 06:53:33');
 
 --
 -- Indexes for dumped tables
@@ -638,6 +690,18 @@ ALTER TABLE `colors`
 -- Indexes for table `comments`
 --
 ALTER TABLE `comments`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupons`
+--
+ALTER TABLE `coupons`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `coupon_orders`
+--
+ALTER TABLE `coupon_orders`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -771,7 +835,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `carts`
 --
 ALTER TABLE `carts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `categories`
@@ -789,7 +853,19 @@ ALTER TABLE `colors`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `coupons`
+--
+ALTER TABLE `coupons`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `coupon_orders`
+--
+ALTER TABLE `coupon_orders`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -801,19 +877,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -825,19 +901,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `products_images`
 --
 ALTER TABLE `products_images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
 --
 ALTER TABLE `product_colors`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `reported_comment`
@@ -861,7 +937,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user_details`
@@ -885,7 +961,7 @@ ALTER TABLE `whitelist_words`
 -- AUTO_INCREMENT for table `wishlists`
 --
 ALTER TABLE `wishlists`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

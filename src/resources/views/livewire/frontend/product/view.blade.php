@@ -259,6 +259,28 @@
                                     </div>
                                 </div>
                                 <br>
+                                {{-- Fake form (take the value from real one in line 305 -> 342) --}}
+                                <form id="form-report" action="{{ route('storeReportComment') }}" method="post"
+                                    style="display: none">
+                                    @csrf
+                                    <input class="form-check-input link" type="checkbox" id="form-violence"
+                                        name="">
+                                    <input class="form-check-input link" type="checkbox" id="form-hate"
+                                        name="">
+                                    <input class="form-check-input link" type="checkbox" id="form-suicide"
+                                        name="">
+                                    <input class="form-check-input link" type="checkbox" id="form-misinformation"
+                                        name="">
+                                    <input class="form-check-input spamming" type="checkbox" id="form-frauds"
+                                        name="">
+                                    <input class="form-check-input attitude" type="checkbox" id="form-deceptive"
+                                        name="">
+                                    <input class="form-check-input attitude" type="text" id="re-else"
+                                        name="else">
+                                    <input type="number" id="re-commmentInfo" value="{{ $comment->id }}"
+                                        name="commmentInfo">
+                                </form>
+
                             @empty
                                 <div class="col-md-12">No comment yet!</div>
                             @endforelse
@@ -272,12 +294,7 @@
     <div class="modal" id="reportModal" tabindex="-1" aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-
-
-
             <div class="modal-content">
-
-
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Reporting @if (Auth::user())
                             <span class="comment-name text-primary"></span>'s comment
@@ -291,37 +308,47 @@
                         <div class="col-sm-8 ">
                             <div class="" style="padding-left: 20px">
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Given link</label>
-                                    <input class="form-check-input link" name="" type="checkbox"
-                                        value="1">
+                                    <label class="form-check-label" for="mySwitch"><strong>Viloence and abuse
+                                        </strong></label>{{-- Real Viloence and abuse form report --}}
+                                    <input class="form-check-input violence" type="checkbox" value="1">
+                                    <hr>
                                 </div>
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Spamming comment</label>
-                                    <input class="form-check-input spamming" type="checkbox" value="1">
-
+                                    <label class="form-check-label" for="mySwitch"><strong>Hate and
+                                            harassment</strong></label>{{-- Real Hate and harassment form report --}}
+                                    <input class="form-check-input hate" type="checkbox" value="1">
+                                    <hr>
                                 </div>
                                 <div class="form-check form-switch">
-                                    <label class="form-check-label" for="mySwitch">Bad attitude</label>
-                                    <input class="form-check-input attitude" type="checkbox" value="1">
-
+                                    <label class="form-check-label" for="mySwitch"><strong>Suicide and
+                                            self-harm</strong></label>{{-- Real Suicide and self-harmform report --}}
+                                    <input class="form-check-input suicide" type="checkbox" value="1">
+                                    <hr>
                                 </div>
-
-
-
-                                <button id="createFormButton" style="border-radius: 25%">Else</button>
-                                <span id="formContainer"></span>
-                                <form id="form-report" action="{{ route('storeReportComment') }}" method="post" style="display: none">
-                                    @csrf
-                                    <input class="form-check-input link" type="checkbox" id="re-link" name="link" >
-                                    <input class="form-check-input spamming" type="checkbox" id="re-spamming" name="spamming">
-                                    <input class="form-check-input attitude" type="checkbox" id="re-attitude" name="attitude">
-                                    <input class="form-check-input attitude" type="text" id="re-else" name="else">
-                                </form>
-
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label"
+                                        for="mySwitch"><strong>Misinformation</strong></label>{{-- Real Misinformation form report --}}
+                                    <input class="form-check-input misinformation" type="checkbox" value="1">
+                                    <hr>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch"><strong>Frauds and
+                                            scams</strong></label>{{-- Real Frauds and scams form report --}}
+                                    <input class="form-check-input frauds" type="checkbox" value="1">
+                                    <hr>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <label class="form-check-label" for="mySwitch"><strong>Deceptive behavior and
+                                            spam</strong></label>{{-- Real Deceptive behavior and spam form report --}}
+                                    <input class="form-check-input deceptive" type="checkbox" value="1">
+                                    <hr>
+                                </div>
+                                <button id="elseBtn"
+                                    style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}
+                                <input type="text" style="display: none" class="else" id="elseInput"
+                                    placeholder="Please tell us more.......">
                             </div>
                         </div>
-
-
                         <div class="col-md-4" style="border-left: solid black">
                             @if (session('avatar'))
                                 <img src="{{ session('avatar') }}" width="30px"
@@ -345,8 +372,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary commitReport" value="{{ $comment->id }}">Commit
-                        report</button>
+                    <button type="button" class="btn btn-primary commitReport">Commit report</button>
                 </div>
             </div>
             </form>
@@ -426,105 +452,7 @@
 {{-- Report script --}}
 @section('commitReport')
     <script>
-        let elseabc = document.getElementById("re-else");
-        let link = document.querySelector(".link");
-        
-        let commitReport = document.querySelector(".commitReport");
-        commitReport.addEventListener('click',function(){
-            elseabc.value = link.value;
-            console.log("elseabc", elseabc.value);
-        })
-        // $(document).ready(function() {
-        //     $(".commitReport").click(function(e) {
-        //         e.preventDefault();
-                
-        //         let else =  $('#re-else').val();
-        //         // let link = $('#re-link');
-        //         // let spamming = $('#re-spamming');
-        //         // let attitude = $('#re-attitude');
-        //         // let formReport = $('#form-report');
-        //         // if ($('.link').is(":checked")) {
-        //         //     link.val() = $(this).val();
-
-        //         // }
-
-        //         // if ($('.spamming').is(":checked")) {
-        //         //     spamming.val()  = $(this).val();
-
-
-        //         // }
-
-        //         // if ($('.attitude').is(":checked")) {
-        //         //     attitude.val()  = $(this).val();
-
-
-        //         // }
-        //         // if ($('.elseContent').length) {
-        //         //     else.val() = $(this).val(); // Get the value from the input field if it exists
-
-
-        //         // }
-        //         console.log(else);
-        //         // formrReport.submit();
-        //     });
-        // });
-        // $(document).ready(function() {
-        //     $('.commitReport').click(function() {
-
-        //        // let else =  $('#reelse');
-        //         // let link = $('#re-link');
-        //         // let spamming = $('#re-spamming');
-        //         // let attitude = $('#re-attitude');
-        //         // // let commitReportClick = $(this);
-        //         // let formReport = $('#form-report');
-        //         // let commitReport = commitReportClick.val();
-
-        //         // if ($('.link').is(":checked")) {
-        //         //     link = $(this).val();
-
-        //         // }
-
-        //         // if ($('.spamming').is(":checked")) {
-        //         //     spamming = $(this).val();
-
-
-        //         // }
-
-        //         // if ($('.attitude').is(":checked")) {
-        //         //     attitude = $(this).val();
-
-
-        //         // }
-        //         // if ($('.elseContent').length) {
-        //         //     elseContent = $(this).val(); // Get the value from the input field if it exists
-
-
-        //         // }
-        //         console.log("da nhan su kien");
-
-        //         // formrReport.submit();
-
-        //         // $.ajax({
-        //         //     type: "post",
-        //         //     url: "/commitReport",
-        //         //     data: {
-        //         //         'link': link,
-        //         //         'spamming': spamming,
-        //         //         'attitude': attitude,
-        //         //         'elseContent': elseContent,
-        //         //         'comment_id': comment_id
-        //         //     },
-        //         //     success: function(res) {
-        //         //         if (res.status == 200) {
-        //         //             alert(res.messageComment);
-        //         //         } else {
-
-
-        //         //         }
-        //         //     }
-        //         // });
-        //     });
-        // });
+        let form_ = document.querySelector(".")
     </script>
 @endsection
 @section('reportComment')
@@ -626,7 +554,8 @@
                     countdownElement.style.color = "red";
                 }
                 if (remainingCharacters < -30) {
-                    window.location.href = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                    var newUrl = "https://www.youtube.com/watch?v=dQw4w9WgXcQ";
+                    window.open(newUrl, '_blank');
                 }
             } else {
                 countdownElement.style.color = "hsl(144, 70%, 64%)";
@@ -638,18 +567,14 @@
 {{-- Script for else btn --}}
 @section('elseBtn')
     <script>
-        var formContainer = document.getElementById("formContainer");
-        var inputElementCreated = false;
-        document.getElementById("createFormButton").addEventListener("click", function() {
-            if (!inputElementCreated) {
+        // Get references to the button and input elements
+        const elseBtn = document.getElementById('elseBtn');
+        const elseInput = document.getElementById('elseInput');
 
-                var inputElement = document.createElement("input");
-                inputElement.type = "text";
-                inputElement.className = "elseContent";
-                inputElement.placeholder = "Enter text...";
-                formContainer.appendChild(inputElement);
-                inputElementCreated = true;
-            }
+        // Add a click event listener to the button
+        elseBtn.addEventListener('click', () => {
+            // Change the display property of the input element
+            elseInput.style.display = 'block';
         });
     </script>
 @endsection
