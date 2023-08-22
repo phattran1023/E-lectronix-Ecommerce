@@ -13,32 +13,22 @@ class WishlistController extends Controller
 {
    public function store(Request $request){
     $validator = Validator::make($request->all(), [
-        'link'=>'nullable',
-        'spamming'=>'nullable',
-        'attitude'=>'nullable',
-        'elseContent'=>'nullable|max:30',
+        'form-violence'=>'nullable',
+        'form-hate'=>'nullable',
+        'form-suicide'=>'nullable',
+        'form-misinformation'=>'nullable',
+        'form-frauds'=>'nullable',
+        'form-deceptive'=>'nullable',
+       
+        'form-else'=>'nullable|max:50',
     ]);
 
     if ($validator) {
-       //handle success
-       $commentInfo = Comment::where('id', $request->comment_id)
-       ->where('user_id', Auth::user()->id)
-       ->first();
-       $reportedComment = new ReportedComment();
-        $reportedComment->report_id = $commentInfo->comment_id;
-        $reportedComment->reporter_id = $commentInfo->user_id;
-        $reportedComment->user_comment = $commentInfo->comment_body;
-        $reportedComment->link = $request->link;
-        $reportedComment->spamming = $request->spamming;
-        $reportedComment->attitude = $request->attitude;
-        $reportedComment->else = $request->else;
-        dd($reportedComment);
-        // $reportedComment->save();
-        // return response()->json([
-        //     'status' => 200,
-        //     'messageComment' => 'Reported successfully',
+      //handle success
+        $commentInfo = Comment::where('id','commentInfo');
+      $reportComment = new ReportedComment();
+      $reportComment->
 
-        // ]);
     } else {
         //handle fail
         return response()->json([

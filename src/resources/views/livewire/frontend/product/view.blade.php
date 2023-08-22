@@ -260,7 +260,7 @@
                                 </div>
                                 <br>
                                 {{-- Fake form --}}
-                                <form  id="commitReport" action="{{ route('storeReportComment') }}" method="post"
+                                <form id="commitReport" action="{{ route('storeReportComment') }}" method="post"
                                     style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
@@ -349,8 +349,10 @@
                                     <hr>
                                 </div>
                                 <button id="elseBtn"
-                                    style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}
-                                <input type="text" style="display: none" id="modal-else" class="elseInput"
+                                    style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
+                                <small class="text-white ">Characters
+                                    remaining: <span id="countdown2">50&nbsp;</span></small>
+                                <input type="text" style="display: none" id="modal-else"  oninput="CharacterCountdown()" class="elseInput"
                                     placeholder="Please tell us more.......">
                             </div>
                         </div>
@@ -460,7 +462,7 @@
         function commitReport() {
 
             //Violence and abuse
-           let abc = document.getElementById('form-violence').value = document.getElementById('modal-violence').value;
+            let abc = document.getElementById('form-violence').value = document.getElementById('modal-violence').value;
 
             //Hate and harassment
             document.getElementById('form-hate').value = document.getElementById('modal-hate').value;
@@ -479,9 +481,10 @@
 
             //Else report
             document.getElementById('form-else').value = document.getElementById('modal-else').value;
-            
+
             //submit the form report
-            
+            const commit = document.getElementById('commitReport');
+            commit.submit();
         }
     </script>
 @endsection
@@ -559,6 +562,32 @@
 {{-- Coutn maximum word script --}}
 @section('countMaximumWords')
     <script>
+        function CharacterCountdown(){
+            const maxCharacters2 = 50;
+            const inputText2 = document.getElementById("modal-else").value;
+            const remainingCharacters2 = maxCharacters2 - inputText2.length;
+
+            
+            const minus20_2 = "Stop >:(";
+            
+            const countdownElement2 = document.getElementById("countdown2");
+            countdownElement2.textContent = remainingCharacters2;
+
+            if (remainingCharacters2 < 0) {
+                
+                countdownElement2.style.color = "red";
+
+                if (remainingCharacters2 < -20) {
+                    countdownElement2.textContent = minus20_2;
+                    countdownElement2.style.color = "red";
+
+                }
+               
+                
+            } else {
+                countdownElement2.style.color = "hsl(144, 70%, 64%)";
+            }
+        }
         function updateCharacterCountdown() {
             const maxCharacters = 50; // Change this to your desired maximum character count
             const inputText = document.getElementById("inputText").value;
