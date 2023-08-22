@@ -22389,11 +22389,12 @@ dl li {
   display: flex;
   -webkit-flex-direction: column;
   flex-direction: column;
+  margin-left: 257px;
 }
 
 @media (max-width: 991px) {
   .main-panel {
-    margin-left: 0;
+    margin-left: 70px;
     width: 100%;
   }
 }
@@ -22414,6 +22415,8 @@ dl li {
 
 /* Sidebar */
 .sidebar {
+  position: fixed;
+  overflow: hidden;
   min-height: calc(100vh - 60px);
   background: #ffffff;
   font-family: "Roboto", sans-serif;
