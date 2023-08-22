@@ -263,22 +263,19 @@
                                 <form id="form-report" action="{{ route('storeReportComment') }}" method="post"
                                     style="display: none">
                                     @csrf
-                                    <input class="form-check-input link" type="checkbox" id="form-violence"
-                                        name="">
-                                    <input class="form-check-input link" type="checkbox" id="form-hate"
-                                        name="">
-                                    <input class="form-check-input link" type="checkbox" id="form-suicide"
-                                        name="">
-                                    <input class="form-check-input link" type="checkbox" id="form-misinformation"
-                                        name="">
-                                    <input class="form-check-input spamming" type="checkbox" id="form-frauds"
-                                        name="">
-                                    <input class="form-check-input attitude" type="checkbox" id="form-deceptive"
-                                        name="">
-                                    <input class="form-check-input attitude" type="text" id="re-else"
-                                        name="else">
-                                    <input type="number" id="re-commmentInfo" value="{{ $comment->id }}"
-                                        name="commmentInfo">
+                                    <input class="form-check-input" type="checkbox" id="form-violence"
+                                        name="form-violence">
+                                    <input class="form-check-input" type="checkbox" id="form-hate" name="form-hate">
+                                    <input class="form-check-input" type="checkbox" id="form-suicide"
+                                        name="form-suicide">
+                                    <input class="form-check-input" type="checkbox" id="form-misinformation"
+                                        name="form-misinformation">
+                                    <input class="form-check-input" type="checkbox" id="form-frauds"
+                                        name="form-frauds">
+                                    <input class="form-check-input" type="checkbox" id="form-deceptive"
+                                        name="form-deceptive">
+                                    <input class="form-check-input" type="text" id="form-else" name="form-else">
+                                    <input type="number" value="{{ $comment->id }}" name="commmentInfo">
                                 </form>
 
                             @empty
@@ -310,42 +307,48 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Viloence and abuse
                                         </strong></label>{{-- Real Viloence and abuse form report --}}
-                                    <input class="form-check-input violence" type="checkbox" value="1">
+                                    <input class="form-check-input violence" id="modal-violence" type="checkbox"
+                                        value="1">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Hate and
                                             harassment</strong></label>{{-- Real Hate and harassment form report --}}
-                                    <input class="form-check-input hate" type="checkbox" value="1">
+                                    <input class="form-check-input hate" id="modal-hate" type="checkbox"
+                                        value="1">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Suicide and
-                                            self-harm</strong></label>{{-- Real Suicide and self-harmform report --}}
-                                    <input class="form-check-input suicide" type="checkbox" value="1">
+                                            self-harm</strong></label>{{-- Real Suicide and self-harm form report --}}
+                                    <input class="form-check-input suicide" id="modal-suicide" type="checkbox"
+                                        value="1">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label"
                                         for="mySwitch"><strong>Misinformation</strong></label>{{-- Real Misinformation form report --}}
-                                    <input class="form-check-input misinformation" type="checkbox" value="1">
+                                    <input class="form-check-input misinformation" id="modal-misinformation"
+                                        type="checkbox" value="1">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Frauds and
                                             scams</strong></label>{{-- Real Frauds and scams form report --}}
-                                    <input class="form-check-input frauds" type="checkbox" value="1">
+                                    <input class="form-check-input frauds" id="modal-frauds" type="checkbox"
+                                        value="1">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Deceptive behavior and
                                             spam</strong></label>{{-- Real Deceptive behavior and spam form report --}}
-                                    <input class="form-check-input deceptive" type="checkbox" value="1">
+                                    <input class="form-check-input deceptive" id="modal-deceptive" type="checkbox"
+                                        value="1">
                                     <hr>
                                 </div>
                                 <button id="elseBtn"
                                     style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}
-                                <input type="text" style="display: none" class="else" id="elseInput"
+                                <input type="text" style="display: none" id="modal-else"
                                     placeholder="Please tell us more.......">
                             </div>
                         </div>
@@ -452,7 +455,38 @@
 {{-- Report script --}}
 @section('commitReport')
     <script>
-        let form_ = document.querySelector(".")
+        //Violence and abuse
+        let form_violence = document.getElementById('modal-violence');
+        document.getElementById('form-violence') = form_violence;
+
+        //Hate and harassment
+        let form_hate = document.getElementById('modal-hate');
+        document.getElementById('form-hate') = form_hate;
+        //Suicide and self-harm
+        let form_suicide = document.getElementById('modal-suicide');
+        document.getElementById('form-suicide') = form_suicide;
+        //Misinformation
+        let form_misinformation = document.getElementById('modal-misinformation');
+        document.getElementById('form-misinformation') = form_misinformation;
+        //Frauds and scams
+        let form_frauds = document.getElementById('modal-frauds');
+        document.getElementById('form-frauds') = form_frauds;
+        //Deceptive behavior and spam 
+        let form_deceptive = document.getElementById('modal-deceptive');
+        document.getElementById('form-deceptive') = form_deceptive;
+        //Else report
+        let form_else = document.getElementById('modal-else');
+        document.getElementById('form-else') = form_else;
+
+        document.querySelector('#commitReport').addEventListener('click', function() {
+            form_violence;
+
+            if (form_violence) {
+                console.log(form_violence);
+            } else {
+                console.error("Element with ID 'form-violence' not found.");
+            }
+        });
     </script>
 @endsection
 @section('reportComment')
@@ -575,6 +609,10 @@
         elseBtn.addEventListener('click', () => {
             // Change the display property of the input element
             elseInput.style.display = 'block';
+
+            // Set the width style of the input element
+            elseInput.style.width = '100%';
+
         });
     </script>
 @endsection
