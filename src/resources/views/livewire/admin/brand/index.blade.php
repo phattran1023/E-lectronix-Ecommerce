@@ -1,5 +1,4 @@
 <div>
-
     @include('livewire.admin.brand.modal-form')
 
     <div class="row">
@@ -13,7 +12,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                    <table class="table table-striped table-bordered">
+                    <table id="example" class="table table-striped table-bordered">
                         <thead>
                             <tr>
                                 <th>ID</th>
@@ -52,13 +51,16 @@
                         </tbody>
                     </table>
                     <div>
-                        {{ $brands->links() }}
+                        {{-- {{ $brands->links() }} --}}
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    new DataTable('#example');
+</script>
 @push('scripts')
     <script>
         // Listen for the 'close-modal' event and close the modal
@@ -68,4 +70,5 @@
             $('#addBrandModal').modal('hide');
         });
     </script>
+    
 @endpush

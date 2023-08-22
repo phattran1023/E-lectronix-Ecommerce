@@ -19,18 +19,22 @@ class OrderController extends Controller
         // $orders = Order::whereDate('created_at',$todayDate)->paginate(2);
         $todayDate = Carbon::now()->format('Y-m-d');
         // dd($todayDate);
-
-        $orders = Order::when($request->date != null, function ($q) use ($request) {
-
-            return $q->whereDate('created_at', $request->date);
-        }, function ($q) use ($todayDate) {
-            $q->whereDate('created_at', $todayDate);
-        })
-            ->when($request->status != null, function ($q) use ($request) {
-
-                return $q->where('status_message', $request->status);
+        if ($request->date != null) {
+            $orders = Order::when($request->date != null, function ($q) use ($request) {
+        
+                return $q->whereDate('created_at', $request->date);
+            }, function ($q) use ($todayDate) {
+                $q->whereDate('created_at', $todayDate);
             })
-            ->paginate(10);
+                ->when($request->status != null, function ($q) use ($request) {
+    
+                    return $q->where('status_message', $request->status);
+                })
+                ->paginate(10);
+        } else {
+            $orders = Order::get();
+        }
+        
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -38,9 +42,9 @@ class OrderController extends Controller
     // public function show(int $orderId)
     // {
 
-        
+
     //     $order = Order::where('id', $orderId)->first();
-   
+
     //     if ($order) {
     //         return view('admin.orders.view', compact('order'));
     //     } else {
