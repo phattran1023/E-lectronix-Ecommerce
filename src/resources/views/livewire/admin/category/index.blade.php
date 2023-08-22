@@ -1,4 +1,8 @@
+
+
+
 {{-- Delete modal confirmation message --}}
+
 <div>
 
     <div class="row">
@@ -16,13 +20,13 @@
                 </div>
                 <div class="card-body">
                     <!-- Livewrire -->
-                    <table class="table table-bordered table-striped">
+                    <table id="example" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Status</th>
-                                <th>Action</th>
+                                <th width="200px">Action</th>
 
                             </tr>
                         </thead>
@@ -71,4 +75,6 @@
         </div>
     </div>
 </div>
-
+<script>
+    new DataTable('#example');
+</script>

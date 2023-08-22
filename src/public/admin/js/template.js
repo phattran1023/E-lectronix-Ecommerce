@@ -50,8 +50,29 @@
 
     //Change sidebar
 
+    // $('[data-toggle="minimize"]').on("click", function() {
+    //   body.toggleClass('sidebar-icon-only');
+    // });
     $('[data-toggle="minimize"]').on("click", function() {
+      // Lấy ra phần tử có class "main-panel"
       body.toggleClass('sidebar-icon-only');
+      var mainPanel = $('.main-panel');
+      
+      // Kiểm tra xem hiện tại có class 'sidebar-icon-only' hay không
+      var isSidebarIconOnly = mainPanel.hasClass('sidebar-icon-only');
+      
+      // Nếu có class 'sidebar-icon-only', thay đổi width thành 'calc(100% - 70px)'
+      if (isSidebarIconOnly) {
+        mainPanel.css('width', 'calc(100% - 70px)');
+        mainPanel.css('margin-left', '257px');
+      } else {
+        // Nếu không có class 'sidebar-icon-only', thay đổi width thành 'calc(100% - 257px)'
+        mainPanel.css('width', 'calc(100% - 70px)');
+        mainPanel.css('margin-left', '70px');
+      }
+      
+      // Toggle class 'sidebar-icon-only'
+      mainPanel.toggleClass('sidebar-icon-only');
     });
 
     //checkbox and radios

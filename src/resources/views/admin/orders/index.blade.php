@@ -34,7 +34,7 @@
                         </div>
                     </form>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
+                        <table id="example" class="table table-bordered table-striped">
                             <thead>
                                 <th>Order ID</th>
                                 <th>Tracking No.</th>
@@ -82,12 +82,14 @@
                             </tbody>
                         </table>
                         <div>
-                            {{ $orders->links() }}
+                            {{-- {{ $orders->links() }} --}}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+    <script>
+        new DataTable('#example');
+    </script>
 @endsection
