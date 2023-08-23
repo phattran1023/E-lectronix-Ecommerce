@@ -16,44 +16,50 @@ use Illuminate\Support\Facades\File;
 
 class CommentController extends Controller
 {
+
     //storing comments
     public function store(Request $request)
-{
-    $badWords = $this->getBadWords();
+    {
+        $badWords = $this->getBadWords();
 
-    if (Auth::check()) {
-        $validator = Validator::make($request->all(), [
-            'comment_body' => 'required|string|max:50',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->with('messageComment', 'Comment area is required.');
-        }
-
-        // Check for bad words in the comment body
-        foreach ($badWords as $badWord) {
-            if (stripos($request->comment_body, $badWord) !== false) {
-                return redirect()->back()->with('messageComment', 'The comment contains sensitive words.');
-            }
-        }
-
-        $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
-
-        if ($post) {
-            Comment::create([
-                'post_id' => $post->id,
-                'user_id' => Auth::user()->id,
-                'comment_body' => $request->comment_body,
+        if (Auth::check()) {
+            $validator = Validator::make($request->all(), [
+                'comment_body' => 'required|string|max:50',
             ]);
-        } else {
-            return redirect()->back()->with('messageComment', 'No Such Post found');
-        }
 
-        return redirect(url('collections/comment'));
-    } else {
-        return redirect()->back()->with('messageComment', 'Login is required for comment');
+            if ($validator->fails()) {
+                return redirect()->back()->with('messageComment', 'Comment area is required.');
+            }
+
+            // Check for bad words in the comment body
+            foreach ($badWords as $badWord) {
+                if (stripos($request->comment_body, $badWord) !== false) {
+                    return redirect()->back()->with('messageComment', 'The comment contains sensitive words.');
+                }
+            }
+
+            $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
+
+            if ($post) {
+                Comment::create([
+                    'post_id' => $post->id,
+                    'user_id' => Auth::user()->id,
+                    'comment_body' => $request->comment_body,
+                ]);
+
+            } else {
+                return redirect()->back()->with('messageComment', 'No Such Post found');
+            }
+            //Do sort for the earliest Comment
+            $comments = Comment::where('post_id', $post->id)
+                ->orderBy('created_at', 'asc')
+                ->get();
+            return redirect(url('collections/comment'))->with('comments', $comments);
+
+        } else {
+            return redirect()->back()->with('messageComment', 'Login is required for comment');
+        }
     }
-}
 
 
     //Use for deleting comments
@@ -97,7 +103,7 @@ class CommentController extends Controller
                     $badWords[] = $data[0]; // Assuming the bad words are in the first column of the CSV file
                 }
                 fclose($handle);
-}
+            }
             return $badWords;
         } else {
             // Return an empty array if the file is not found

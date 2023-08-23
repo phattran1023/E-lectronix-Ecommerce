@@ -46,7 +46,7 @@ Route::post('delete-comment',[App\Http\Controllers\Frontend\CommentController::c
 Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::class,'index']);
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');
-
+Route::get('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'earliestComment']);
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 
