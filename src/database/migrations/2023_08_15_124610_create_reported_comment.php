@@ -16,12 +16,12 @@ return new class extends Migration
             $table->integer('report_id')->references('id')->on('comments');
             $table->integer('reporter_id');
             $table->integer('user_comment');
-            $table->tinyInteger('link')->nullable();
-            $table->tinyInteger('spaming')->nullable();
-            $table->tinyInteger('attiude')->nullable();
-            $table->tinyInteger('link')->nullable();
-            $table->tinyInteger('spaming')->nullable();
-            $table->tinyInteger('attiude')->nullable();
+            $table->tinyInteger('violence')->nullable();
+            $table->tinyInteger('hate')->nullable();
+            $table->tinyInteger('suicide')->nullable();
+            $table->tinyInteger('misinformation')->nullable();
+            $table->tinyInteger('frauds')->nullable();
+            $table->tinyInteger('deceptive')->nullable();
             $table->string('else')->nullable();
             $table->timestamps();
         });

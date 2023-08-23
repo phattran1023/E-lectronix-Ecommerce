@@ -27,7 +27,7 @@ class WishlistController extends Controller
       //handle success
         $commentInfo = Comment::where('id','commentInfo');
       $reportComment = new ReportedComment();
-      $reportComment->
+      $reportComment->;
 
     } else {
         //handle fail
