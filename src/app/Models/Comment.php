@@ -23,8 +23,9 @@ class Comment extends Model
    public function user(){
       return $this->belongsTo(User::class, 'user_id','id');
    }
-   public function imgages(){
-      return $this->hasMany(UserImage::class,'user_img_id','id');
-  }
+   public function reported_comments(){
+      return $this->hasMany(ReportedComment::class, 'report_id','post_id');
+   }
+  
   
 }

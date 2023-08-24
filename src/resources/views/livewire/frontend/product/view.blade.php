@@ -134,7 +134,7 @@
             <div class="container">
                 <div class="row">
                     <div>
-                        <div class="card" style=" background-color: #7C73C0;">
+                        <div class="card" style="width: 100%; background-color: #7C73C0;">
                             <div class="card-header" style=" background-color: #7C73C0;">
                                 <h4 style="text-align: center;" class="text-white">Comment Here</h4>
                             </div>
@@ -151,7 +151,7 @@
                                     @csrf
 
 
-                                    <div class="row ">
+                                    <div class="row">
                                         <div>
                                             <div>
 
@@ -166,7 +166,7 @@
                                                 @if (Auth::user())
                                                     <strong class="text-warning">{{ Auth::user()->name }}</strong>
                                                 @else
-                                                    Unknow user
+                                                    Unknow user :/
                                                 @endif
 
 
@@ -174,11 +174,28 @@
                                             <div>
                                                 <input type="hidden" name="post_slug"value="{{ $product->slug }}">
 
-                                                <span>
-                                                    <input id="inputText" name="comment_body" style="width: 60%"
-                                                        class="form-control" value="{{ old('comment_body') }}"
-                                                        placeholder="Comment....." oninput="updateCharacterCountdown()">
+                                                <span class="d-flex">
+                                                    <div class="d-flex justify-content-start" style="width: 70%">
+                                                        <input id="inputText" name="comment_body" style="width: 80%"
+                                                            class="form-control" value="{{ old('comment_body') }}"
+                                                            placeholder="Comment....."
+                                                            oninput="updateCharacterCountdown()">
 
+                                                    </div>
+
+                                                    <div class="d-flex justify-content" id="countCommentBox">
+                                                        @php
+                                                            $commentCount = 0; //variable to count the total comment
+                                                        @endphp
+                                                        @foreach ($product->comments->sortByDesc('created_at') as $comment)
+                                                            @php
+                                                                $commentCount++; // Increment the comment count
+                                                            @endphp
+                                                        @endforeach
+
+                                                        <p style="text-align: center; padding: 0 5px 0 5px">Total
+                                                            Comments: {{ $commentCount }}</p>
+                                                    </div>
 
                                                 </span>
                                                 <span>
@@ -186,7 +203,9 @@
                                                         <p class="text-white " style="font-weight: 20px">Characters
                                                             remaining: <span id="countdown">50&nbsp;</span></p>
                                                     </div>
+
                                                 </span>
+
                                             </div>
                                         </div>
 
@@ -196,10 +215,11 @@
 
                                 </form>
                             </div>
-                            @forelse ($product->comments as $comment)
+
+                            @forelse ($product->comments->sortByDesc('created_at') as $comment)
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-8">
-                                        <div class=" comment-container card p-3">
+                                        <div class=" comment-container card p-3" style="width: 100%">
 
                                             <div class="d-flex justify-content-between align-items-center">
 
@@ -223,7 +243,7 @@
                                                     &nbsp; &nbsp;
                                                     <small class="font-weight-bold">{!! $comment->comment_body !!}</small>
                                                 </div>
-                                                &nbsp;&nbsp;<small>{{ $comment->created_at->format('d/m/Y') }}</small>
+                                                &nbsp;&nbsp;<small>{{ $comment->created_at->diffForHumans() }}</small>
 
                                             </div>
                                             <div class="action d-flex justify-content-between mt-2 ">
@@ -258,7 +278,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+
                                 <br>
+
                                 {{-- Fake form --}}
                                 <form id="commitReport" action="{{ route('storeReportComment') }}" method="post"
                                     style="display: none">
@@ -279,7 +302,7 @@
                                 </form>
 
                             @empty
-                                <div class="col-md-12">No comment yet!</div>
+                                <div class="col-md-12">No comment yet :< "Be the first one to comment"</div>
                             @endforelse
                         </div>
                     </div>
@@ -352,7 +375,8 @@
                                     style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
                                 <small class="text-white ">Characters
                                     remaining: <span id="countdown2">50&nbsp;</span></small>
-                                <input type="text" style="display: none" id="modal-else"  oninput="CharacterCountdown()" class="elseInput"
+                                <input type="text" style="display: none" id="modal-else"
+                                    oninput="CharacterCountdown()" class="elseInput"
                                     placeholder="Please tell us more.......">
                             </div>
                         </div>
@@ -547,6 +571,9 @@
                         success: function(res) {
                             if (res.status == 200) {
                                 deleteClick.closest('.comment-container').remove();
+                               
+                               
+                              
 
                             } else {
                                 alert(res.message);
@@ -562,19 +589,19 @@
 {{-- Coutn maximum word script --}}
 @section('countMaximumWords')
     <script>
-        function CharacterCountdown(){
+        function CharacterCountdown() {
             const maxCharacters2 = 50;
             const inputText2 = document.getElementById("modal-else").value;
             const remainingCharacters2 = maxCharacters2 - inputText2.length;
 
-            
+
             const minus20_2 = "Stop >:(";
-            
+
             const countdownElement2 = document.getElementById("countdown2");
             countdownElement2.textContent = remainingCharacters2;
 
             if (remainingCharacters2 < 0) {
-                
+
                 countdownElement2.style.color = "red";
 
                 if (remainingCharacters2 < -20) {
@@ -582,12 +609,13 @@
                     countdownElement2.style.color = "red";
 
                 }
-               
-                
+
+
             } else {
                 countdownElement2.style.color = "hsl(144, 70%, 64%)";
             }
         }
+
         function updateCharacterCountdown() {
             const maxCharacters = 50; // Change this to your desired maximum character count
             const inputText = document.getElementById("inputText").value;

@@ -14,11 +14,19 @@ class ReportedComment extends Model
         'report_id',
         'reporter_id',
         'user_comment',
-        'link',
-        'spamming',
-        'attitude',
+        'violence',
+        'hate',
+        'suicide',
+        'misinformation',
+        'frauds',
+        'deceptive',
         'else',
 
     ];
+
+    public function comment(){
+        return $this->belongsTo(Comment::class,'report_id','id');
+    }
+   
     
 }

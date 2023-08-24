@@ -7,10 +7,11 @@
             @endif
             <div class="me-md-3 me-xl-5">
                 <h2>Welcome</h2>
-                <p class="mb-md-0">Your analytics dashboard template.</p>
-                <hr>
+                <p class="mb-md-0">Analytics dashboard</p>
             </div>
-
+            <hr>
+            
+            
             <div class="row">
                 <div class="col-md-3">
                     <div class="card card-body bg-primary text-white mb-3">
@@ -27,8 +28,8 @@
                     </div>
                 </div>
                 <div class="col-md-3">
-                    <div class="card card-body bg-warning text-white mb-3">
-                        <label for=""><a href="{{ url('admin/categories') }}" class="text-white">Total
+                    <div class="card card-body bg-warning text-dark mb-3">
+                        <label for=""><a href="{{ url('admin/categories') }}" class="text-dark">Total
                                 Categories</a></label>
                         <h1>{{ $totalCategories }}</h1>
                     </div>
@@ -60,8 +61,74 @@
                         <h1>{{ $monthOrders }}</h1>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="card card-body bg-success text-white mb-3">
+                        <label for=""><a href="{{ url('admin/orders') }}" class="text-white">Today's Revenue</a></label>
+                        <h1>{{ number_format($todayRevenue) }} đ</h1>
+                    </div>
+                </div>
             </div>
             <hr>
+
+            {{-- top 3 mua nhìu --}}
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">Top 3 Buyers with Highest Spending</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class=" text-primary">
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Total Spent</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($topBuyers as $buyer)
+                                            <tr>
+                                                <td>{{ $buyer->name }}</td>
+                                                <td>{{ $buyer->email }}</td>
+                                                <td>{{ number_format($buyer->total_spent) }} đ</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="text-center">Top 3 Most Sold Products</h2>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead class=" text-primary">
+                                        <th>Product Name</th>
+                                        <th>Total Quantity Sold</th>
+                                        <th>Total Revenue</th>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($topProducts as $product)
+                                            <tr>
+                                                <td>{{ $product->name }}</td>
+                                                <td class="text-center">{{ $product->total_quantity }}</td>
+                                                <td>{{ number_format($product->total_revenue) }} đ</td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+
             <div class="row">
                 {{-- chart 1 --}}
                 <div class="col-md-6 ">
@@ -217,6 +284,8 @@
                     </script>
                 </div>
             </div>
+
+            
         </div>
     </div>
 @endsection
