@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2023 at 06:21 PM
+-- Generation Time: Aug 24, 2023 at 04:24 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -156,7 +156,8 @@ CREATE TABLE `comments` (
 
 INSERT INTO `comments` (`id`, `post_id`, `user_id`, `comment_body`, `created_at`, `updated_at`) VALUES
 (1, 1, 2, 'Hello world', '2023-08-08 06:30:20', '2023-08-08 06:30:20'),
-(3, 8, 2, 'hmm', '2023-08-15 04:19:49', '2023-08-15 04:19:49');
+(3, 8, 2, 'hmm', '2023-08-15 04:19:49', '2023-08-15 04:19:49'),
+(4, 7, 1, 'dddd', '2023-08-22 07:15:21', '2023-08-22 07:15:21');
 
 -- --------------------------------------------------------
 
@@ -580,10 +581,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `role_as`) VALUES
-(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$xh4uMnrLrYonVbsFRVLvKeMDua1MYF9Iu0E/UeN0Ucf3ZXN88jt.6', 'KxLyW5u0aWKXwE00YDJb1Drd2MVDsD6q5ym9Zksili01PsqVO2eQYeagHBEc', '2023-07-25 19:19:17', '2023-08-15 04:09:35', 1),
-(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$o/rRsllzFo6ZoS.hnTXGFujDEehgZiXu0DtYnKALoubvz75jtsDda', 'ixCWSmVZMhuF7MIplts7tkHCfdKESasXGE6am9uCfy6UDz1vpSV4MzimNmIT', '2023-07-25 19:20:04', '2023-08-19 04:42:19', 0),
+(1, 'Admin', 'admin@gmail.com', NULL, '$2y$10$xh4uMnrLrYonVbsFRVLvKeMDua1MYF9Iu0E/UeN0Ucf3ZXN88jt.6', 'kr9dJzyx3KblzHBzNEG9Wt8prUGlaU4hoh0HJsmctYpFuj0anijZyPgXOWQO', '2023-07-25 19:19:17', '2023-08-15 04:09:35', 1),
+(2, 'Phat', 'ptrnvnh@gmail.com', NULL, '$2y$10$o/rRsllzFo6ZoS.hnTXGFujDEehgZiXu0DtYnKALoubvz75jtsDda', 'v6GmZHNRGxFy1EcYpRGR503RP76qBqAqSqYVyYLHVpCIbSoo5DExsjzOhzI6', '2023-07-25 19:20:04', '2023-08-19 04:42:19', 0),
 (3, 'Trần Vĩnh Phát', 'phattran1023@gmail.com', NULL, '$2y$10$KHP6y7lXVsCQY2m1D/pGF.8vVM7UShWEpnChJtDX1zL4WEsobk9.2', NULL, '2023-07-30 02:02:30', '2023-07-30 02:02:30', 3),
-(7, 'Phat3', 'ptrnvnh3@gmail.com', NULL, '$2y$10$vnk0BsEoaDicz8hTTzfXGu1QjcCDm6YKOQHe58OpgCeT.4hdXwxzG', NULL, '2023-08-15 04:27:40', '2023-08-15 04:27:40', 0);
+(7, 'Phat3', 'ptrnvnh3@gmail.com', NULL, '$2y$10$vnk0BsEoaDicz8hTTzfXGu1QjcCDm6YKOQHe58OpgCeT.4hdXwxzG', NULL, '2023-08-15 04:27:40', '2023-08-15 04:27:40', 0),
+(8, 'Tran Vinh Phat (Aptech HCM)', 'phattvts2210019@fpt.edu.vn', NULL, '$2y$10$fcZ1Jp8NAIUOasYMxToHHemxQSFmaEF2/gOqseL.TMobF9A/nEFIG', NULL, '2023-08-22 07:16:48', '2023-08-22 07:16:48', 3);
 
 -- --------------------------------------------------------
 
@@ -841,7 +843,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `colors`
@@ -853,7 +855,7 @@ ALTER TABLE `colors`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -937,7 +939,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_details`

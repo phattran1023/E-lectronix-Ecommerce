@@ -26,7 +26,9 @@ class DashboardController extends Controller
         $thisMonth = Carbon::now()->format('m');
         $todayOrders = Order::whereDate('created_at', $todayDate)->count();
         $monthOrders = Order::whereMonth('created_at', $thisMonth)->count();
-
+        $todayRevenue = Orderitem::join('orders', 'order_items.order_id', '=', 'orders.id')
+            ->whereDate('orders.created_at', Carbon::today())
+            ->sum('order_items.price');
         // Lấy data chart 1
         $monthlyOrders = Order::selectRaw('YEAR(created_at) year, MONTH(created_at) month, COUNT(*) as total_orders')
             ->groupBy('year', 'month')
@@ -104,6 +106,23 @@ class DashboardController extends Controller
             'roleData' => $roleData,
         ];
 
-        return view('admin.dashboard', compact('totalProducts', 'totalCategories', 'totalBrands', 'totalUsers', 'totalOrders', 'todayOrders', 'monthOrders', 'chartData'));
+        //Top 3 người mua nhiều nhất
+        $topBuyers = User::join('orders', 'users.id', '=', 'orders.user_id')
+        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->selectRaw('users.name, users.email, SUM(order_items.quantity * order_items.price) as total_spent')
+        ->groupBy('users.id', 'users.name', 'users.email')
+        ->orderByDesc('total_spent')
+        ->limit(3)
+        ->get();
+
+        // Top 3  sp mua nhiều nhất
+        $topProducts = Product::join('order_items', 'products.id', '=', 'order_items.product_id')
+            ->selectRaw('products.name, SUM(order_items.quantity) as total_quantity, SUM(order_items.quantity * order_items.price) as total_revenue')
+            ->groupBy('products.id', 'products.name')
+            ->orderByDesc('total_quantity')
+            ->limit(3)
+            ->get();
+
+        return view('admin.dashboard', compact('totalProducts', 'totalCategories', 'totalBrands', 'totalUsers', 'totalOrders', 'todayOrders', 'monthOrders', 'todayRevenue', 'chartData','topBuyers','topProducts'));
     }
 }
