@@ -24,13 +24,14 @@ class CustomResetPasswordNotification extends Notification
     public function toMail($notifiable)
     {
         $resetUrl = url(route('password.reset', ['token' => $this->token, 'email' => $notifiable->getEmailForPasswordReset()], false));
-
+        $expirationTime = now()->addMinutes(config('auth.passwords.users.expire')); // Get expiration time
         return (new MailMessage)
             ->subject('Password Reset')
             ->markdown('email.passwordReset', [
                 'user' => $notifiable,
                 'resetUrl' => $resetUrl,
                 'userName' => $this->userName, // Pass the user's name to the template
+                'expirationTime' => $expirationTime,
             ]);
     }
     /**

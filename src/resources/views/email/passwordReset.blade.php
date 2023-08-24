@@ -15,6 +15,7 @@
         <li>
             <strong>Click the Reset Button Below:</strong>
             <p><a href="{{ $resetUrl }}" style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;">Reset Password</a></p>
+            <p>This link will expire in {{ $expirationTime->diffForHumans(now()) }}.</p>
         </li>
         <li>
             <strong>Create a New Password:</strong>
