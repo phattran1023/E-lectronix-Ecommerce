@@ -7,10 +7,10 @@
             @endif
             <div class="me-md-3 me-xl-5">
                 <h2>Welcome</h2>
-                <p class="mb-md-0">Your analytics dashboard template.</p>
-                <hr>
+                <p class="mb-md-0">Analytics dashboard</p>
             </div>
             <hr>
+            
             
             <div class="row">
                 <div class="col-md-3">
