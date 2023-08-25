@@ -38,11 +38,11 @@ class CommentController extends Controller
                 }
             }
 
-            $post = Product::where('slug', $request->post_slug)->where('status', '0')->first();
+            $product = Product::where('slug', $request->post_slug)->where('status', '0')->first();
 
-            if ($post) {
+            if ($product) {
                 Comment::create([
-                    'post_id' => $post->id,
+                    'post_id' => $product->id,
                     'user_id' => Auth::user()->id,
                     'comment_body' => $request->comment_body,
                 ]);
@@ -51,10 +51,11 @@ class CommentController extends Controller
                 return redirect()->back()->with('messageComment', 'No Such Post found');
             }
             //Do sort for the earliest Comment
-            $comments = Comment::where('post_id', $post->id)
+            $comments = Comment::where('post_id', $product->id)
                 ->orderBy('created_at', 'asc')
                 ->get();
-            return redirect(url('collections/comment'))->with('comments', $comments);
+          
+            return redirect(url('collections/comment'));
 
         } else {
             return redirect()->back()->with('messageComment', 'Login is required for comment');
