@@ -286,7 +286,7 @@
                                 <br>
 
                                 {{-- Fake form --}}
-                                <form id="commitReport" action="{{ route('storeReportComment', $comment->id) }}"
+                                <form id="commitReport" action="{{route('storeReportComment',$comment->id) }}"
                                     method="post" style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
@@ -301,7 +301,8 @@
                                     <input class="form-check-input" type="number" id="form-deceptive"
                                         name="form_deceptive">
                                     <input class="form-check-input" type="text" id="form-else" name="form_else">
-
+                                    
+                                   
                                 </form>
 
                             @empty
@@ -329,14 +330,15 @@
                 <div class="modal-body " style="background: #6489e4">
                     <div class="row">
                         <div class="col-sm-8">
-                            <div class="" style="padding-left: 20px">
+                            <div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Viloence and abuse
                                         </strong></label>{{-- Real Viloence and abuse form report --}}
                                     <input class="form-check-input violence" id="modal-violence" type="checkbox"
                                         value="1">
-                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/violence.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/violence.png') }}"
+                                        width="30px" style="float: right">
+                                        <p></p>
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -344,8 +346,8 @@
                                             harassment</strong></label>{{-- Real Hate and harassment form report --}}
                                     <input class="form-check-input hate" id="modal-hate" type="checkbox"
                                         value="1">
-                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/hate.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/hate.png') }}"
+                                        width="30px" style="float: right">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -353,8 +355,8 @@
                                             self-harm</strong></label>{{-- Real Suicide and self-harm form report --}}
                                     <input class="form-check-input suicide" id="modal-suicide" type="checkbox"
                                         value="1">
-                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/suicide.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/suicide.png') }}"
+                                        width="30px" style="float: right">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -362,8 +364,8 @@
                                         for="mySwitch"><strong>Misinformation</strong></label>{{-- Real Misinformation form report --}}
                                     <input class="form-check-input misinformation" id="modal-misinformation"
                                         type="checkbox" value="1">
-                                        &nbsp;&nbsp;  <img src="{{ asset('/uploads/reportIcons/misinformation.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/misinformation.png') }}"
+                                        width="30px" style="float: right">
 
                                     <hr>
                                 </div>
@@ -372,8 +374,8 @@
                                             scams</strong></label>{{-- Real Frauds and scams form report --}}
                                     <input class="form-check-input frauds" id="modal-frauds" type="checkbox"
                                         value="1">
-                                        &nbsp;&nbsp;<img src="{{ asset('/uploads/reportIcons/fraud-alert.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp;<img src="{{ asset('/uploads/reportIcons/fraud-alert.png') }}"
+                                        width="30px" style="float: right">
 
                                     <hr>
                                 </div>
@@ -382,8 +384,8 @@
                                             spam</strong></label>{{-- Real Deceptive behavior and spam form report --}}
                                     <input class="form-check-input deceptive" id="modal-deceptive" type="checkbox"
                                         value="1">
-                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/deceptive.png') }}"
-                                        width="30px">
+                                    &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/deceptive.png') }}"
+                                        width="30px" style="float: right">
 
                                     <hr>
                                 </div>
@@ -394,6 +396,9 @@
                                 <input type="text" style="display: none" id="modal-else"
                                     oninput="CharacterCountdown()" class="elseInput"
                                     placeholder="Please tell us more.......">
+                                   @if (session('errorElse'))
+                                       <small><span class="text-danger">The words must lower than 50</span></small>
+                                   @endif
                             </div>
                         </div>
                         <div class="col-md-4" style="border-left: solid black; text-align: center">
