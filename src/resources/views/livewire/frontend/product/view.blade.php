@@ -145,6 +145,12 @@
                                         <strong>Fail!</strong>&nbsp; <span>{{ session('messageComment') }}</span>
                                     </div>
                                 @endif
+                                @if (session('reportComment'))
+                                    <div class="alert alert-success alert-dismissible">
+                                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                                        <strong>Success!</strong>&nbsp; <span>{{ session('reportComment') }}</span>
+                                    </div>
+                                @endif
 
 
                                 <form action="{{ url('collections/comment') }}" method="post">
@@ -268,11 +274,8 @@
                                                     @endif
                                                 </div>
                                                 <div class=" align-items-center">
-                                                    <i class="fa fa-star text-warning"></i>
-                                                    <i class="fa fa-star text-warning"></i>
-                                                    <i class="fa fa-star text-warning"></i>
-                                                    <i class="fa fa-star text-warning"></i>
-                                                    <i class="fa fa-star text-warning"></i>
+                                                    <input id="toggle-heart" type="checkbox" />
+                                                    <label for="toggle-heart">❤</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -283,26 +286,26 @@
                                 <br>
 
                                 {{-- Fake form --}}
-                                <form id="commitReport" action="{{ route('storeReportComment') }}" method="post"
-                                    style="display: none">
+                                <form id="commitReport" action="{{ route('storeReportComment', $comment->id) }}"
+                                    method="post" style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
-                                        name="form-violence">
+                                        name="form_violence">
                                     <input class="form-check-input" type="number" id="form-hate" name="form-hate">
                                     <input class="form-check-input" type="number" id="form-suicide"
-                                        name="form-suicide">
+                                        name="form_suicide">
                                     <input class="form-check-input" type="number" id="form-misinformation"
-                                        name="form-misinformation">
+                                        name="form_misinformation">
                                     <input class="form-check-input" type="number" id="form-frauds"
-                                        name="form-frauds">
+                                        name="form_frauds">
                                     <input class="form-check-input" type="number" id="form-deceptive"
-                                        name="form-deceptive">
-                                    <input class="form-check-input" type="text" id="form-else" name="form-else">
-                                    <input type="number" value="{{ $comment->id }}" name="commmentInfo">
+                                        name="form_deceptive">
+                                    <input class="form-check-input" type="text" id="form-else" name="form_else">
+
                                 </form>
 
                             @empty
-                                <div class="col-md-12">No comment yet :< "Be the first one to comment"</div>
+                                <div class="col-md-12">No comment yet :< "Be the first one to comment" </div>
                             @endforelse
                         </div>
                     </div>
@@ -325,13 +328,15 @@
 
                 <div class="modal-body " style="background: #6489e4">
                     <div class="row">
-                        <div class="col-sm-8 ">
+                        <div class="col-sm-8">
                             <div class="" style="padding-left: 20px">
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Viloence and abuse
                                         </strong></label>{{-- Real Viloence and abuse form report --}}
                                     <input class="form-check-input violence" id="modal-violence" type="checkbox"
                                         value="1">
+                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/violence.png') }}"
+                                        width="30px">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -339,6 +344,8 @@
                                             harassment</strong></label>{{-- Real Hate and harassment form report --}}
                                     <input class="form-check-input hate" id="modal-hate" type="checkbox"
                                         value="1">
+                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/hate.png') }}"
+                                        width="30px">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -346,6 +353,8 @@
                                             self-harm</strong></label>{{-- Real Suicide and self-harm form report --}}
                                     <input class="form-check-input suicide" id="modal-suicide" type="checkbox"
                                         value="1">
+                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/suicide.png') }}"
+                                        width="30px">
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
@@ -353,6 +362,8 @@
                                         for="mySwitch"><strong>Misinformation</strong></label>{{-- Real Misinformation form report --}}
                                     <input class="form-check-input misinformation" id="modal-misinformation"
                                         type="checkbox" value="1">
+                                        &nbsp;&nbsp;  <img src="{{ asset('/uploads/reportIcons/misinformation.png') }}"
+                                        width="30px">
 
                                     <hr>
                                 </div>
@@ -361,6 +372,8 @@
                                             scams</strong></label>{{-- Real Frauds and scams form report --}}
                                     <input class="form-check-input frauds" id="modal-frauds" type="checkbox"
                                         value="1">
+                                        &nbsp;&nbsp;<img src="{{ asset('/uploads/reportIcons/fraud-alert.png') }}"
+                                        width="30px">
 
                                     <hr>
                                 </div>
@@ -369,6 +382,9 @@
                                             spam</strong></label>{{-- Real Deceptive behavior and spam form report --}}
                                     <input class="form-check-input deceptive" id="modal-deceptive" type="checkbox"
                                         value="1">
+                                        &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/deceptive.png') }}"
+                                        width="30px">
+
                                     <hr>
                                 </div>
                                 <button id="elseBtn"
@@ -380,7 +396,7 @@
                                     placeholder="Please tell us more.......">
                             </div>
                         </div>
-                        <div class="col-md-4" style="border-left: solid black">
+                        <div class="col-md-4" style="border-left: solid black; text-align: center">
                             @if (session('avatar'))
                                 <img src="{{ session('avatar') }}" width="30px"
                                     style="border-radius:  50%; padding-bottom: 3px">&nbsp;
@@ -391,12 +407,9 @@
                             @if (Auth::user())
                                 <span class="comment-name"></span>
                             @endif
-
-
-                            <div class="card" style="margin-top: 5px">
-
-                                <span style="padding: 3px 3px 3px 3px" class="comment-content"></span>
-
+                            <div style="margin-top:5px">
+                                <span style="padding: 4px 4px 4px 4px"
+                                    class="comment-content bg-white form-control"></span>
                             </div>
                         </div>
                     </div>
@@ -571,9 +584,9 @@
                         success: function(res) {
                             if (res.status == 200) {
                                 deleteClick.closest('.comment-container').remove();
-                               
-                               
-                              
+
+
+
 
                             } else {
                                 alert(res.message);
