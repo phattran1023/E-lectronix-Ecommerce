@@ -18,7 +18,7 @@ class User extends Authenticatable
         $this->notify(new CustomResetPasswordNotification($token, $this->userDetail->name));
     }
 
-    
+
 
     /**
      * The attributes that are mass assignable.
@@ -56,6 +56,6 @@ class User extends Authenticatable
         return $this->hasOne(UserDetail::class,'user_id','id');
     }
     public function comments(){
-        return $this->hasMany(Comment::class)
+        return $this->hasMany(Comment::class);
     }
 }

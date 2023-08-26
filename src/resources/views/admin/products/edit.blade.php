@@ -60,14 +60,12 @@
                                 aria-labelledby="home-tab" tabindex="0">
                                 <div class="mb-3">
                                     <label for="">Category</label>
-                                    <select name="category_id" class="form-control" id="">
+                                    <select name="category_id" class="form-control">
                                         @foreach ($categories as $item)
-                                            <option value="{{ $item->id }}"
-                                                {{ $item->id == $product->category_id ? 'selected' : '' }}>
+                                            <option value="{{ $item->id }}" {{ $item->id == $product->category_id ? 'selected' : '' }}>
                                                 {{ $item->name }}
                                             </option>
                                         @endforeach
-
                                     </select>
                                 </div>
                                 <div class="mb-3">
