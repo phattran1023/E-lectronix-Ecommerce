@@ -47,6 +47,7 @@ Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport/{id}',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');
 Route::get('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'earliestComment']);
+
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 
@@ -154,13 +155,14 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('users/{user_id}/delete','delete');
     });
     //Comments-admin routes-Tien's routes
-    Route::controller(App\Http\Controllers\Admin\UserController::class)->group(function () {
-        Route::get('/comments', 'index');
+    Route::controller(App\Http\Controllers\Admin\ReportedComment::class)->group(function () {
+        Route::get('/comments', 'indexAdmin');
         Route::get('/users/create', 'create');
         Route::post('users','store');
         Route::get('users/{user_id}/edit','edit');
         Route::put('users/{user_id}','update');
         Route::get('users/{user_id}/delete','delete');
+       
     });
     //Coupon-admin routes-Tai's routes
     Route::controller(App\Http\Controllers\CouponController::class)->group(function () {
