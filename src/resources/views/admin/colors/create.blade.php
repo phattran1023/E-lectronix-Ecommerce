@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+@section('title', 'Create New Color')
 
 @section('content')
     <div class="row">

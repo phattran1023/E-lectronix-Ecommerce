@@ -423,15 +423,18 @@
     .col-md-10{
         width: 100%;
     }
+    .col-md-4{
+        margin-bottom: 25px;
+    }
     .col-md-3 {
         width: 33.33%; 
         margin: auto;
     }
     .card{
-        width: 50%;
+        width: 100%;
         float: left;
         height: 100%;
-        margin: 0;
+        margin: 10px;
     }
     .mt-3{
         margin: 0;
