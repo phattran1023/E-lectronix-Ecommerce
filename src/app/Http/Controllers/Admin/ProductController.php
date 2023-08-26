@@ -160,7 +160,7 @@ class ProductController extends Controller
 
             return redirect('/admin/products')->with('message', 'Product updated successfully');
         } else {
-            return redirect()->with('message', 'No such product Id found');
+            return redirect('/admin/products')->with('message', 'No such product Id found');
         }
     }
 

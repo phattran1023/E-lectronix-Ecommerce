@@ -39,14 +39,14 @@ class UserController extends Controller
             'role_as' => ['required', 'integer'],
 
         ]);
-    
+
         User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_as' => $request->role_as
         ]);
-    
+
         return redirect('admin/users/')->with('message','User created successfully');
     }
 
@@ -68,20 +68,20 @@ class UserController extends Controller
                 'string',
                 'email',
                 'max:255',
-                
+
             ],
             'password' => ['required', 'string', 'min:8'],
             'role_as' => ['required', 'integer'],
 
         ]);
-    
+
         User::findOrFail($user_id)->update([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role_as' => $request->role_as
         ]);
-    
+
         return redirect('admin/users/')->with('message','User updated successfully');
     }
 
