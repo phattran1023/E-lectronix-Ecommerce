@@ -46,11 +46,8 @@ class ReportedComment extends Controller
       return redirect()->back()->with('reportComment', 'Reported successfully, wait for response.');
     } else {
         //handle fail
-        return redirect()->back()->with('reportComment', 'Something went wrong');
+        return redirect()->back()->with('errorElse', '...');
     }
-       
-
-
-       
-   }
+  }
+   
 }
