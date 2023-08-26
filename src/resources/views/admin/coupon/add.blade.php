@@ -74,7 +74,7 @@
         <div class="row">
             <div class="input-group mb-3 col">
                 <span for="date_created" class="input-group-text">Date Created</span>
-                <input type="datetime-local" class="form-control" id="date_created" name="date_created" value="{{ old('date_created', now()->format('Y-m-d\TH:i')) }}">
+                <input type="datetime-local" class="form-control" id="date_created" name="date_created" value="{{ old('date_created', now()->addHour()->format('Y-m-d\TH:i')) }}">
             </div>
     
             <div class="input-group mb-3 col">
