@@ -18,7 +18,7 @@ class User extends Authenticatable
         $this->notify(new CustomResetPasswordNotification($token, $this->userDetail->name));
     }
 
-    
+
 
     /**
      * The attributes that are mass assignable.

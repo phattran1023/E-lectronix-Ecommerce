@@ -31,7 +31,7 @@ Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->grou
     Route::get('/collections', 'categories');
     Route::get('/collections/{category_slug}', 'products');
     Route::get('/collections/{category_slug}/{product_slug}', 'productView');
-    
+
 
     Route::get('/new-arrivals', 'newArrival');
     Route::get('/featured-products', 'featuredProducts');
@@ -114,7 +114,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('products/create', 'create')->name('product.create');
         Route::post('products', 'store')->name('product.store');
         Route::get('products/{product}/edit', 'edit')->name('product.edit');
-        Route::put('products/{product}', 'update')->name('product.update');
+        Route::put('products/{product_id}', 'update')->name('product.update');
         Route::get('products/{product_id}/delete', 'destroy')->name('product.delete');
         Route::get('product-image/{product_image_id}/delete', 'destroyImage')->name('product.deleteImage');
         Route::post('product-color/{prod_color_id}', 'updateProdColorQty');
@@ -162,7 +162,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('users/{user_id}/edit','edit');
         Route::put('users/{user_id}','update');
         Route::get('users/{user_id}/delete','delete');
-       
+
     });
     //Coupon-admin routes-Tai's routes
     Route::controller(App\Http\Controllers\CouponController::class)->group(function () {
