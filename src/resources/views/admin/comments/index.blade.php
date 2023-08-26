@@ -18,36 +18,40 @@
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Action</th>
+                                
+                                <th><small>Id</small></th>
+                                <th><small>User name</small></th>
+                                <th><small>User comment</small></th>
+                                <th><small>Violence and abuse</small></th>
+                                <th><small>Hate and harassment</small></th>
+                                <th><small>Suicide and self-harm</small></th>
+                                <th><small>Misinformation</small></th>
+                                <th><small>Fradus and scamp</small></th>
+                                <th><small>Deceptive behavior and spam</small></th>
+                                <th><small>Else</small></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($users as $item)
+                            @forelse ($reportIndex as $comment)
                                 <tr>
-                                    <td>{{ $item->id }}</td>
-                                    <td>{{ $item->name }}</td>
-                                    <td>{{ $item->email }}</td>
-                                    <td>@if ($item->role_as == '0')
-                                        <label class="badge rounded-pill bg-primary">User</label>
-                                    @elseif ($item->role_as == '1')
-                                        <label class="badge rounded-pill bg-success">Admin</label>
-                                    @else
-                                        <label class="badge rounded-pill bg-danger">Google/Twitter User</label>
-                                    @endif</td>
-                                    <td><a href="{{ url('admin/users/' . $item->id . '/edit') }}"
-                                            class="btn btn-sm btn-success">Edit</a>
-                                        <a href="{{ url('admin/users/' . $item->id . '/delete') }}"
-                                            onclick="return confirm('Are you sure you want to delete this user ?')"
-                                            class="btn btn-sm btn-danger">Delete</a>
-                                    </td>
+                                  <td>{{$comment->id}}</td>
+                                    
+                                  <td>{{$comment->user_comment}}</td>
+                                  <td  class="d-flex justify-content-center"  >
+                                    {!! $comment->violence == 1 ? '<img src="' . asset('/uploads/reportIcons/check.png') . '">' : '<img src="' . asset('/uploads/reportIcons/delete-button.png') . '">' !!}
+                                </td>
+                                <td class="d-flex justify-content-center" > 
+                                    {!! $comment->hate == 1 ? '<img src="' . asset('/uploads/reportIcons/check.png') . '">' : '<img src="' . asset('/uploads/reportIcons/delete-button.png') . '">' !!}
+                                </td>
+                                <td class="d-flex justify-content-center" >
+                                    {!! $comment->suicide == 1 ? '<img src="' . asset('/uploads/reportIcons/check.png') . '">' : '<img src="' . asset('/uploads/reportIcons/delete-button.png') . '">' !!}
+                                </td>
+                                
                                 </tr>
                             @empty
                                 <tr>
                                     <td colspan="5">No user available</td>
+                               
                                 </tr>
                             @endforelse
 
@@ -55,7 +59,7 @@
                     </table>
                 </div>
                 <div>
-                    {{$users->links()}}
+                    {{$reportPaginate->links()}}
                 </div>
             </div>
         </div>

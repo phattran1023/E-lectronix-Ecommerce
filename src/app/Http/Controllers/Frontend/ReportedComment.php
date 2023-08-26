@@ -48,9 +48,6 @@ class ReportedComment extends Controller
         //handle fail
         return redirect()->back()->with('errorElse', '...');
     }
-       
-
-
-       
-   }
+  }
+   
 }
