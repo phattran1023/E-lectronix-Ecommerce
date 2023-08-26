@@ -72,12 +72,12 @@
                                             <a href="{{ url('admin/orders/' . $item->id) . '?date=' . Request::get('date') }}" class="btn btn-primary btn-sm">View</a>
                                         </td>
                                         
-                                        </td>
+                                        
                                     </tr>
                                 @empty
-                                    <tr>
-                                        <td colspan="7">No orders available.</td>
-                                    </tr>
+                                    
+                                    
+                                    
                                 @endforelse
                             </tbody>
                         </table>

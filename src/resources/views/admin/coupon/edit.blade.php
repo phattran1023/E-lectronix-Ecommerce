@@ -85,6 +85,7 @@
                 <input class="form-check-input" type="checkbox" id="status" name="status" {{ $coupon->status=='free' ? 'checked' : '' }}>
                 <label class="form-check-label" for="status">Show on Home panel</label>
             </div>
+            <input type="hidden" name="status_current" value="{{$coupon->status}}">
         </div>
 
         <button type="submit" class="btn btn-primary">Update</button>

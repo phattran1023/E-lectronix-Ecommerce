@@ -1,4 +1,6 @@
 @extends('layouts.admin')
+@section('title', 'Admin Dashboard')
+
 @section('content')
     <div class="row">
         <div class="col-md-12 grid-margin">
@@ -6,7 +8,7 @@
                 <h2 class="alert alert-success">{{ session('message') }}</h2>
             @endif
             <div class="me-md-3 me-xl-5">
-                <h2>Welcome</h2>
+                <h2>Welcome back !!</h2>
                 <p class="mb-md-0">Analytics dashboard</p>
             </div>
             <hr>

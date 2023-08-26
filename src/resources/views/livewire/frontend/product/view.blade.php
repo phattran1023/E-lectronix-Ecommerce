@@ -14,10 +14,10 @@
                             {{-- <img src="{{ asset($product->productImages[0]->image) }}" class="w-100" alt="Img"> --}}
                             <div class="exzoom" id="exzoom">
                                 <!-- Images -->
-                                <div class="exzoom_img_box">
-                                    <ul class='exzoom_img_ul'>
+                                <div class="exzoom_img_box ">
+                                    <ul class=' exzoom_img_ul'>
                                         @foreach ($product->productImages as $itemImg)
-                                            <li><img src="{{ asset($itemImg->image) }}" /></li>
+                                            <li><img  src="{{ asset($itemImg->image) }}" /></li>
                                         @endforeach
                                     </ul>
                                 </div>
