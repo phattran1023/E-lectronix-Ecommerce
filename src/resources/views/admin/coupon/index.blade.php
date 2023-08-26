@@ -62,22 +62,17 @@
             <div class="col">
                 <a href="{{ Route('coupon.add') }}" class="btn btn-success btn-lg ">Add Coupon</a>
             </div>
-            {{-- <form class="col" action="{{Route('coupon.search')}}" method="post">
-        @csrf
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search..." aria-label="Search" aria-describedby="button-addon2" name="searchCoupon">
-                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Search</button>
+            <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#topBuyersModal">Send to Top Buyers</button>
             </div>
-        </form> --}}
-
         </div>
-
+        <hr class="hr" />
         <table class="table table-striped table-hover" id="couponTable" style="width:100%; padding:0;">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th style="width:100%">Code</th>
-                    <th>Applies</th>
+                    {{-- <th>Applies</th> --}}
                     {{-- <th>Type</th> --}}
                     <th>Value</th>
                     <th>Max Value</th>
@@ -96,7 +91,7 @@
                     <tr>
                         <td>{{ $coupon->id }}</td>
                         <td>{{ $coupon->code }}</td>
-                        <td>{{ $coupon->applies }}</td>
+                        {{-- <td>{{ $coupon->applies }}</td> --}}
                         {{-- <td>{{$coupon->type=="percent"?"%":"VND"}}</td> --}}<td>{{ $coupon->type == 'percent' ? $coupon->value . '%' : $coupon->value . 'VND' }}</td>
                         <td>{{ $coupon->max_value . 'VND' }}</td>
                         <td>{{ $coupon->description }}</td>
@@ -149,6 +144,54 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- The TopbuyersModal -->
+    <div class="modal fade" id="topBuyersModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Send Coupon</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ Route('coupon.sendToAll') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <table class="table table-striped table-hover" id="couponTable" style="width:100%; padding:0;">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Total Purchase</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($topBuyers as $buyer)
+                                    <tr>
+                                        <td>{{ $buyer->user_id }}</td>
+                                        <td>{{ $buyer->user_name }}</td>
+                                        <td>{{ $buyer->total_purchase }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row col-12">
+                            <div class="col-9">
+                                <select class="form-select" name="selectCoupon">
+                                    @foreach ($couponGroups as $couponGroupsItem)
+                                        <option value="{{$couponGroupsItem->description}}">{{$couponGroupsItem->description}}|({{$couponGroupsItem->count}})</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary">Send All</button>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>

@@ -6,15 +6,33 @@ use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class CouponController extends Controller
 {
     public function index(){
         // $coupons = Coupon::all();
-        $coupons = Coupon::paginate(15);
+        $coupons = Coupon::all();
         $users = User::all();
-        return view('admin.coupon.index',compact('coupons','users'));
+        $topBuyersQuery = DB::table('users')
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->select('users.id as user_id', 'users.name as user_name', DB::raw('SUM(order_items.price) as total_purchase'))
+        ->groupBy('users.id', 'users.name')
+        ->orderByDesc('total_purchase')
+        ->take(10);
+        $topBuyers = $topBuyersQuery->get();
+        $topBuyersCount = $topBuyers->count();
+        $couponGroups = Coupon::select('description', DB::raw('COUNT(*) as count'))
+        ->whereIn('status', [0, 'free'])
+        ->groupBy('description')
+        ->get();
+        // dd($couponGroups);
+        return view('admin.coupon.index',compact('coupons','users','topBuyers','couponGroups','topBuyersCount'));
+    }
+    public function survey(){
+        return view('admin.coupon.survey');
     }
 
     public function search(Request $request){
@@ -90,7 +108,7 @@ class CouponController extends Controller
         if ($request->input('status')=='on'){
             $status = 'free';
         }else{
-            $status = 'null';
+            $status = '0';
         }
         if ($request->input('quantity')=='1') {
             $coupon = new Coupon;
@@ -136,6 +154,7 @@ class CouponController extends Controller
             // "date_created" => "required|date|after_or_equal:" . now()->format('Y-m-d\TH:i'),
             // "date_expires" => "required|date|after:date_created",
             "type" => "required|in:percent,amount",
+            "status" => "nullable",
         ]);
     
         if ($validator->fails()) {
@@ -165,12 +184,14 @@ class CouponController extends Controller
                 return redirect()->back()->withErrors(['value' => 'The Max Value cannot be greater than sell price for Amount type. (' . $product->selling_price . ' VND)']);
             }
         }
+
         if ($request->input('status')=='on'){
             $status = 'free';
         }else{
-            $status = null;
+            $status = $request->status_current;
         }
-        $coupon = new Coupon;
+        
+        $coupon = Coupon::where('code', $request->input('code'))->first();
         $coupon->code = $request->input('code');
         $coupon->applies = $request->input('applies');
         $coupon->type = $request->input('type');
@@ -224,7 +245,7 @@ class CouponController extends Controller
     public function send(Request $request){
         $User = User::where('id', $request->id)->first();
         $Coupon = Coupon::where('code', $request->sendCodeInput)->first();
-    
+        // dd($User, $Coupon);
         if($User && $Coupon){
             $Coupon->status = $User->id;
             $Coupon->save();
@@ -233,5 +254,36 @@ class CouponController extends Controller
         }else{
             return redirect()->back()->with('message', 'User not found or Coupon not valid!');
         }
+    }
+    public function sendToAll(Request $request){
+        $description = $request->selectCoupon;
+        $check = Coupon::where('description', $description)->count();
+
+        $topBuyersQuery = DB::table('users')
+        ->join('orders', 'users.id', '=', 'orders.user_id')
+        ->join('order_items', 'orders.id', '=', 'order_items.order_id')
+        ->select('users.id as user_id', 'users.name as user_name', DB::raw('SUM(order_items.price) as total_purchase'))
+        ->groupBy('users.id', 'users.name')
+        ->orderByDesc('total_purchase')
+        ->take(10);
+        $topBuyers = $topBuyersQuery->get();
+        $topBuyersCount = $topBuyers->count();
+
+        if($topBuyersCount===0){
+            return redirect()->back()->with('message', 'User list is empty!');
+        }else{
+            if($check>$topBuyersCount){
+                foreach ($topBuyers as $buyer) {
+                    $coupon = Coupon::where('description', $description)
+                    ->whereIn('status', [0, 'free'])
+                    ->first();
+                    $coupon->status = $buyer->user_id;
+                    $coupon->save();
+                }
+                return redirect()->back()->with('message', 'Coupon sent to Top Buyer successfully');
+            }else{
+                return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
+            }
+        }      
     }
 }

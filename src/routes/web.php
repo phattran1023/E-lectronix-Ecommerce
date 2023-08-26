@@ -173,14 +173,6 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('coupon/{id}','delete')->name('coupon.delete');
         Route::get('coupon/get','getRandomCoupon')->name('coupon.getRandomCoupon');
         Route::post('coupon/send/','send')->name('coupon.send');
+        Route::post('coupon/sendToAll','sendToAll')->name('coupon.sendToAll');
     });
-
-    // Route::get('coupon', [CouponController::class, 'index'])->name('coupon.index');
-    // Route::get('coupon/add', [CouponController::class, 'add'])->name('coupon.add');
-    // Route::post('coupon/store', [CouponController::class, 'store'])->name('coupon.store');
-    // Route::get('coupon/edit/{coupon}', [CouponController::class, 'edit'])->name('coupon.edit');
-    // Route::put('coupon/update/{coupon}', [CouponController::class, 'update'])->name('coupon.update');
-    // Route::get('coupon/{id}', [CouponController::class, 'delete'])->name('coupon.delete');
-    // Route::get('coupon/get', [CouponController::class, 'getRandomCoupon'])->name('coupon.getRandomCoupon');
-    // Route::post('coupon/send/', [CouponController::class, 'send'])->name('coupon.send');
 });
