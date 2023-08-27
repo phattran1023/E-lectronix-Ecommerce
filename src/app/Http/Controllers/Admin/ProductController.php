@@ -102,9 +102,13 @@ class ProductController extends Controller
     public function update(ProductFormRequest $request, int $product_id)
     {
         $validatedData = $request->validated();
-        $product = Category::findOrFail($validatedData['category_id'])
-            ->products()->where('id', $product_id)->first();
-        // dd($validatedData['brand']);
+        // $product = Category::findOrFail($validatedData['category_id'])
+        //     ->products()->where('id', $product_id)->first();
+
+        $product = Product::findOrFail($product_id);
+
+        // dd($validatedData['category_id']);
+        // dd($product);
         if ($product) {
             $product->update([
                 'category_id' => $validatedData['category_id'],
@@ -160,7 +164,7 @@ class ProductController extends Controller
 
             return redirect('/admin/products')->with('message', 'Product updated successfully');
         } else {
-            return redirect()->with('message', 'No such product Id found');
+            return redirect('/admin/products')->with('message', 'No such product Id found');
         }
     }
 
