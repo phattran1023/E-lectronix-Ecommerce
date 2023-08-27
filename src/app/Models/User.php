@@ -55,4 +55,8 @@ class User extends Authenticatable
     public function userDetail () {
         return $this->hasOne(UserDetail::class,'user_id','id');
     }
+    public function surveys()
+    {
+        return $this->belongsToMany(Survey::class, 'survey_users', 'user_id', 'survey_id');
+    }
 }

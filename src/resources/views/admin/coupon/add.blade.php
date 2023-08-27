@@ -9,7 +9,7 @@
     }
 </style>
     <div class="container mt-3">
-    <h2>Stacked form</h2>
+    <h2>Add Coupon form</h2>
     @if ($errors->any())
         <div class="alert alert-danger">
             @foreach ($errors->all() as $error)

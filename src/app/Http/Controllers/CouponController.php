@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Coupon;
 use App\Models\Product;
@@ -24,7 +25,9 @@ class CouponController extends Controller
         ->take(10);
         $topBuyers = $topBuyersQuery->get();
         $topBuyersCount = $topBuyers->count();
+        $now = Carbon::now()->toDateTimeString();
         $couponGroups = Coupon::select('description', DB::raw('COUNT(*) as count'))
+        ->where('date_expires', '>', $now)
         ->whereIn('status', [0, 'free'])
         ->groupBy('description')
         ->get();
@@ -52,9 +55,10 @@ class CouponController extends Controller
 
     public function couponUser(){
         $user=auth()->user();
+        $now = Carbon::now()->toDateTimeString();
         if($user){
             $user_id = $user->id;
-            $coupons = Coupon::where('status',$user_id)->get();
+            $coupons = Coupon::where('status',$user_id)->where('date_expires', '>', $now)->get();
             if($coupons){
                 return view('admin.coupon.coupon',compact('coupons'));
             }else{
@@ -257,7 +261,13 @@ class CouponController extends Controller
     }
     public function sendToAll(Request $request){
         $description = $request->selectCoupon;
-        $check = Coupon::where('description', $description)->count();
+
+        $now = Carbon::now()->toDateTimeString();
+        $coupons = Coupon::where('description', $description)
+        ->where('date_expires', '>', $now)
+        ->whereIn('status', [0, 'free'])
+        ->get();
+        $check = $coupons->count();
 
         $topBuyersQuery = DB::table('users')
         ->join('orders', 'users.id', '=', 'orders.user_id')
@@ -269,6 +279,7 @@ class CouponController extends Controller
         $topBuyers = $topBuyersQuery->get();
         $topBuyersCount = $topBuyers->count();
 
+        // dd($now,$coupons,$check);
         if($topBuyersCount===0){
             return redirect()->back()->with('message', 'User list is empty!');
         }else{
@@ -285,5 +296,26 @@ class CouponController extends Controller
                 return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
             }
         }      
+    }
+    public function sendToSurvey(Request $request){
+        $description = $request->selectCoupon;
+
+        $now = Carbon::now()->toDateTimeString();
+        $coupons = Coupon::where('description', $description)
+        ->where('date_expires', '>', $now)
+        ->whereIn('status', [0, 'free'])
+        ->get();
+        $check = $coupons->count();
+
+        // dd($now,$coupons,$check);
+        if($check>0){
+            foreach ($coupons as $coupon) {
+                $coupon->status = 'survey';
+                $coupon->save();
+            }
+            return redirect()->back()->with('message', 'Coupon sent to Survey successfully');
+        }else{
+            return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
+        }    
     }
 }

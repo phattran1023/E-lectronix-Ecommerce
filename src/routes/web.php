@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\momoController;
 use App\Http\Controllers\CouponController;
+use App\Http\Controllers\SurveyController;
 use App\Http\Controllers\Auth\socialLoginController;
 use App\Http\Controllers\Frontend\CheckoutController;
 
@@ -78,6 +79,8 @@ Route::get('login/twitter/callback', [socialLoginController::class, 'handleTwitt
 
 //Coupon user- Tai's routes
 Route::get('coupon/user', [CouponController::class, 'couponUser'])->name('coupon.couponUser');
+Route::get('survey', [SurveyController::class, 'survey'])->name('survey.survey');
+Route::post('survey/submit', [SurveyController::class, 'surveySubmit'])->name('survey.submit');
 
 //Coupon - checkout
 Route::post('coupon/add/', [CheckoutController::class, 'addCoupon'])->name('coupon.addCoupon');
@@ -174,5 +177,14 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('coupon/get','getRandomCoupon')->name('coupon.getRandomCoupon');
         Route::post('coupon/send/','send')->name('coupon.send');
         Route::post('coupon/sendToAll','sendToAll')->name('coupon.sendToAll');
+        Route::post('coupon/sendToSurvey','sendToSurvey')->name('coupon.sendToSurvey');
+    });
+    Route::controller(App\Http\Controllers\SurveyController::class)->group(function () {
+        Route::get('survey','index')->name('survey.index');
+        Route::get('survey/add','add')->name('survey.add');
+        Route::post('survey/store','store')->name('survey.store');
+        Route::get('survey/edit/{id}','edit')->name('survey.edit');
+        Route::put('survey/update','update')->name('survey.update');
+        Route::get('survey/{id}','delete')->name('survey.delete');
     });
 });
