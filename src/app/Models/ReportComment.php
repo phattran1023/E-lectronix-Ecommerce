@@ -13,6 +13,7 @@ class ReportComment extends Model
     protected $fillable = [
         'report_id',
         'reporter_id',
+        'comment_owner',
         'user_comment',
         'violence',
         'hate',
