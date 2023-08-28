@@ -44,7 +44,9 @@ class CommentController extends Controller
                 Comment::create([
                     'post_id' => $product->id,
                     'user_id' => Auth::user()->id,
+                    'user_name' =>Auth::user()->name,
                     'comment_body' => $request->comment_body,
+                    
                 ]);
 
             } else {

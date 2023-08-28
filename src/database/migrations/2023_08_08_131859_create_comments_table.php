@@ -14,9 +14,12 @@ return new class extends Migration {
             $table->id();
             $table->integer('post_id');
             $table->integer('user_id');
+            $table->string('user_name');
             $table->mediumText('comment_body');
            
             $table->timestamps();
+           
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

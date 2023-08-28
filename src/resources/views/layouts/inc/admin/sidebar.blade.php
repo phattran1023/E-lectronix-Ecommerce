@@ -114,6 +114,12 @@
                 <span class="menu-title">Coupon</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url('admin/survey') }}">
+                <i class="mdi mdi-rename-box menu-icon"></i>
+                <span class="menu-title">Survey</span>
+            </a>
+        </li>
 
         <li class="nav-item">
             <a class="nav-link" href="{{ url('admin/settings') }}">

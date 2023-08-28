@@ -13,6 +13,7 @@ class ReportComment extends Model
     protected $fillable = [
         'report_id',
         'reporter_id',
+        'comment_owner',
         'user_comment',
         'violence',
         'hate',
@@ -28,6 +29,8 @@ class ReportComment extends Model
         return $this->belongsTo(Comment::class,'report_id','id');
     }
     
-   
+   public function user(){
+        return $this->belongsTo(User::class);
+   }
     
 }

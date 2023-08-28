@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class ReportedComment extends Controller
 {
     public function indexAdmin(){
-        $reportIndex = ReportComment::get();
+        $reportIndex = ReportComment::all();
         $userIndex = User::all();
         $reportPaginate = ReportComment::paginate(10);
         return view('admin.comments.index',compact('reportIndex','reportPaginate','userIndex'));

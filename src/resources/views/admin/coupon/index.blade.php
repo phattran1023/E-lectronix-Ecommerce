@@ -63,6 +63,7 @@
                 <a href="{{ Route('coupon.add') }}" class="btn btn-success btn-lg ">Add Coupon</a>
             </div>
             <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sendToSurvey">Send to Survey</button>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#topBuyersModal">Send to Top Buyers</button>
             </div>
         </div>
@@ -92,19 +93,20 @@
                         <td>{{ $coupon->id }}</td>
                         <td>{{ $coupon->code }}</td>
                         {{-- <td>{{ $coupon->applies }}</td> --}}
-                        {{-- <td>{{$coupon->type=="percent"?"%":"VND"}}</td> --}}<td>{{ $coupon->type == 'percent' ? $coupon->value . '%' : $coupon->value . 'VND' }}</td>
+                        {{-- <td>{{$coupon->type=="percent"?"%":"VND"}}</td> --}}
+                        <td>{{ $coupon->type == 'percent' ? $coupon->value . '%' : $coupon->value . 'VND' }}</td>
                         <td>{{ $coupon->max_value . 'VND' }}</td>
                         <td>{{ $coupon->description }}</td>
                         <td>{{ $coupon->date_created }}</td>
-                        <td
-                            style="color: 
-                    @if (Carbon\Carbon::parse($coupon->date_expires)->isPast()) #FF0000
-                    @elseif(Carbon\Carbon::parse($coupon->date_expires)->diffInDays(now()) < 3)
-                        #FFA500
-                    @else
-                        #006400 @endif;">
-                            {{ $coupon->date_expires }}
-                        </td>
+                        <td><span class="badge rounded-pill
+                            @if (Carbon\Carbon::parse($coupon->date_expires)->isPast()) 
+                                bg-danger
+                            @elseif(Carbon\Carbon::parse($coupon->date_expires)->diffInDays(now()) < 3) 
+                                bg-warning
+                            @else
+                                bg-success
+                            @endif
+                            ">{{ $coupon->date_expires }}</span></td>
                         <td>{{ $coupon->status == 'free' ? 'Free' : $coupon->status }}</td>
                         <td><a href="{{ Route('coupon.edit', $coupon) }}" class="btn btn-primary">Edit</a></td>
                         <td><a href="{{ Route('coupon.delete', $coupon->id) }}" class="btn btn-danger">Delete</a></td>
@@ -191,6 +193,32 @@
                             <div class="col-3">
                                 <button type="submit" class="btn btn-primary">Send All</button>
                             </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- The sendToSurvey -->
+    <div class="modal fade" id="sendToSurvey" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Send to Survey</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ Route('coupon.sendToSurvey') }}" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <select class="form-select" name="selectCoupon">
+                            @foreach ($couponGroups as $couponGroupsItem)
+                                <option value="{{$couponGroupsItem->description}}">{{$couponGroupsItem->description}}|({{$couponGroupsItem->count}})</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row col-12">
+                            <button type="submit" class="btn btn-primary">Send All</button>
                         </div>
                     </div>
                 </form>

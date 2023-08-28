@@ -7,14 +7,19 @@
     }
 
     .wrapper {
-        height: 100vh;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
     }
 
     .card {
         position: relative;
         background-color: #7B1FA2;
         padding: 10px;
-        width: 320px;
+        flex: 1;
+        min-width: 320px;
+        max-width: 320px; /* Limit the maximum width of each card */
+        margin: 10px;
         min-height: 420px;
         border: none;
     }
@@ -71,41 +76,57 @@
         border: #7B1FA2;
         transition-duration: 0.5s;   
     }
+    .ads{
+        background-color: #868ff5;
+        padding: 30px;
+        opacity: 0.7;
+    }
+    .ads:hover{
+        opacity: 1;
+        transition: 0.8s;
+    }
 </style>
+<div class="text text-center mt-4 mb-4 ads">
+    <p class="display-3">GETS MORE COUPON!!!</p>
+    <p class="display-6">Answer questions to collect more valuable coupons</p>
+    <div>
+        <a class="btn btn-info" href="{{Route('survey.survey')}}">Get Coupon</a>
+    </div>
+</div>
 @if (session('message'))
-    <div class="alert alert-success">
+    <div class="alert alert-danger text-center">
         <p>{{ session('message') }}</p>
     </div>
 @endif
 <div class="wrapper d-flex justify-content-center align-items-center">
     @foreach ($coupons as $coupon)
-    <div class="card mx-3">
-        <div class="cross-bg">
-        </div>
-        <div class="content">
-            <div class="logo text-right row">
-                <img class="col col-6" src="{{asset('assets/img/coupon.png')}}" width="50%">
-                <span class="col col-6" style="color: white;">EXP: {{$coupon->date_expires}}</span>
+        <div class="card mx-3">
+            <div class="cross-bg">
             </div>
-            <div class="text-center text-uppercase text-white off">
-                <span>Discount</span>
-                <h1 class="mt-0">{{$coupon->type=='percent'?$coupon->value.'%':($coupon->value/1000).'K'}}</h1>
-            </div>
-            <div class="text-center text-white">
-                <span class="plus">Max: {{$coupon->max_value}}VND</span>
-            </div>
-            <div class="text-center text-uppercase text-white">
-                <h3 class="m-0 des">{{$coupon->description}}</h3>
-            </div>
-            <div class="px-3 mb-3 ">
-                <div class="code text-center mt-4 row">
-                    <input class="col col-10 text-center" id="coupon{{ $coupon->id }}" value="{{ $coupon->code }}" style="border: none">
-                    <i class="far fa-copy fa-sm col col-2" style="font-size: 25px" onclick="copyCouponCode('coupon{{ $coupon->id }}')"></i>
+            <div class="content">
+                <div class="logo text-right row">
+                    <img class="col col-6" src="{{asset('assets/img/coupon.png')}}" width="50%">
+                    <span class="col col-6" style="color: white;">EXP: {{$coupon->date_expires}}</span>
+                </div>
+                <div class="text-center text-uppercase text-white off">
+                    <span>Discount</span>
+                    <h1 class="mt-0">{{$coupon->type=='percent'?$coupon->value.'%':($coupon->value/1000).'K'}}</h1>
+                </div>
+                <div class="text-center text-white">
+                    <span class="plus">Max: {{$coupon->max_value}}VND</span>
+                </div>
+                <div class="text-center text-uppercase text-white">
+                    <h3 class="m-0 des">{{$coupon->description}}</h3>
+                </div>
+                <div class="px-3 mb-3 ">
+                    <div class="code text-center mt-4 row">
+                        <input class="col col-10 text-center" id="coupon{{ $coupon->id }}" value="{{ $coupon->code }}" style="border: none">
+                        <i class="far fa-copy fa-sm col col-2" style="font-size: 25px" onclick="copyCouponCode('coupon{{ $coupon->id }}')"></i>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    @endforeach
+        @endforeach
 </div>
 <script>
     function copyCouponCode(elementId) {

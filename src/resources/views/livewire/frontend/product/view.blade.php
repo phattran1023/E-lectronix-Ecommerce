@@ -17,7 +17,7 @@
                                 <div class="exzoom_img_box ">
                                     <ul class=' exzoom_img_ul'>
                                         @foreach ($product->productImages as $itemImg)
-                                            <li><img  src="{{ asset($itemImg->image) }}" /></li>
+                                            <li><img src="{{ asset($itemImg->image) }}" /></li>
                                         @endforeach
                                     </ul>
                                 </div>
@@ -286,12 +286,14 @@
                                 <br>
 
                                 {{-- Fake form --}}
-                                <form id="commitReport" action="{{route('storeReportComment',$comment->id) }}"
+                                <form id="commitReport"
+                                    action="{{ route('storeReportComment', ['commentId' => $comment->id, 'userId' => Auth::user()->id]) }}"
                                     method="post" style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
                                         name="form_violence">
-                                    <input class="form-check-input" type="number" id="form-hate" name="form-hate">
+                                    <input class="form-check-input" type="number" id="form-hate"
+                                         name="form_hate">
                                     <input class="form-check-input" type="number" id="form-suicide"
                                         name="form_suicide">
                                     <input class="form-check-input" type="number" id="form-misinformation"
@@ -301,8 +303,8 @@
                                     <input class="form-check-input" type="number" id="form-deceptive"
                                         name="form_deceptive">
                                     <input class="form-check-input" type="text" id="form-else" name="form_else">
-                                    
-                                   
+
+
                                 </form>
 
                             @empty
@@ -334,18 +336,16 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Viloence and abuse
                                         </strong></label>{{-- Real Viloence and abuse form report --}}
-                                    <input class="form-check-input violence" id="modal-violence" type="checkbox"
-                                        value="1">
+                                    <input class="form-check-input violence" id="modal-violence" type="checkbox">
                                     &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/violence.png') }}"
                                         width="30px" style="float: right">
-                                        <p></p>
+                                    <p></p>
                                     <hr>
                                 </div>
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Hate and
                                             harassment</strong></label>{{-- Real Hate and harassment form report --}}
-                                    <input class="form-check-input hate" id="modal-hate" type="checkbox"
-                                        value="1">
+                                    <input class="form-check-input hate" id="modal-hate" type="checkbox">
                                     &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/hate.png') }}"
                                         width="30px" style="float: right">
                                     <hr>
@@ -353,8 +353,7 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Suicide and
                                             self-harm</strong></label>{{-- Real Suicide and self-harm form report --}}
-                                    <input class="form-check-input suicide" id="modal-suicide" type="checkbox"
-                                        value="1">
+                                    <input class="form-check-input suicide" id="modal-suicide" type="checkbox">
                                     &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/suicide.png') }}"
                                         width="30px" style="float: right">
                                     <hr>
@@ -363,7 +362,7 @@
                                     <label class="form-check-label"
                                         for="mySwitch"><strong>Misinformation</strong></label>{{-- Real Misinformation form report --}}
                                     <input class="form-check-input misinformation" id="modal-misinformation"
-                                        type="checkbox" value="1">
+                                        type="checkbox">
                                     &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/misinformation.png') }}"
                                         width="30px" style="float: right">
 
@@ -372,8 +371,7 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Frauds and
                                             scams</strong></label>{{-- Real Frauds and scams form report --}}
-                                    <input class="form-check-input frauds" id="modal-frauds" type="checkbox"
-                                        value="1">
+                                    <input class="form-check-input frauds" id="modal-frauds" type="checkbox">
                                     &nbsp;&nbsp;<img src="{{ asset('/uploads/reportIcons/fraud-alert.png') }}"
                                         width="30px" style="float: right">
 
@@ -382,8 +380,7 @@
                                 <div class="form-check form-switch">
                                     <label class="form-check-label" for="mySwitch"><strong>Deceptive behavior and
                                             spam</strong></label>{{-- Real Deceptive behavior and spam form report --}}
-                                    <input class="form-check-input deceptive" id="modal-deceptive" type="checkbox"
-                                        value="1">
+                                    <input class="form-check-input deceptive" id="modal-deceptive" type="checkbox">
                                     &nbsp;&nbsp; <img src="{{ asset('/uploads/reportIcons/deceptive.png') }}"
                                         width="30px" style="float: right">
 
@@ -396,9 +393,9 @@
                                 <input type="text" style="display: none" id="modal-else"
                                     oninput="CharacterCountdown()" class="elseInput"
                                     placeholder="Please tell us more.......">
-                                   @if (session('errorElse'))
-                                       <small><span class="text-danger">The words must lower than 50</span></small>
-                                   @endif
+                                @if (session('errorElse'))
+                                    <small><span class="text-danger">The words must lower than 50</span></small>
+                                @endif
                             </div>
                         </div>
                         <div class="col-md-4" style="border-left: solid black; text-align: center">
@@ -424,7 +421,7 @@
                     <button type="button" class="btn btn-primary" onclick="commitReport()">Commit report</button>
                 </div>
             </div>
-            </form>
+
         </div>
     </div>
     {{-- Related Products --}}
@@ -502,31 +499,49 @@
 @section('commitReport')
     <script>
         function commitReport() {
+            var modalViolence = document.getElementById("modal-violence");
+            var modalHate = document.getElementById("modal-hate");
+            var modalSuicide = document.getElementById("modal-suicide");
+            var modalMisinformation = document.getElementById("modal-misinformation");
+            var modalFrauds = document.getElementById("modal-frauds");
+            var modalDeceptive = document.getElementById("modal-deceptive");
+            var modalElse = document.getElementById("modal-else");
 
-            //Violence and abuse
-            let abc = document.getElementById('form-violence').value = document.getElementById('modal-violence').value;
+            function updateValues() {
+                modalViolence.value = modalViolence.checked ? "1" : "0";
+                modalHate.value = modalHate.checked ? "1" : "0";
+                modalSuicide.value = modalSuicide.checked ? "1" : "0";
+                modalMisinformation.value = modalMisinformation.checked ? "1" : "0";
+                modalFrauds.value = modalFrauds.checked ? "1" : "0";
+                modalDeceptive.value = modalDeceptive.checked ? "1" : "0";
+            }
 
-            //Hate and harassment
-            document.getElementById('form-hate').value = document.getElementById('modal-hate').value;
+            // Add event listeners to each checkbox
+            modalViolence.addEventListener("change", updateValues);
+            modalHate.addEventListener("change", updateValues);
+            modalSuicide.addEventListener("change", updateValues);
+            modalMisinformation.addEventListener("change", updateValues);
+            modalFrauds.addEventListener("change", updateValues);
+            modalDeceptive.addEventListener("change", updateValues);
 
-            //Suicide and self-harm
-            document.getElementById('form-suicide').value = document.getElementById('modal-suicide').value;
+            // Update hidden form inputs based on modal checkbox values
+            updateValues();
 
-            //Misinformation
-            document.getElementById('form-misinformation').value = document.getElementById('modal-misinformation').value;
+            // Assign checkbox values to the form inputs
+            document.getElementById('form-violence').value = modalViolence.value;
+            document.getElementById('form-hate').value = modalHate.value;
+            document.getElementById('form-suicide').value = modalSuicide.value;
+            document.getElementById('form-misinformation').value = modalMisinformation.value;
+            document.getElementById('form-frauds').value = modalFrauds.value;
+            document.getElementById('form-deceptive').value = modalDeceptive.value;
+            document.getElementById('form-else').value = modalElse.value;
 
-            //Frauds and scams
-            document.getElementById('form-frauds').value = document.getElementById('modal-frauds').value;
-
-            //Deceptive behavior and spam 
-            document.getElementById('form-deceptive').value = document.getElementById('modal-deceptive').value;
-
-            //Else report
-            document.getElementById('form-else').value = document.getElementById('modal-else').value;
-
-            //submit the form report
+            // Submit the form
             const commit = document.getElementById('commitReport');
             commit.submit();
+
+            // Reset the form
+            commit.reset();
         }
     </script>
 @endsection
