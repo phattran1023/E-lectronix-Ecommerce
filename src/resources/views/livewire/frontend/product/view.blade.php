@@ -286,7 +286,7 @@
                                 <br>
 
                                 {{-- Fake form --}}
-                                <form id="commitReport" action="{{route('storeReportComment',$comment->id) }}"
+                                <form id="commitReport" action="{{route('storeReportComment',['commentId' => $comment->id, 'userId' => Auth::user()->id]) }}"
                                     method="post" style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
@@ -424,7 +424,7 @@
                     <button type="button" class="btn btn-primary" onclick="commitReport()">Commit report</button>
                 </div>
             </div>
-            </form>
+            
         </div>
     </div>
     {{-- Related Products --}}

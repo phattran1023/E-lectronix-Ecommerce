@@ -21,7 +21,7 @@ class Comment extends Model
       return $this-> belongsTo(Product::class,'post_id','id');
    }
    public function user(){
-      return $this->belongsTo(User::class, 'user_id','id');
+      return $this->belongsTo(User::class);
    }
    public function reported_comments(){
       return $this->hasMany(ReportedComment::class, 'report_id','post_id');

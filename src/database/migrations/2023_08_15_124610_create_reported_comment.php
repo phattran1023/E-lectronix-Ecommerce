@@ -24,6 +24,7 @@ return new class extends Migration
             $table->tinyInteger('deceptive')->nullable();
             $table->string('else')->nullable();
             $table->timestamps();
+            $table->foreign('reporter_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
