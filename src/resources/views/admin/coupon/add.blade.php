@@ -36,7 +36,7 @@
                 <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity', 1) }}">
             </div>
         </div>
-        
+
         <div class="input-group mb-3">
             <span for="applies" class="input-group-text">Applies To</span>
             <select class="form-select" name="applies">
@@ -59,7 +59,7 @@
                 <span for="value" class="input-group-text">Value</span>
                 <input type="number" class="form-control" id="value" name="value" value="{{ old('value', 0) }}">
             </div>
-    
+
             <div class="input-group mb-3 col">
                 <span for="max_value" class="input-group-text">Max Value</span>
                 <input type="number" class="form-control" id="max_value" name="max_value" value="{{ old('max_value', 0) }}">
@@ -76,7 +76,7 @@
                 <span for="date_created" class="input-group-text">Date Created</span>
                 <input type="datetime-local" class="form-control" id="date_created" name="date_created" value="{{ old('date_created', now()->addHour()->format('Y-m-d\TH:i')) }}">
             </div>
-    
+
             <div class="input-group mb-3 col">
                 <span for="date_expires" class="input-group-text">Date Expires</span>
                 <input type="datetime-local" class="form-control" id="date_expires" name="date_expires" value="{{ old('date_expires', now()->addDay()->format('Y-m-d\TH:i')) }}">

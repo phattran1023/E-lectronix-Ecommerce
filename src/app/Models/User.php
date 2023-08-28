@@ -55,6 +55,7 @@ class User extends Authenticatable
     public function userDetail () {
         return $this->hasOne(UserDetail::class,'user_id','id');
     }
+<<<<<<< HEAD
 
     public function surveys()
     {
@@ -64,6 +65,8 @@ class User extends Authenticatable
     public function reported_comments(){
         return $this->hasMany(ReportComment::class,'id','report_id');
     }
+=======
+>>>>>>> f9d5377a5400ebef8878da0eaa31072297e22c24
     public function comments(){
         return $this->hasMany(Comment::class);
     }
