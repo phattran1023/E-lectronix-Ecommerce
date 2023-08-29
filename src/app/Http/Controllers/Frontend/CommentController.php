@@ -28,7 +28,7 @@ class CommentController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect()->back()->with('messageComment', 'Comment area is required.');
+                return redirect()->back()->with('messageComment', 'Comment out of length.');
             }
 
             // Check for bad words in the comment body

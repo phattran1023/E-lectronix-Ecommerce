@@ -116,9 +116,10 @@
 
                     <div style="margin-top:5px">
                         <div class="d-flex bd-highlight">
-                            <div class="p-1 flex-fill bd-highlight form-control" >{{ $comment->user_comment }}
+                            {{--User Comment --}}
+                            <div class="p-1 flex-fill bd-highlight form-control userComment">
                             </div>
-                            <div class="p-8 flex-fill bd-highlight"> <button id="highlightButton">></button></div>
+                            <div class="p-8 flex-fill bd-highlight"> <button id="highlightButton"></button></div>
 
                         </div>
                     </div>
@@ -164,6 +165,7 @@
 
                             $(".commentOwner").text(res.report_comment_info.comment_owner);
                             $(".reporterName").text(res.report_comment_info.reporter_name);
+                            $(".userComment").text(res.report_comment_info.user_comment);
                         } else {
                             alert(res.messageErr);
                             $(".modal").modal('hide');

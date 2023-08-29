@@ -48,7 +48,7 @@ Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport/{commentId}/{userId}',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');
 Route::get('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'earliestComment']);
-
+Route::post('replyComment',[App\Http\Controllers\Frontend\ReplyController::class,'store']);
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 

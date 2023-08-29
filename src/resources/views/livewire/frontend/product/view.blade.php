@@ -263,7 +263,8 @@
                                                         &nbsp;&nbsp;
                                                     @endif
 
-                                                    <button href="" class="fa fa-comments text-primary"
+                                                    <button value="{{ $comment->id }}"
+                                                        class="fa fa-comments text-primary replyComment"
                                                         style="text-decoration: none; border: none"></button>
                                                     &nbsp;&nbsp;
 
@@ -292,8 +293,7 @@
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
                                         name="form_violence">
-                                    <input class="form-check-input" type="number" id="form-hate"
-                                         name="form_hate">
+                                    <input class="form-check-input" type="number" id="form-hate" name="form_hate">
                                     <input class="form-check-input" type="number" id="form-suicide"
                                         name="form_suicide">
                                     <input class="form-check-input" type="number" id="form-misinformation"
@@ -494,7 +494,40 @@
     </div>
 
 </div>
+{{-- Reply comment --}}
+@section('commentReply')
+    <script>
+        $(document).ready(function() {
+            $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            $(document).on('click', '.replyComment', function() {
+                var replyClick = $(this);
+                var replyId = replyClick.val();
+                $.ajax({
+                    type: "post",
+                    url: "/replyComment",
+                    data: {
+                        'replyId': replyId
+                    },
+                    success: function(res) {
+                        if (res.status == 200) {
 
+                            $(".comment-content").text(res.comment.comment_body);
+                            $(".comment-name").text(res.user.name);
+                        } else {
+                            alert(res.message);
+                            $(".modal").modal('hide');
+                        }
+                    }
+                });
+              
+            });
+        });
+    </script>
+@endsection
 {{-- Report script --}}
 @section('commitReport')
     <script>

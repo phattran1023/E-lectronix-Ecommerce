@@ -27,6 +27,9 @@ class Comment extends Model
    public function reported_comments(){
       return $this->hasMany(ReportedComment::class, 'report_id','post_id');
    }
-  
+   
+   public function replies(){
+      return $this->hasMany(Reply::class,'id','orgin_comment');
+   }
   
 }
