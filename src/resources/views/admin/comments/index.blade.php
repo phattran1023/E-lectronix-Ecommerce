@@ -68,8 +68,8 @@
                                             : '<img src="' . asset('/uploads/reportIcons/delete-button.png') . '">' !!}
                                     </td>
                                     <td>
-                                        <button type="button" class="card btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop">
+                                        <button type="button" class="card btn-primary viewFullBtn" data-bs-toggle="modal"
+                                            data-bs-target="#staticBackdrop" value="{{$comment->id}}">
                                             View full
                                         </button>
                                     </td>
@@ -116,7 +116,7 @@
 
                     <div style="margin-top:5px">
                         <div class="d-flex bd-highlight">
-                            <div class="p-1 flex-fill bd-highlight form-control" id="myText">{{ $comment->user_comment }}
+                            <div class="p-1 flex-fill bd-highlight form-control" >{{ $comment->user_comment }}
                             </div>
                             <div class="p-8 flex-fill bd-highlight"> <button id="highlightButton">></button></div>
 
@@ -140,4 +140,40 @@
             </div>
         </div>
     </div>
+@endsection
+@section('viewFullBtn')
+    <script>
+        $(document).ready(function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $(document).on('click', '.viewFullBtn', function() {
+                var viewFullClick = $(this);
+                var report_id = viewFullClick.val();
+                $.ajax({
+                    type: "get",
+                    url: "/viewFullInfo",
+                    data: {
+                        'report_id': report_id
+                    },
+                    success: function(res) {
+                        if (res.status == 200) {
+
+                            $(".comment-content").text(res.comment.comment_body);
+                            $(".comment-name").text(res.user.name);
+                        } else {
+                            alert(res.messageErr);
+                            $(".modal").modal('hide');
+                        }
+                    }
+                });
+
+            });
+
+
+        });
+    </script>
 @endsection

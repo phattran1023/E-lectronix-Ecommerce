@@ -84,8 +84,8 @@
 
 
     @livewireScripts
-
-    
+    {{--Comment view report--}}
+    @yield('viewFullBtn')
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>
 

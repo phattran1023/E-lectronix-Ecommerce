@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,24 @@ use Illuminate\Support\Facades\Validator;
 
 class ReportedComment extends Controller
 {
- 
+  public function index(Request $request){
+    $report_comment_info = ReportComment::where('id', $request->report_id);
+    $comment_info = Comment::where('id',$report_comment_info->report_id);
+    $post_info = Product::where('id',$comment_info->post_id);
+    if($report_comment_info && $comment_info && $post_info){
+      return response()->json([
+        'report_comment_info' => $report_comment_info,
+        'comment_info' => $comment_info,
+        'post_info' => $post_info,
+        'status' => 200,
+    ]);
+    }else{
+      response()->json([
+        'messageErr' => 'Can not find any information about that comment.',
+        'status' => 500,
+    ]);
+    }
+  }
    public function store(Request $request,$commentId,$userId){
     $validator = Validator::make($request->all(), [
         'form_violence'=>'nullable',

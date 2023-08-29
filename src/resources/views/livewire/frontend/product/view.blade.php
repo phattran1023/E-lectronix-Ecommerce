@@ -329,7 +329,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body " style="background: #6489e4">
+                <div class="modal-body " style="background: #6489e4; box-shadow: inset 0 0 10px #2c2c2b;">
                     <div class="row">
                         <div class="col-sm-8">
                             <div>

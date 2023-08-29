@@ -160,11 +160,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
     //Comments-admin routes-Tien's routes
     Route::controller(App\Http\Controllers\Admin\ReportedComment::class)->group(function () {
         Route::get('/comments', 'indexAdmin');
-        Route::get('/users/create', 'create');
-        Route::post('users','store');
-        Route::get('users/{user_id}/edit','edit');
-        Route::put('users/{user_id}','update');
-        Route::get('users/{user_id}/delete','delete');
+        Route::get('viewFullInfo','index');
 
     });
     //Coupon-admin routes-Tai's routes
