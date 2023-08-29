@@ -22,7 +22,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-md-5 my-auto">
+                <div class="col-md-5 my-auto userNav">
                     <ul class="nav justify-content-end">
 
                         <li class="nav-item">
@@ -117,7 +117,7 @@
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <span ><i class="fas fa-bars" style="color:#fff; font-size:24px;"></i></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ">
