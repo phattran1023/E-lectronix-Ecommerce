@@ -55,7 +55,7 @@
                                     @foreach ($product->productColors as $colorItem)
                                         {{-- <input type="radio" name="colorSelection" value="{{ $colorItem->id }}">{{ $colorItem->color->name }} --}}
                                         <label class="colorSelectionLabel"
-                                            style="background-color: {{ $colorItem->color->code }}"
+                                            style="background-color: {{ $colorItem->color->code }}; color:white;"
                                             wire:click="colorSelected( {{ $colorItem->id }} )">{{ $colorItem->color->name }}</label>
                                     @endforeach
                                 @endif
