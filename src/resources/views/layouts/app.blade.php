@@ -169,7 +169,7 @@
     @yield('deleteComment')
     @yield('reportComment')
     @yield('countMaximumWords')
-    
+    @yield('commentReply')
     @yield('elseBtn')
     @yield('commitReport')
 

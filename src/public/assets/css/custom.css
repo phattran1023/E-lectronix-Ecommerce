@@ -515,4 +515,19 @@
     background-color: white;
 
 }
+/***** reply *****/
+.reply-field {
+    margin-top: 10px;
+}
+
+.reply-field textarea {
+    width: 100%;
+    resize: vertical;
+}
+
+.reply-field button {
+    border-radius: 0;
+}
+
+/***** End reply *****/
 

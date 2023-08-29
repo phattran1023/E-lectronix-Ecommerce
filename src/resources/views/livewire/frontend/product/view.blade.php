@@ -224,7 +224,7 @@
 
                             @forelse ($product->comments->sortByDesc('created_at') as $comment)
                                 <div class="row d-flex justify-content-center">
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class=" comment-container card p-3" style="width: 100%">
 
                                             <div class="d-flex justify-content-between align-items-center">
@@ -274,9 +274,18 @@
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
                                                 </div>
+                                               
                                                 <div class=" align-items-center">
                                                     <input id="toggle-heart" type="checkbox" />
                                                     <label for="toggle-heart">❤</label>
+                                                </div>
+                                            </div>
+                                            <div class="reply-field mt-2" style="display: none;">
+                                                <div class="input-group">
+                                                    <input class="form-control" rows="1" placeholder="Write a reply..." id="textIput">
+                                                    <div class="input-group-append">
+                                                        <button type="button" style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%" class="btn" id="replyBtn">Reply</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -387,7 +396,7 @@
                                     <hr>
                                 </div>
                                 <button id="elseBtn"
-                                    style="border-radius: 15%"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
+                                    style="border-radius: 15%" class="btn btn-warning"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
                                 <small class="text-white ">Characters
                                     remaining: <span id="countdown2">50&nbsp;</span></small>
                                 <input type="text" style="display: none" id="modal-else"
@@ -499,18 +508,25 @@
     <script>
         $(document).ready(function() {
             $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
             $(document).on('click', '.replyComment', function() {
-                var replyClick = $(this);
-                var replyId = replyClick.val();
-                $.ajax({
-                    type: "post",
+
+                // Find the closest .comment-container and then find .reply-field inside it
+                var replyField = $(this).closest(".comment-container").find(".reply-field");
+
+                // Toggle the visibility of the reply field
+                replyField.toggle();
+                $(document).on('click','#replyBtn',function(){
+                    var text = $('#textInput').val();
+                    $.ajax({
+                    type: "get",
                     url: "/replyComment",
                     data: {
-                        'replyId': replyId
+                        'comment_id': comment_id
+
                     },
                     success: function(res) {
                         if (res.status == 200) {
@@ -523,7 +539,7 @@
                         }
                     }
                 });
-              
+                });
             });
         });
     </script>
