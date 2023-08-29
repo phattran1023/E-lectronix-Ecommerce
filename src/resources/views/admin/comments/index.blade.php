@@ -99,8 +99,8 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Reporting from <a href=""
-                            style="text-decoration: none">{{ $comment->reporter_name }}</a></h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Reporting from <a href="" class="reporterName"
+                            style="text-decoration: none"></a></h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -112,7 +112,7 @@
                             style="border-radius:  50%">
                     @endif
 
-                    <span class="">{{ $comment->comment_owner }}</span>
+                    <span class="commentOwner"></span>
 
                     <div style="margin-top:5px">
                         <div class="d-flex bd-highlight">
@@ -162,8 +162,8 @@
                     success: function(res) {
                         if (res.status == 200) {
 
-                            $(".comment-content").text(res.comment.comment_body);
-                            $(".comment-name").text(res.user.name);
+                            $(".commentOwner").text(res.report_comment_info.comment_owner);
+                            $(".reporterName").text(res.report_comment_info.reporter_name);
                         } else {
                             alert(res.messageErr);
                             $(".modal").modal('hide');
