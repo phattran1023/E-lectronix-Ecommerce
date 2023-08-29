@@ -157,12 +157,30 @@
     font-size: 15px;
 }
 @media only screen and (max-width: 600px) {
-    .main-navbar .top-navbar .nav-link {
+    /* .main-navbar .top-navbar .nav-link {
         font-size: 12px;
         padding: 8px 10px;
         display: none;
+    } */
+    .brandIcon{
+        display: none;
     }
-    
+    .searchBar{
+        display: block;
+        width: 100%;
+    }
+    .userNav{
+        display: block;
+        width: 100%;
+    }
+    .userNav ul{
+        padding-left: 0;
+        margin-left: 0;
+    }
+    .userNav li{
+        text-align: center;
+        float: left;
+    }
 }
 .navbar-brand {
     color :#fff;
