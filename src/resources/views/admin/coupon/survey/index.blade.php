@@ -3,10 +3,17 @@
 @section('title', 'Admin Coupon List')
 
 @section('content')
-<a class="btn btn-info" href="{{Route('survey.add')}}">Add new Question</a>
-<a class="btn btn-info" href="{{Route('survey.survey')}}">View Survey</a>
+
 <div class="container mt-3">
-    <h2>Survey Questions</h2>     
+    <div class="row">
+        <div class="col">
+            <h2>Survey Questions</h2>
+        </div>
+        <div class="col text-md-end">
+            <a class="btn btn-info" href="{{Route('survey.add')}}">Add new Question</a>
+            <a class="btn btn-info" href="{{Route('survey.survey')}}">View Survey</a>
+        </div>
+    </div>
     <hr class="hr" />
     @if (session('message'))
         <div class="alert alert-success">
