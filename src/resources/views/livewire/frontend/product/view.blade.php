@@ -269,7 +269,7 @@
                                                     &nbsp;&nbsp;
 
                                                     @if (Auth::id() == $comment->user_id)
-                                                        <button type="button" value="{{ $comment->id }}"
+                                                        <button type="button"
                                                             class="fa fa-trash text-danger deleteComment"
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
@@ -284,7 +284,7 @@
                                                 <div class="input-group">
                                                     <input class="form-control" rows="1" placeholder="Write a reply..." id="textIput">
                                                     <div class="input-group-append">
-                                                        <button type="button" style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%" class="btn" id="replyBtn">Reply</button>
+                                                        <button type="button" style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%" class="btn" id="replyBtn"  value="{{ $comment->id }}">Reply</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -297,7 +297,7 @@
 
                                 {{-- Fake form --}}
                                 <form id="commitReport"
-                                    action="{{ route('storeReportComment', ['commentId' => $comment->id, 'userId' => Auth::user()->id]) }}"
+                                    action="{{ route('storeReportComment', ['commentId' => $comment->id]) }}"
                                     method="post" style="display: none">
                                     @csrf
                                     <input class="form-check-input" type="number" id="form-violence"
@@ -521,11 +521,15 @@
                 replyField.toggle();
                 $(document).on('click','#replyBtn',function(){
                     var text = $('#textInput').val();
+                    var replyClick = $(this).val();
+                  
                     $.ajax({
-                    type: "get",
+                    type: "post",
                     url: "/replyComment",
                     data: {
-                        'comment_id': comment_id
+                        _token: '{{ csrf_token() }}',
+                        'text': text,
+                        'replyClick': replyClick,
 
                     },
                     success: function(res) {
@@ -535,7 +539,7 @@
                             $(".comment-name").text(res.user.name);
                         } else {
                             alert(res.message);
-                            $(".modal").modal('hide');
+                            
                         }
                     }
                 });

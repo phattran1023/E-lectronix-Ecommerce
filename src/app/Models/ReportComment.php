@@ -9,10 +9,10 @@ class ReportComment extends Model
 {
     use HasFactory;
 
-    protected $table ='reported_comment';
+    protected $table = 'reported_comment';
     protected $fillable = [
         'report_id',
-        'reporter_id',
+
         'comment_owner',
         'user_comment',
         'violence',
@@ -25,12 +25,14 @@ class ReportComment extends Model
 
     ];
 
-    public function comment(){
-        return $this->belongsTo(Comment::class,'report_id','id');
+    public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'report_id', 'id');
     }
-    
-   public function user(){
+
+    public function user()
+    {
         return $this->belongsTo(User::class);
-   }
-    
+    }
+
 }

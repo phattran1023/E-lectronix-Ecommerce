@@ -11,13 +11,17 @@ class Reply extends Model
     protected $table = 'Reply';
 
    protected $fillable = [
-    'origin_comment',
+    'origin_comment_id',
+    'origin_comment_name',
     'user_id',
     'user_name',
     'reply_body',
     
    ];
-   public function getReply(){
-    return $this->belongsTo(Comment::class,'origin_comment','id');
+   public function comment(){
+    return $this->belongsTo(Comment::class,'origin_comment_id','id');
+   }
+   public function user(){
+    return $this->belongsTo(User::class, 'origin_comment_id','id');
    }
 }

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
-            $table->integer('origin_comment');
+            $table->integer('origin_comment_id');
+            $table->string('origin_comment_name');
             $table->integer('user_id');
             $table->string('user_name');
             $table->string('reply_body');

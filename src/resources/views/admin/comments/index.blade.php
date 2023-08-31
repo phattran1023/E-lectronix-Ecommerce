@@ -20,8 +20,7 @@
                             <tr>
 
 
-                                <th><small>Reporter name</small></th>
-
+                                <th><small>ID</small></th>
                                 <th><small>Violence and abuse</small></th>
                                 <th><small>Hate and harassment</small></th>
                                 <th><small>Suicide and self-harm</small></th>
@@ -35,8 +34,8 @@
                             @forelse ($reportIndex as $comment)
                                 <tr>
 
-                                    <td>{{ $comment->reporter_name }}</td>
 
+                                    <td>{{ $comment->id }}</td>
                                     <td>
                                         {!! $comment->violence == 1
                                             ? '<img src="' . asset('/uploads/reportIcons/check.png') . '">'
@@ -69,7 +68,7 @@
                                     </td>
                                     <td>
                                         <button type="button" class="card btn-primary viewFullBtn" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" value="{{$comment->id}}">
+                                            data-bs-target="#staticBackdrop" value="{{ $comment->id }}">
                                             View full
                                         </button>
                                     </td>
@@ -99,8 +98,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Reporting from <a href="" class="reporterName"
-                            style="text-decoration: none"></a></h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" class="commentId">Reporting #</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -116,20 +114,18 @@
 
                     <div style="margin-top:5px">
                         <div class="d-flex bd-highlight">
-                            {{--User Comment --}}
+                            {{-- User Comment --}}
                             <div class="p-1 flex-fill bd-highlight form-control userComment">
                             </div>
-                            <div class="p-8 flex-fill bd-highlight"> <button id="highlightButton"></button></div>
+                            <div class="p-8 flex-fill bd-highlight"> <button id="highlightButton"
+                                    class="btn btn-warning">=></button></div>
 
                         </div>
                     </div>
+                    <hr>
+                    <h6>Comment's details</h6>
                     <div style=" margin-top: 10px;">
 
-                        @if ($comment->else)
-                            {{ $comment->else }}
-                        @else
-                            <p style="text-align: center">No "else" content yet</p>
-                        @endif
 
 
                     </div>
@@ -152,24 +148,27 @@
                 }
             });
             $(document).on('click', '.viewFullBtn', function() {
-                var viewFullClick = $(this);
-                var report_id = viewFullClick.val();
+                var report_id = $(this).val();
+
                 $.ajax({
                     type: "get",
-                    url: "/viewFullInfo",
+                    url: "/comments/index",
                     data: {
-                        'report_id': report_id
+                        'report_id': report_id,
                     },
                     success: function(res) {
                         if (res.status == 200) {
-
-                            $(".commentOwner").text(res.report_comment_info.comment_owner);
-                            $(".reporterName").text(res.report_comment_info.reporter_name);
+                            $(".commentId").text(res.report_comment_info.id);
                             $(".userComment").text(res.report_comment_info.user_comment);
                         } else {
                             alert(res.messageErr);
-                            $(".modal").modal('hide');
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log(xhr.responseText); // Log the responseText for debugging
+                        console.log(status); // Log the status for debugging
+                        console.log(error); // Log the error for debugging
+                        alert('An error occurred while fetching data.');
                     }
                 });
 

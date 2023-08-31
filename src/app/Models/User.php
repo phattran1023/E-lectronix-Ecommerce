@@ -62,9 +62,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Survey::class, 'survey_users', 'user_id', 'survey_id');
     }
-
+    public function comments(){
+        return $this->hasMany(Comment::class, 'id','post_id');
+    }
     public function reported_comments()
     {
         return $this->hasMany(ReportComment::class, 'id', 'report_id');
+    }
+    public function replies(){
+        return $this->hasMany(Reply::class, 'id','origin_comment_id');
     }
 }

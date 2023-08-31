@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('reported_comment', function (Blueprint $table) {
             $table->id();
-            $table->integer('report_id')->references('id')->on('comments');
-            $table->integer('reporter_id');
+            $table->integer('report_id');
+         
+          
             $table->integer('user_comment');
             $table->tinyInteger('violence')->nullable();
             $table->tinyInteger('hate')->nullable();
@@ -24,7 +25,7 @@ return new class extends Migration
             $table->tinyInteger('deceptive')->nullable();
             $table->string('else')->nullable();
             $table->timestamps();
-            $table->foreign('reporter_id')->references('id')->on('users')->onDelete('cascade');
+         
         });
     }
 

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Validator;
 class ReportedComment extends Controller
 {
  
-   public function store(Request $request,$commentId,$userId){
+   public function store(Request $request,$commentId){
     $validator = Validator::make($request->all(), [
         'form_violence'=>'nullable',
         'form_hate'=>'nullable',
@@ -33,15 +33,13 @@ class ReportedComment extends Controller
     if ($validator) {
      
       //handle success
-      $userInfo = User::findOrFail($userId);
-     
-      $commentInfo = Comment::findOrFail($commentId);
-      
+    
+     $commentInfo = Comment::findOrFail($commentId);
+  
 
       $reportComment = new ReportComment();
       $reportComment->report_id = $commentInfo->id;
-      $reportComment->reporter_id = $userInfo->id;
-      $reportComment->reporter_name = $userInfo->name;
+     
       $reportComment->comment_owner = $commentInfo->user_name;
       $reportComment->user_comment = $commentInfo->comment_body;
       //report begin

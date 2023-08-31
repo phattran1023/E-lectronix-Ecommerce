@@ -22,14 +22,14 @@ class Comment extends Model
       return $this-> belongsTo(Product::class,'post_id','id');
    }
    public function user(){
-      return $this->belongsTo(User::class);
+      return $this->belongsTo(User::class,'post_id','id');
    }
    public function reported_comments(){
-      return $this->hasMany(ReportedComment::class, 'report_id','post_id');
+      return $this->hasMany(ReportedComment::class, 'id','report_id');
    }
    
    public function replies(){
-      return $this->hasMany(Reply::class,'id','orgin_comment');
+      return $this->hasMany(Reply::class,'id','orgin_comment_id');
    }
   
 }
