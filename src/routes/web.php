@@ -48,8 +48,11 @@ Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport/{commentId}',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');
 Route::get('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'earliestComment']);
-Route::post('replyComment',[App\Http\Controllers\Frontend\ReplyController::class,'store']);
+Route::post('/replyComment', 'Frontend\ReplyController@store')->name('reply.store');
 
+Route::post('/comment/{comment}/like',[App\Http\Controllers\Frontend\CommentController::class,'likeBtn'])->name('comment.like');
+
+Route::post('replyComment',[App\Http\Controllers\Frontend\ReplyController::class,'store'])->name('reply.store');;
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 

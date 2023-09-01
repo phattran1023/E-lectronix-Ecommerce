@@ -137,5 +137,19 @@ class CommentController extends Controller
             ]);
         }
     }
+    //heart like btn
+    public function likeBtn(Comment $comment){
+        $user = auth()->user();
+    
+        if ($comment->isLikedByUser($user)) {
+            $comment->likes()->where('user_id', $user->id)->delete();
+        } else {
+            $comment->likes()->create(['user_id' => $user->id]);
+        }
+        
+        $likesCount = $comment->likes()->count();
+        
+        return response()->json(['likes' => $likesCount]);
+    }
 
 }

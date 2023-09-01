@@ -24,6 +24,14 @@ class Comment extends Model
    public function user(){
       return $this->belongsTo(User::class,'post_id','id');
    }
+   public function likes()
+   {
+       return $this->hasMany(CommentLike::class);
+   }
+   public function isLikedByUser($user)
+{
+    return $this->likes()->where('user_id', $user->id)->exists();
+}
    public function reported_comments(){
       return $this->hasMany(ReportedComment::class, 'id','report_id');
    }

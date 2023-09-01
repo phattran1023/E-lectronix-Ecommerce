@@ -241,9 +241,9 @@
                                                     &nbsp; &nbsp;
                                                     <small class="font-weight-bold text-primary">
                                                         <strong>
-                                                            @if ($comment->user)
-                                                                {{ $comment->user->name }}
-                                                            @endif
+                                                            
+                                                                {{ $comment->user_name }}
+                                                            
                                                         </strong>
                                                     </small>
                                                     &nbsp; &nbsp;
@@ -252,7 +252,7 @@
                                                 &nbsp;&nbsp;<small>{{ $comment->created_at->diffForHumans() }}</small>
 
                                             </div>
-                                            <div class="action d-flex justify-content-between mt-2 ">
+                                            <div class="action d-flex justify-content-between mt-2">
                                                 <div>
                                                     @if (Auth::id() != $comment->user_id)
                                                         <button type="button" value="{{ $comment->id }}"
@@ -274,20 +274,68 @@
                                                             style="text-decoration: none; border: none"></button>
                                                     @endif
                                                 </div>
-                                               
-                                                <div class=" align-items-center">
-                                                    <input id="toggle-heart" type="checkbox" />
-                                                    <label for="toggle-heart">❤</label>
+
+                                                <div>
+                                                    <button type="button"
+                                                        class="btn btn-link like-button {{ $comment->isLikedByUser(auth()->user()) ? 'text-danger' : 'text-secondary' }}"
+                                                        data-comment-id="{{ $comment->id }}">
+                                                        <i class="fa fa-heart"></i>
+                                                        <span
+                                                            class="ml-1 like-count">{{ $comment->likes()->count() }}</span>
+                                                    </button>
                                                 </div>
                                             </div>
+
                                             <div class="reply-field mt-2" style="display: none;">
                                                 <div class="input-group">
-                                                    <input class="form-control" rows="1" placeholder="Write a reply..." id="textIput">
+                                                    <input class="form-control" rows="1"
+                                                        placeholder="Write a reply..." id="textIput">
                                                     <div class="input-group-append">
-                                                        <button type="button" style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%" class="btn" id="replyBtn"  value="{{ $comment->id }}">Reply</button>
+                                                        <button type="button"
+                                                            style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%"
+                                                            class="btn" id="replyBtn"
+                                                            value="{{ $comment->id }}">Reply</button>
                                                     </div>
                                                 </div>
                                             </div>
+
+
+                                           
+                                                <div class="replies mt-2">
+                                                    @foreach ($comment->replies as $reply)
+                                                        <div class="row justify-content-center">
+                                                            <div class="col-md-8">
+                                                                <div class="reply-container card p-2">
+                                                                    <div
+                                                                        class="d-flex justify-content-between align-items-center">
+                                                                        <div
+                                                                            class="user d-flex flex-row align-items-center">
+                                                                            <!-- Display user avatar and name -->
+                                                                            <img src="{{ $reply->user->avatar_url }}"
+                                                                                alt="{{ $reply->user->name }}"
+                                                                                width="30px"
+                                                                                style="border-radius: 50%">
+                                                                            &nbsp; &nbsp;
+                                                                            <small
+                                                                                class="font-weight-bold text-primary">
+                                                                                <strong>{{ $reply->user->name }}</strong>
+                                                                            </small>
+                                                                            &nbsp; &nbsp;
+                                                                            <small
+                                                                                class="font-weight-bold">{{ $reply->reply_body }}</small>
+                                                                        </div>
+                                                                        <small>{{ $reply->created_at->diffForHumans() }}</small>
+                                                                    </div>
+                                                                    <!-- Add actions for replies here -->
+
+                                                                </div>
+                                                                <div class="text-danger" id="replyError"></div>
+                                                                <!-- Error message container -->
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -395,8 +443,8 @@
 
                                     <hr>
                                 </div>
-                                <button id="elseBtn"
-                                    style="border-radius: 15%" class="btn btn-warning"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
+                                <button id="elseBtn" style="border-radius: 15%"
+                                    class="btn btn-warning"><strong>Else</strong></button>{{-- Real else form report --}}&nbsp;
                                 <small class="text-white ">Characters
                                     remaining: <span id="countdown2">50&nbsp;</span></small>
                                 <input type="text" style="display: none" id="modal-else"
@@ -503,46 +551,75 @@
     </div>
 
 </div>
+
 {{-- Reply comment --}}
 @section('commentReply')
     <script>
+        
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('click', '.replyComment', function() {
 
+            $(document).on('click', '.replyComment', function() {
                 // Find the closest .comment-container and then find .reply-field inside it
                 var replyField = $(this).closest(".comment-container").find(".reply-field");
 
-                // Toggle the visibility of the reply field
-                replyField.toggle();
-                $(document).on('click','#replyBtn',function(){
-                    var text = $('#textInput').val();
-                    var replyClick = $(this).val();
-                  
-                    $.ajax({
+                // Show the reply field
+                replyField.show();
+            });
+
+
+            $(document).on('click', '#replyBtn', function() {
+                var text = $('#textIput').val(); // Use the correct id selector
+                var replyClick = $(this).val();
+
+                $.ajax({
                     type: "post",
-                    url: "/replyComment",
+                    url: "{{ route('reply.store') }}",
                     data: {
                         _token: '{{ csrf_token() }}',
                         'text': text,
                         'replyClick': replyClick,
-
                     },
                     success: function(res) {
                         if (res.status == 200) {
 
                             $(".comment-content").text(res.comment.comment_body);
                             $(".comment-name").text(res.user.name);
+                            $("#replyError").html('');
                         } else {
-                            alert(res.message);
-                            
+                            $("#replyError").html('<p>' + res.errors.text[0] + '</p>');
                         }
                     }
                 });
+            });
+        });
+    </script>
+@endsection
+@section('likeBtn')
+    <script>
+        $(document).ready(function() {
+            $('.like-button').on('click', function() {
+                var commentId = $(this).data('comment-id');
+                var button = $(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/comment/' + commentId + '/like',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(data) {
+                        // Update the like count and button appearance based on the response
+                        button.find('.like-count').text(data.likes);
+                        button.toggleClass('text-secondary text-danger');
+                    },
+                    error: function(data) {
+                        // Handle errors if necessary
+                    }
                 });
             });
         });
