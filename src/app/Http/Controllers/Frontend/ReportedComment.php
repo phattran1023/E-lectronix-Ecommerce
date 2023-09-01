@@ -51,7 +51,7 @@ class ReportedComment extends Controller
       $reportComment->deceptive = $request->form_deceptive;
       $reportComment->else = $request->form_else;
       $reportComment->save();
-      return redirect()->back()->with('reportComment', 'Reported successfully, wait for response.');
+      return redirect()->back()->with('reportComment', 'Reported successfully.');
     } else {
         //handle fail
         return redirect()->back()->with('errorElse', '...');
