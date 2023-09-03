@@ -189,7 +189,7 @@
 
                                                     </div>
 
-                                                    <div class="d-flex justify-content" id="countCommentBox">
+                                                    <div class="d-flex justify-content card" id="countCommentBox">
                                                         @php
                                                             $commentCount = 0; //variable to count the total comment
                                                         @endphp
@@ -241,9 +241,9 @@
                                                     &nbsp; &nbsp;
                                                     <small class="font-weight-bold text-primary">
                                                         <strong>
-                                                            
-                                                                {{ $comment->user_name }}
-                                                            
+
+                                                            {{ $comment->user_name }}
+
                                                         </strong>
                                                     </small>
                                                     &nbsp; &nbsp;
@@ -300,42 +300,11 @@
                                             </div>
 
 
-                                           
-                                                <div class="replies mt-2">
-                                                    @foreach ($comment->replies as $reply)
-                                                        <div class="row justify-content-center">
-                                                            <div class="col-md-8">
-                                                                <div class="reply-container card p-2">
-                                                                    <div
-                                                                        class="d-flex justify-content-between align-items-center">
-                                                                        <div
-                                                                            class="user d-flex flex-row align-items-center">
-                                                                            <!-- Display user avatar and name -->
-                                                                            <img src="{{ $reply->user->avatar_url }}"
-                                                                                alt="{{ $reply->user->name }}"
-                                                                                width="30px"
-                                                                                style="border-radius: 50%">
-                                                                            &nbsp; &nbsp;
-                                                                            <small
-                                                                                class="font-weight-bold text-primary">
-                                                                                <strong>{{ $reply->user->name }}</strong>
-                                                                            </small>
-                                                                            &nbsp; &nbsp;
-                                                                            <small
-                                                                                class="font-weight-bold">{{ $reply->reply_body }}</small>
-                                                                        </div>
-                                                                        <small>{{ $reply->created_at->diffForHumans() }}</small>
-                                                                    </div>
-                                                                    <!-- Add actions for replies here -->
 
-                                                                </div>
-                                                                <div class="text-danger" id="replyError"></div>
-                                                                <!-- Error message container -->
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                </div>
-                                            
+                                            @foreach ($comment->replies as $reply)
+                                           {{$reply->reply_body}}
+                                        @endforeach
+
                                         </div>
                                     </div>
                                 </div>
@@ -555,7 +524,6 @@
 {{-- Reply comment --}}
 @section('commentReply')
     <script>
-        
         $(document).ready(function() {
             $.ajaxSetup({
                 headers: {
@@ -564,11 +532,18 @@
             });
 
             $(document).on('click', '.replyComment', function() {
-                // Find the closest .comment-container and then find .reply-field inside it
+
                 var replyField = $(this).closest(".comment-container").find(".reply-field");
 
                 // Show the reply field
-                replyField.show();
+                if (replyField.is(":visible")) {
+
+                    replyField.hide();
+                } else {
+
+                    replyField.show();
+                }
+
             });
 
 

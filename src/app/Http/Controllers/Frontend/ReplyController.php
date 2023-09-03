@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Comment;
+use App\Models\Product;
 use App\Models\Reply;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class ReplyController extends Controller
 {
 
-  
     public function store(Request $request)
     {
         // Check if the user is authenticated
@@ -31,14 +31,14 @@ class ReplyController extends Controller
             $reply->user_name = Auth::user()->name;
             $reply->reply_body = $request->text;
             $reply->save();
-            $comment = Comment::with('replies')->find($request->replyClick);
+            $comments = Comment::with('replies')->find($request->replyClick);
             // You can also update the original comment's reply count here if needed
 
             // Return a success response
             return response()->json([
                 'status' => 200,
                 'message' => 'Reply posted successfully',
-                'comment' => $comment
+                'comments' => $comments
             ]);
         } else {
             return response()->json([
