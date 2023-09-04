@@ -67,10 +67,10 @@
                                             : '<img src="' . asset('/uploads/reportIcons/delete-button.png') . '">' !!}
                                     </td>
                                     <td>
+
                                         <button type="button" class="card btn-primary viewFullBtn" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" value="{{ $comment->id }}">
-                                            View full
-                                        </button>
+                                            data-bs-target="#staticBackdrop" data-report-id="{{ $comment->id }}">View
+                                            Full</button>
                                     </td>
 
 
@@ -98,7 +98,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel" class="commentId">Reporting #</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel" class="commentId">Reporting # </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -132,7 +132,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Understood</button>
+                    <button type="button" class="btn btn-primary">Manage deleting</button>
                 </div>
             </div>
         </div>
@@ -141,14 +141,9 @@
 @section('viewFullBtn')
     <script>
         $(document).ready(function() {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
             $(document).on('click', '.viewFullBtn', function() {
-                var report_id = $(this).val();
+                // Get the report_id from the data attribute of the button
+                var report_id = $(this).data('report-id');
 
                 $.ajax({
                     type: "get",
@@ -158,23 +153,18 @@
                     },
                     success: function(res) {
                         if (res.status == 200) {
-                            $(".commentId").text(res.report_comment_info.id);
+                            $(".commentId").text("Reporting #" + res.report_comment_info.id);
                             $(".userComment").text(res.report_comment_info.user_comment);
+                            $("#staticBackdrop").modal('show'); // Show the modal
                         } else {
                             alert(res.messageErr);
                         }
                     },
                     error: function(xhr, status, error) {
-                        console.log(xhr.responseText); // Log the responseText for debugging
-                        console.log(status); // Log the status for debugging
-                        console.log(error); // Log the error for debugging
                         alert('An error occurred while fetching data.');
                     }
                 });
-
             });
-
-
         });
     </script>
 @endsection

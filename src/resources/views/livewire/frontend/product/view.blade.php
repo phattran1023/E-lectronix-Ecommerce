@@ -277,7 +277,7 @@
 
                                                 <div>
                                                     <button type="button"
-                                                        class="btn btn-link like-button {{ $comment->isLikedByUser(auth()->user()) ? 'text-danger' : 'text-secondary' }}"
+                                                        class="btn btn-link like-button {{ $comment->isLikedByUser(auth()->user()) ? 'text-danger' : 'text-secondary' }} text-decoration-none"
                                                         data-comment-id="{{ $comment->id }}">
                                                         <i class="fa fa-heart"></i>
                                                         <span
@@ -301,9 +301,8 @@
 
 
 
-                                            @foreach ($comment->replies as $reply)
-                                           {{$reply->reply_body}}
-                                        @endforeach
+                                            {{-- display replies --}}
+
 
                                         </div>
                                     </div>
@@ -586,14 +585,22 @@
                     url: '/comment/' + commentId + '/like',
                     data: {
                         _token: '{{ csrf_token() }}',
+                        'comment_id': commentId,
                     },
                     success: function(data) {
-                        // Update the like count and button appearance based on the response
-                        button.find('.like-count').text(data.likes);
-                        button.toggleClass('text-secondary text-danger');
+                        if ('likeErr' in data) {
+                            // An error occurred, display the error message
+                            alert(data.likeErr);
+                        } else {
+                            // Update the like count and button appearance based on the response
+                            button.find('.like-count').text(data.likes);
+                            button.toggleClass('text-secondary text-danger');
+                        }
+
                     },
                     error: function(data) {
-                        // Handle errors if necessary
+                     //handle errs
+                     alert('An error occurred :<')
                     }
                 });
             });
