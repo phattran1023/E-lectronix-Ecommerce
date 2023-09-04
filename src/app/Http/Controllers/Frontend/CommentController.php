@@ -44,9 +44,9 @@ class CommentController extends Controller
                 Comment::create([
                     'post_id' => $product->id,
                     'user_id' => Auth::user()->id,
-                    'user_name' =>Auth::user()->name,
+                    'user_name' => Auth::user()->name,
                     'comment_body' => $request->comment_body,
-                    
+
                 ]);
 
             } else {
@@ -56,7 +56,7 @@ class CommentController extends Controller
             $comments = Comment::where('post_id', $product->id)
                 ->orderBy('created_at', 'asc')
                 ->get();
-          
+
             return redirect(url('collections/comment'));
 
         } else {
@@ -137,18 +137,21 @@ class CommentController extends Controller
             ]);
         }
     }
-    //heart like btn
-    public function likeBtn(Comment $comment){
+    //heart like btn 
+    public function likeBtn(Comment $comment)
+    {
         $user = auth()->user();
-    
+        if ($user === null) {
+            return response()->json(['likeErr' => 'Login is required for this action']);
+        }
+
         if ($comment->isLikedByUser($user)) {
             $comment->likes()->where('user_id', $user->id)->delete();
         } else {
             $comment->likes()->create(['user_id' => $user->id]);
         }
-        
         $likesCount = $comment->likes()->count();
-        
+
         return response()->json(['likes' => $likesCount]);
     }
 
