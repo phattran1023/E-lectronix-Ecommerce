@@ -112,7 +112,7 @@
                         <td><a href="{{ Route('coupon.delete', $coupon->id) }}" class="btn btn-danger">Delete</a></td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#myModal"
-                                data-coupon-code="{{ $coupon->code }}" {{$coupon->status!='free'?'disabled':''}}>
+                                data-coupon-code="{{ $coupon->code }}" {{$coupon->status!='free' && $coupon->status!='0'?'disabled':''}}>
                                 Send
                             </button>
                         </td>
@@ -139,7 +139,7 @@
                         <input class="form-control" list="ids" name="id" id="id">
                         <datalist id="ids">
                             @foreach ($users as $user)
-                                <option value="{{ $user->id }}" {{$user->id==auth()->user()->id?'disabled':''}}>{{ $user->id }} | {{ $user->name }}</option>
+                                <option value="{{ $user->id }}" {{$user->id==auth()->user()->id?'hidden':''}}>{{ $user->id }} | {{ $user->name }}</option>
                             @endforeach
                         </datalist>
                     </div>
