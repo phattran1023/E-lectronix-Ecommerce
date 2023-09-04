@@ -34,12 +34,12 @@
                                     <td>{{ $item->id }}</td>
                                     <td>
                                         {{-- Lấy name từ bảng catagory thông qua catagory_id --}}
-                                        
+
                                             {{ $item->categoryGetName->name }}
-                                        
+
                                     </td>
                                     <td>{{ $item->name }}</td>
-                                    <td>{{ $item->selling_price }}</td>
+                                    <td>{{ number_format($item->selling_price) }}</td>
                                     <td>{{ $item->quantity }}</td>
                                     <td>{{ $item->status == '1' ? 'Hidden' : 'Visible' }}</td>
                                     <td><a href="{{url('admin/products/'.$item->id.'/edit')}}" class="btn btn-sm btn-success">Edit</a>

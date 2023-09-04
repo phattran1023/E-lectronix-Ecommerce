@@ -59,7 +59,8 @@ class RegisterController extends Controller
             'name' => [
                 'required',
                 'string',
-                'max:255',
+                'min:3',
+                'max:50',
                 function ($attribute, $value, $fail) use ($badWords) {
                     foreach ($badWords as $badWord) {
                         if (strpos(strtolower($value), strtolower($badWord)) !== false) {
@@ -82,7 +83,7 @@ class RegisterController extends Controller
                     }
                 },
             ],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:3', 'confirmed'],
         ]);
     }
 

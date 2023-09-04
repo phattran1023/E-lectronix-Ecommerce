@@ -1,4 +1,5 @@
 @extends('layouts.app')
+
 @section('title', 'Login')
 
 @section('content')
@@ -113,7 +114,7 @@
 
                     <div class="d-flex justify-content-around align-items-center mb-4">
                         <!-- Checkbox -->
-                        
+
                         <a href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
                     </div>
 
