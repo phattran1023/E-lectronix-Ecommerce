@@ -196,7 +196,7 @@
 
             </tr>
         @endforeach
-        @if ($couponOrder!==null)
+        @if ($couponOrder!=null)
             <tr>
                 <td colspan="4" class="fw-light">Total Products Amount </td>
                 <td colspan="1" class="fw-light">{{ number_format($totalPrice) }} đ</td>

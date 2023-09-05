@@ -92,7 +92,8 @@ class OrderController extends Controller
     public function generateInvoice(int $orderId)
     {
         $order = Order::findOrFail($orderId);
-        $data = ['order' => $order];
+        $couponOrder = CouponOrder::Where('order_id', $orderId)->first();
+        $data = ['order' => $order, 'couponOrder' => $couponOrder];
         $pdf = Pdf::loadView('admin.invoice.generate-invoice', $data);
 
         $todayDate = Carbon::now()->format('Y-m-d');
