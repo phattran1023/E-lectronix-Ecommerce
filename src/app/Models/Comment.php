@@ -28,6 +28,7 @@ class Comment extends Model
    {
        return $this->hasMany(CommentLike::class);
    }
+  
    public function isLikedByUser($user)
    {
        return $this->likes()->where('user_id', $user ? $user->id : null)->exists();

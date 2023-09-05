@@ -166,7 +166,7 @@
     {{-- Alertify vs Exzoom --}}
     @stack('scripts')
     {{-- Comment --}}
-    @yield('deleteComment')
+  
     @yield('reportComment')
     @yield('countMaximumWords')
     @yield('commentReply')

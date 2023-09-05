@@ -56,7 +56,7 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserDetail::class, 'user_id', 'id');
     }
-
+    
 
     public function surveys()
     {
