@@ -269,9 +269,15 @@
                                                     &nbsp;&nbsp;
 
                                                     @if (Auth::id() == $comment->user_id)
-                                                        <button type="button"
-                                                            class="fa fa-trash text-danger deleteComment"
-                                                            style="text-decoration: none; border: none"></button>
+                                                        <form action="{{ route('delete-comment', $comment->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit"
+                                                                class="fa fa-trash text-danger"
+                                                                style="text-decoration: none; border: none"
+                                                                onclick="return confirm('Are you sure you want to delete this comment?')"></button>
+                                                        </form>
                                                     @endif
                                                 </div>
 
@@ -599,8 +605,8 @@
 
                     },
                     error: function(data) {
-                     //handle errs
-                     alert('An error occurred :<')
+                        //handle errs
+                        alert('An error occurred :<')
                     }
                 });
             });
@@ -693,44 +699,7 @@
         });
     </script>
 @endsection
-{{-- Deleting script --}}
-@section('deleteComment')
-    <script>
-        $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $(document).on('click', '.deleteComment', function() {
-                if (confirm('Are you sure deleting this comment?')) {
-                    var deleteClick = $(this);
-                    var comment_id = deleteClick.val();
 
-                    $.ajax({
-                        type: "POST",
-                        url: "/delete-comment",
-                        data: {
-                            'comment_id': comment_id
-                        },
-                        success: function(res) {
-                            if (res.status == 200) {
-                                deleteClick.closest('.comment-container').remove();
-
-
-
-
-                            } else {
-                                alert(res.message);
-                            }
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-    <script></script>
-@endsection
 {{-- Coutn maximum word script --}}
 @section('countMaximumWords')
     <script>

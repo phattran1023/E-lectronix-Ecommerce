@@ -43,7 +43,7 @@ Route::controller(App\Http\Controllers\Frontend\FrontendController::class)->grou
 
 //comment system - Tien's route
 Route::post('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'store']);
-Route::post('delete-comment',[App\Http\Controllers\Frontend\CommentController::class,'destroy']);
+Route::delete('/delete-comment/{comment}', [App\Http\Controllers\Frontend\CommentController::class, 'destroy'])->name('delete-comment');
 Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::class,'index']);
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport/{commentId}',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');

@@ -66,34 +66,17 @@ class CommentController extends Controller
 
 
     //Use for deleting comments
-    public function destroy(Request $request)
-    {
-        if (Auth::check()) {
-            $comment = Comment::where('id', $request->comment_id)
-                ->where('user_id', Auth::user()->id)
-                ->first();
-            if ($comment) {
-                $comment->delete();
-                return response()->json([
-                    'status' => 200,
-                    'message ' => 'Comment deleted successfully.'
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 500,
-                    'message ' => 'Somethings went wrong'
-                ]);
-            }
+    public function destroy(Comment $comment)
+{
+    // Check if the user is authorized to delete the comment
+    if (auth()->check() && auth()->user()->id === $comment->user_id) {
+        $comment->delete();
 
-        } else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'Login to Delete this comment'
-            ]);
-        }
-
-
+        return redirect()->back()->with('success', 'Comment deleted successfully.');
+    } else {
+        return redirect()->back()->with('error', 'Unauthorized to delete this comment.');
     }
+}
     // read BadWords contents
     protected function getBadWords()
     {
