@@ -19,9 +19,9 @@ class Reply extends Model
 
     ];
     public function comment()
-    {
-        return $this->belongsTo(Comment::class, 'origin_comment_id', 'id');
-    }
+{
+    return $this->belongsTo(Comment::class, 'origin_comment_id', 'id');
+}
 
     public function user()
     {

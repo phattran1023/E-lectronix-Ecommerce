@@ -53,7 +53,7 @@ Route::get('collections/comment', 'YourController@yourControllerMethod');
 
 Route::post('/comment/{comment}/like',[App\Http\Controllers\Frontend\CommentController::class,'likeBtn'])->name('comment.like');
 
-Route::post('replyComment/{id}',[App\Http\Controllers\Frontend\ReplyController::class,'store'])->name('reply.store');;
+Route::post('replyComment/{id}', [App\Http\Controllers\Frontend\ReplyController::class, 'store'])->name('reply.store');
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 
