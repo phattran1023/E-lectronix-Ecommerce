@@ -12,17 +12,26 @@ class Reply extends Model
 
     protected $fillable = [
         'origin_comment_id',
-        
+
         'user_id',
         'user_name',
+        'comment_owner',
         'reply_body',
 
     ];
     public function comment()
+    {
+        return $this->belongsTo(Comment::class, 'origin_comment_id', 'id');
+    }
+    public function likes()
 {
-    return $this->belongsTo(Comment::class, 'origin_comment_id', 'id');
+    return $this->hasMany(ReplyLike::class);
 }
-
+    public function isLikedByUser($user)
+    {
+        return $this->likes()->where('user_id', $user ? $user->id : null)->exists();
+    }
+   
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');

@@ -48,12 +48,12 @@ Route::get('takeCommentInfor',[App\Http\Controllers\Frontend\CommentController::
 Route::get('show-user',[App\Http\Controllers\Frontend\CommentController::class,'show']);
 Route::post('commitReport/{commentId}',[App\Http\Controllers\Frontend\ReportedComment::class,'store'])->name('storeReportComment');
 Route::get('collections/comment',[App\Http\Controllers\Frontend\CommentController::class,'earliestComment']);
-
 Route::get('collections/comment', 'YourController@yourControllerMethod');
-
 Route::post('/comment/{comment}/like',[App\Http\Controllers\Frontend\CommentController::class,'likeBtn'])->name('comment.like');
-
-Route::post('replyComment/{id}', [App\Http\Controllers\Frontend\ReplyController::class, 'store'])->name('reply.store');
+Route::post('/reply/{reply}/like', [App\Http\Controllers\Frontend\ReplyController::class,'likeBtn'])->name('reply.like');
+Route::post('replyComment/{id}', [App\Http\Controllers\Frontend\ReplyController::class, 'commentReplyStore'])->name('reply.store');
+Route::post('replyReplyComment/{replyId}/{commentId}', [App\Http\Controllers\Frontend\ReplyController::class, 'replyReplyStore'])->name('replyReply.store');
+Route::post('/delete-replies/{id}',[App\Http\Controllers\Frontend\ReplyController::class, 'deleteReply'])->name('reply.delete');
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 

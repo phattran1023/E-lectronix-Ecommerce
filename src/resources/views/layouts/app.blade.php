@@ -173,6 +173,7 @@
     @yield('elseBtn')
     @yield('commitReport')
     @yield('likeBtn')
+    @yield('ReplyLikeBtn');
 
     <!-- Messenger Plugin chat Code -->
     <div id="fb-root"></div>

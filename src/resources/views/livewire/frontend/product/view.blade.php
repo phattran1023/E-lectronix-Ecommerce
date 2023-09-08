@@ -224,7 +224,7 @@
 
                             @forelse ($product->comments->sortByDesc('created_at') as $comment)
                                 <div class="row d-flex justify-content-center">
-                                    <div class="col-md-9" >
+                                    <div class="col-md-7">
                                         <div class=" comment-container card p-3" style="width: 100%">
 
                                             <div class="d-flex justify-content-between align-items-center">
@@ -310,99 +310,109 @@
 
                                             {{-- display replies --}}
 
-                                            @foreach ($comment->replies->sortByDesc('created_at')  as $reply)
-                                            <div class="row d-flex justify-content-center">
-                                                <div class="col-md-8">
-                                                    <div class=" comment-container card p-3" style="width: 100%">
-            
-                                                        <div class="d-flex justify-content-between align-items-center">
-            
-                                                            <div class="user d-flex flex-row align-items-center">
-            
-                                                                @if (session('avatar'))
-                                                                    <img src="{{ session('avatar') }}" alt=""
-                                                                        width="30px" style="border-radius:  50%">
-                                                                @else
-                                                                    <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
-                                                                        width="30px" style="border-radius:  50%">
-                                                                @endif
-                                                                &nbsp; &nbsp;
-                                                                <small class="font-weight-bold text-primary">
-                                                                    <strong>
-            
-                                                                        {{ $reply->user_name }}
-            
-                                                                    </strong>
-                                                                </small>
-                                                                &nbsp; &nbsp;
-                                                                <small class="font-weight-bold">{!! $reply->reply_body !!}</small>
+                                            @foreach ($comment->replies->sortByDesc('created_at') as $reply)
+                                                <div class="row d-flex justify-content-center">
+                                                    <div class="col">
+                                                        <div class=" comment-container card p-3" style="width: 100%;  background-color: #e9e9e9;">
+
+                                                            <div
+                                                                class="d-flex justify-content-between align-items-center">
+
+                                                                <div class="user d-flex flex-row align-items-center">
+
+                                                                    @if (session('avatar'))
+                                                                        <img src="{{ session('avatar') }}"
+                                                                            alt="" width="30px"
+                                                                            style="border-radius:  50%">
+                                                                    @else
+                                                                        <img src="{{ asset('/uploads/userImg/defaultAvatar/download.jpg') }}"
+                                                                            width="30px"
+                                                                            style="border-radius:  50%">
+                                                                    @endif
+                                                                    &nbsp; &nbsp;
+                                                                    <small class="font-weight-bold text-primary">
+                                                                        <strong>
+
+                                                                            {{ $reply->user_name }} >
+                                                                            {{ $reply->comment_owner }}
+
+                                                                        </strong>
+                                                                    </small>
+                                                                    &nbsp; &nbsp;
+                                                                    <small
+                                                                        class="font-weight-bold">{!! $reply->reply_body !!}</small>
+                                                                </div>
+                                                                &nbsp;&nbsp;<small>{{ $reply->created_at->diffForHumans() }}</small>
+
                                                             </div>
-                                                            &nbsp;&nbsp;<small>{{ $reply->created_at->diffForHumans() }}</small>
-            
-                                                        </div>
-                                                        <div class="action d-flex justify-content-between mt-2">
-                                                            <div>
-                                                                @if (Auth::id() != $reply->user_id)
-                                                                    <button type="button" value="{{ $reply->id }}"
-                                                                        class="fa fa-flag text-danger reportComment"
-                                                                        style="text-decoration: none; border: none"
-                                                                        data-bs-toggle="modal"
-                                                                        data-bs-target="#reportModal"></button>
+                                                            <div class="action d-flex justify-content-between mt-2">
+                                                                <div>
+
+                                                                    <button
+                                                                        class="fa fa-comments text-primary replyComment"
+                                                                        style="text-decoration: none; border: none"></button>
                                                                     &nbsp;&nbsp;
-                                                                @endif
-            
-                                                                <button class="fa fa-comments text-primary replyComment"
-                                                                    style="text-decoration: none; border: none"></button>
-                                                                &nbsp;&nbsp;
-            
-                                                                @if (Auth::id() == $reply->user_id)
-                                                                    <form action="{{ route('delete-comment', $reply->id) }}"
-                                                                        method="POST">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="fa fa-trash text-danger"
-                                                                            style="text-decoration: none; border: none"
-                                                                            onclick="return confirm('Are you sure you want to delete this comment?')"></button>
-                                                                    </form>
-                                                                @endif
+
+                                                                    @if (Auth::id() == $reply->user_id)
+                                                                        <form
+                                                                            action="{{ route('reply.delete', $reply->id) }}"
+                                                                            method="POST">
+                                                                            @csrf
+                                                                            <button type="submit"
+                                                                                class="fa fa-trash text-danger"
+                                                                                style="text-decoration: none; border: none"
+                                                                                onclick="return confirm('Are you sure you want to delete this comment?')"></button>
+                                                                        </form>
+                                                                        @if (session('replyErr'))
+                                                                            <script>
+                                                                                alert('{{ session('replyErr') }}');
+                                                                            </script>
+                                                                        @endif
+                                                                    @endif
+                                                                </div>
+
+                                                                <div>
+
+                                                                    <button type="button"
+                                                                        class="btn btn-link ReplyLike-button {{ $reply->isLikedByUser(auth()->user()) ? 'text-danger' : 'text-secondary' }} text-decoration-none"
+                                                                        data-reply-id="{{ $reply->id }}">
+                                                                        <i class="fa fa-heart"></i>
+                                                                        <span
+                                                                            class="ml-1 replyLike-count">{{ $reply->likes()->count() }}</span>
+                                                                    </button>
+
+                                                                </div>
+
                                                             </div>
-            
-                                                            <div>
-                                                                <button type="button"
-                                                                    class="btn btn-link like-button {{ $comment->isLikedByUser(auth()->user()) ? 'text-danger' : 'text-secondary' }} text-decoration-none"
-                                                                    data-comment-id="{{ $reply->id }}">
-                                                                    <i class="fa fa-heart"></i>
-                                                                    <span
-                                                                        class="ml-1 like-count">{{ $comment->likes()->count() }}</span>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-            
-                                                        <form action="{{ route('reply.store', $comment->id) }}" method="POST">
-                                                            @csrf
-                                                            <div class="reply-field mt-2" style="display: none;">
-                                                                <div class="input-group">
-            
-                                                                    <input class="form-control" rows="1"
-                                                                        placeholder="Write a reply..." name="textIput">
-                                                                    <div class="input-group-append">
-                                                                        <button type="submit"
-                                                                            style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%"
-                                                                            class="btn" id="replyBtn">Reply</button>
+
+                                                            <form action="{{ route('reply.store', $comment->id) }}"
+                                                                method="POST">
+                                                                @csrf
+                                                                <div class="reply-field mt-2" style="display: none;">
+                                                                    <div class="input-group">
+
+                                                                        <input class="form-control" rows="1"
+                                                                            placeholder="Write a reply..."
+                                                                            name="textIput">
+                                                                        <div class="input-group-append">
+                                                                            <button type="submit"
+                                                                                style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%"
+                                                                                class="btn"
+                                                                                id="replyBtn">Reply</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </form>
-            
-            
-            
-                                                     
-            
+                                                            </form>
+
+
+
+
+
+                                                        </div>
                                                     </div>
+
                                                 </div>
-                                               
-                                            </div>
-                                            <br>
+                                                <br>
                                             @endforeach
 
                                         </div>
@@ -642,6 +652,41 @@
 
             });
 
+        });
+    </script>
+@endsection
+@section('ReplyLikeBtn')
+    <script>
+        $(document).ready(function() {
+            $('.ReplyLike-button ').on('click', function() {
+                var replyId = $(this).data('reply-id');
+                var button = $(this);
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/reply/' + replyId + '/like',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        'replyId': replyId,
+                    },
+                    success: function(data) {
+                        if ('likeErr' in data) {
+                            // An error occurred, display the error message
+                            alert(data.likeErr);
+                        } else {
+                            // Update the like count and button appearance based on the response
+                            if (data.replyLikes >= 0) {
+                                button.find('.replyLike-count').text(data.replyLikes);
+                            }
+                            button.toggleClass('text-secondary text-danger');
+                        }
+                    },
+                    error: function(data) {
+                        // Handle errors
+                        alert('An error occurred :<')
+                    }
+                });
+            });
         });
     </script>
 @endsection
