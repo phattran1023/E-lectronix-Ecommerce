@@ -63,13 +63,7 @@
                                     {{ Auth::user()->name }}
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    @if (empty(Auth::user()->userAvatar))
-                                        <li>
-
-                                        <li><a class="dropdown-item bg-warning" href="#" data-toggle="modal"
-                                                data-target=".bs-example-modal-sm">Change avatar</a>
-                                        </li>
-                                    @endif
+                                   
                                     <li><a class="dropdown-item" href="{{ url('profile') }}"><i class="fa fa-user"></i>
                                             Profile</a></li>
                                     <li><a class="dropdown-item" href="{{ url('orders') }}"><i class="fa fa-list"></i> My

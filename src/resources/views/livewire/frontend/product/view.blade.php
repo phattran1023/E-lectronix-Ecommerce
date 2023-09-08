@@ -253,7 +253,7 @@
 
                                             </div>
                                             <div class="action d-flex justify-content-between mt-2">
-                                                <div>
+                                                <div >
                                                     @if (Auth::id() != $comment->user_id)
                                                         <button type="button" value="{{ $comment->id }}"
                                                             class="fa fa-flag text-danger reportComment"
@@ -273,8 +273,7 @@
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
-                                                            <button type="submit"
-                                                                class="fa fa-trash text-danger"
+                                                            <button type="submit" class="fa fa-trash text-danger"
                                                                 style="text-decoration: none; border: none"
                                                                 onclick="return confirm('Are you sure you want to delete this comment?')"></button>
                                                         </form>
@@ -292,18 +291,20 @@
                                                 </div>
                                             </div>
 
-                                            <div class="reply-field mt-2" style="display: none;">
-                                                <div class="input-group">
-                                                    <input class="form-control" rows="1"
-                                                        placeholder="Write a reply..." id="textIput">
-                                                    <div class="input-group-append">
-                                                        <button type="button"
-                                                            style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%"
-                                                            class="btn" id="replyBtn"
-                                                            value="{{ $comment->id }}">Reply</button>
+                                            <form action="{{route('reply.store', $comment->id)}}" method="POST">
+                                                <div class="reply-field mt-2" style="display: none;">
+                                                    <div class="input-group">
+                                                        
+                                                        <input class="form-control" rows="1"
+                                                            placeholder="Write a reply..." name="textIput">
+                                                        <div class="input-group-append">
+                                                            <button type="button"
+                                                                style="margin: auto; background-color: #7C73C0; border-radius: 0% 10% 10% 0%"
+                                                                class="btn" id="replyBtn">Reply</button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </form>
 
 
 
@@ -530,11 +531,7 @@
 @section('commentReply')
     <script>
         $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
+
 
             $(document).on('click', '.replyComment', function() {
 
@@ -551,31 +548,6 @@
 
             });
 
-
-            $(document).on('click', '#replyBtn', function() {
-                var text = $('#textIput').val(); // Use the correct id selector
-                var replyClick = $(this).val();
-
-                $.ajax({
-                    type: "post",
-                    url: "{{ route('reply.store') }}",
-                    data: {
-                        _token: '{{ csrf_token() }}',
-                        'text': text,
-                        'replyClick': replyClick,
-                    },
-                    success: function(res) {
-                        if (res.status == 200) {
-
-                            $(".comment-content").text(res.comment.comment_body);
-                            $(".comment-name").text(res.user.name);
-                            $("#replyError").html('');
-                        } else {
-                            $("#replyError").html('<p>' + res.errors.text[0] + '</p>');
-                        }
-                    }
-                });
-            });
         });
     </script>
 @endsection

@@ -12,39 +12,34 @@ use Illuminate\Support\Facades\Auth;
 class ReplyController extends Controller
 {
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         // Check if the user is authenticated
         if (Auth::check()) {
             // Validate the request data
             $request->validate([
-                'text' => 'required|string|max:50',
+                'textIput' => 'required|string|max:50',
                 // Customize validation rules as needed
-                'replyClick' => 'required|integer', // Assuming it's the comment ID
+                
             ]);
 
             // Create a new reply
+
             $reply = new Reply();
-            $reply->origin_comment_id = $request->replyClick;
+            $reply->origin_comment_id = $request->$id;
 
             $reply->user_id = Auth::id();
             $reply->user_name = Auth::user()->name;
-            $reply->reply_body = $request->text;
+            $reply->reply_body = $request->textIput;
             $reply->save();
-            $comments = Comment::with('replies')->find($request->replyClick);
+            $comments = Comment::with('replies')->find($request->$id);
             // You can also update the original comment's reply count here if needed
 
             // Return a success response
-            return response()->json([
-                'status' => 200,
-                'message' => 'Reply posted successfully',
-                'comments' => $comments
-            ]);
+            return redirect()->back();
+            
         } else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'Login to reply to this comment'
-            ]);
+            return redirect()->back()->with('messageComment', 'Login first.');
         }
     }
 }
