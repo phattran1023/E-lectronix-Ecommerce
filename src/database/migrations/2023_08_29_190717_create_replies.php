@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('replies', function (Blueprint $table) {
             $table->id();
             $table->integer('origin_comment_id');
-           
             $table->integer('user_id');
             $table->string('user_name');
             $table->string('comment_owner');

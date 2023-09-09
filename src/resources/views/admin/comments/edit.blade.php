@@ -7,7 +7,7 @@
                 <div class="alert alert-success">{{ session('message') }}</div>
             @endif
 
-           
+
 
             <div class="card">
                 <div class="card-header">
@@ -16,7 +16,7 @@
                     </h4>
                 </div>
                 <div class="card-body">
-                   
+
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label>Comment from:</label>
@@ -34,7 +34,7 @@
                             </div>
                         </div>
 
-                        <a href="{{ url('admin/comments/' . $reportComment->id . '/delete') }}"
+                        <a href="{{ url('admin/comments/' . $reportComment->id .'/'. $reportComment->report_id. '/delete') }}"
                             onclick="return confirm('Are you sure you want to delete this user ?')"
                             class="btn btn-sm btn-danger">Manage deleting</a>
 
