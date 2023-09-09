@@ -167,7 +167,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::get('/comments', 'indexAdmin');
         Route::get('comments/{id}/edit','edit');
         Route::get('/comments/index','index');
-        Route::get('/comments/{reportId}/delete','delete');
+        Route::get('/comments/{reportId}/{report_id}/delete','delete');
     });
     //Coupon-admin routes-Tai's routes
     Route::controller(App\Http\Controllers\CouponController::class)->group(function () {

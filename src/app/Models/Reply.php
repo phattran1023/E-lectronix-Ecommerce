@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Reply extends Model
 {
     use HasFactory;
-    protected $table = 'Replies';
+    protected $table = 'replies';
 
     protected $fillable = [
         'origin_comment_id',
-
         'user_id',
         'user_name',
         'comment_owner',
@@ -31,7 +30,7 @@ class Reply extends Model
     {
         return $this->likes()->where('user_id', $user ? $user->id : null)->exists();
     }
-   
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
