@@ -9,7 +9,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title> @yield('title')</title>
-    <link rel="icon" type="image/x-icon" href="{{asset('assets/img/kisspng-letter-computer-icons-letter-e-5abfa798001415.6134645015225097200004.png')}}">
+    <link rel="icon" type="image/x-icon"
+        href="{{ asset('assets/img/kisspng-letter-computer-icons-letter-e-5abfa798001415.6134645015225097200004.png') }}">
 
     <meta name="description" content="@yield('meta_description')">
     <meta name="keywords" content="@yield('meta_keyword')">
@@ -58,16 +59,87 @@
             transition: background-color 0.3s;
         }
 
+        .chatBox {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 300px;
+            z-index: 99;
+            width: 500px;
+            max-height: 500px;
+            /* Giới hạn chiều cao tối đa */
+            background-color: #fad3fc;
+            color: #090704;
+            border: none;
+            border-radius: 8px;
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            font-size: 24px;
+            overflow-y: auto;
+            /* Thêm thanh cuộn nếu nội dung vượt quá giới hạn */
+            display: flex;
+            transition: background-color 0.3s;
+        }
+
+        .chat-message {
+            background-color: #0084ff;
+            /* Màu nền cho tin nhắn */
+            color: #fff;
+            /* Màu văn bản */
+            padding: 10px;
+            /* Khoảng cách padding xung quanh tin nhắn */
+            margin-bottom: 10px;
+            /* Khoảng cách giữa các tin nhắn */
+            border-radius: 8px;
+            /* Độ cong viền */
+            max-width: 80%;
+            /* Chiều rộng tối đa của tin nhắn để nó không quá rộng */
+        }
+
+        .input-container {
+            position: relative;
+        }
+
+    
+
+        .chat-input {
+            padding-left: 30px;
+            /* Khoảng cách để biểu tượng không bị che khuất */
+        }
+
+        .message {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 100px;
+            z-index: 99;
+            width: 60px;
+            height: 60px;
+            background-color: #6868d8;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 24px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+
         .back-to-top:hover {
             background-color: #0056b3;
         }
-        
     </style>
     @livewireStyles
 </head>
 
 <body>
     @include('layouts.inc.frontend.header')
+
     <div id="app">
 
         @include('layouts.inc.frontend.navbar')
@@ -75,6 +147,44 @@
         <main>
             @yield('content')
         </main>
+        <div id="chat-box" style="display: none;" class="chatBox">
+            <div class="chat-messages">
+                <!-- Tin nhắn 1 -->
+                <div class="chat-message">Người dùng A: Xin chào!</div>
+                <!-- Tin nhắn 2 -->
+                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
+                <!-- Tin nhắn 3 -->
+                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
+                <!-- Tin nhắn 4 -->
+                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
+                <!-- Tin nhắn 1 -->
+                <div class="chat-message">Người dùng A: Xin chào!</div>
+                <!-- Tin nhắn 2 -->
+                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
+                <!-- Tin nhắn 3 -->
+                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
+                <!-- Tin nhắn 4 -->
+                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
+                <!-- Tin nhắn 1 -->
+                <div class="chat-message">Người dùng A: Xin chào!</div>
+                <!-- Tin nhắn 2 -->
+                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
+                <!-- Tin nhắn 3 -->
+                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
+                <!-- Tin nhắn 4 -->
+                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
+
+                <div class="fixed-input">
+                    <span class="input-icon"><i class="fas fa-envelope"></i></span>
+                    <input type="text" id="message-input" class="chat-input" placeholder="Type your message...">
+                </div>
+            </div>
+
+
+        </div>
+        <button class="message" id="message-button">
+            <i class="fas fa-comments"></i>
+        </button>
         <button id="backToTopBtn" class="back-to-top">
             <span>&#8593;</span>
         </button>
@@ -118,7 +228,19 @@
             }
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            // Xác định nút "Message" và bản chat
+            var messageButton = $("#message-button");
+            var chatBox = $("#chat-box");
 
+            // Sự kiện click cho nút "Message"
+            messageButton.click(function() {
+                // Hiển thị hoặc ẩn bản chat tùy thuộc vào trạng thái hiện tại
+                chatBox.toggle();
+            });
+        });
+    </script>
     {{-- Reset scrollbar --}}
     {{-- <script>
         document.addEventListener("DOMContentLoaded", function(event) {
@@ -166,7 +288,7 @@
     {{-- Alertify vs Exzoom --}}
     @stack('scripts')
     {{-- Comment --}}
-  
+
     @yield('reportComment')
     @yield('countMaximumWords')
     @yield('commentReply')
@@ -183,27 +305,28 @@
     </div>
 
     <script>
-      var chatbox = document.getElementById('fb-customer-chat');
-      chatbox.setAttribute("page_id", "122109060080000551");
-      chatbox.setAttribute("attribution", "biz_inbox");
+        var chatbox = document.getElementById('fb-customer-chat');
+        chatbox.setAttribute("page_id", "122109060080000551");
+        chatbox.setAttribute("attribution", "biz_inbox");
     </script>
 
     <!-- Your SDK code -->
     <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          xfbml            : true,
-          version          : 'v17.0'
-        });
-      };
+        window.fbAsyncInit = function() {
+            FB.init({
+                xfbml: true,
+                version: 'v17.0'
+            });
+        };
 
-      (function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s);
+            js.id = id;
+            js.src = 'https://connect.facebook.net/en_US/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
     </script>
 
 </body>
