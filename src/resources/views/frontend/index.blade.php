@@ -8,7 +8,7 @@
     @include('layouts.inc.frontend.main')
     @push('scripts')
         <script>
-            var countDownDate = new Date("September 3, 2023 15:30:00").getTime();
+            var countDownDate = new Date("September 19, 2023 15:30:00").getTime();
 
             var countdownfunction = setInterval(function() {
 

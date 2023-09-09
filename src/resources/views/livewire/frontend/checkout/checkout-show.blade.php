@@ -38,15 +38,15 @@
                             @if (session('discountAmount') && session('totalProductAmount'))
                                 <h5 class="text-primary fw-light">
                                     Products Total Amount :
-                                    <span class="float-end">{{ session('totalProductAmount') }}đ</span>
+                                    <span class="float-end">{{ number_format(session('totalProductAmount')) }}đ</span>
                                 </h5>
                                 <h5 class="text-primary fw-light">
                                     Discount Amount :
-                                    <span class="float-end">{{ session('discountAmount') }}đ</span>
+                                    <span class="float-end">{{ number_format(session('discountAmount')) }}đ</span>
                                 </h5>
                                 <h4 class="text-primary">
                                     Total Amount :
-                                    <span class="float-end">{{ session('totalAmount')}}đ</span>
+                                    <span class="float-end">{{ number_format(session('totalAmount'))}}đ</span>
                                 </h4>
                             @else
                                 <h4 class="text-primary">

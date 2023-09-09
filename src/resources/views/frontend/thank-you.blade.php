@@ -10,6 +10,11 @@
                     @if (session('message'))
                     <h5 class="alert">{{session('message')}}</h5>
                     @endif
+                    @if (session('error'))
+                    <div class="alert alert-danger" role="alert">
+                        <h5 class="alert">{{session('error')}}</h5>
+                      </div>
+                    @endif
                     <div class="p-4 shadow bg-white">
 
                         <h3>
