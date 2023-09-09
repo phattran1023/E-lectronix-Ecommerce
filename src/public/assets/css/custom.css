@@ -432,10 +432,10 @@
     border-bottom: 2px solid  rgb(34, 29, 132);
 }
 .col-md-2 {
-    width: 15%; 
+    width: 15%;
 }
 .col-md-3 {
-    width: 25%; 
+    width: 25%;
 }
 @media (max-width: 1000px) {
     .col-md-10{
@@ -445,7 +445,7 @@
         margin-bottom: 25px;
     }
     .col-md-3 {
-        width: 33.33%; 
+        width: 33.33%;
         margin: auto;
     }
     .card{
@@ -458,23 +458,24 @@
         margin: 0;
     }
     .col-md-2 {
-        width: 100%; 
+        width: 100%;
     }
 }
 @media (max-width: 550px) {
     .col-md-3 {
-        width: 50%; 
+        width: 50%;
         margin: auto;
     }
 }
 @media (max-width: 420px) {
     .col-md-3 {
-        width: 80%; 
+        width: 80%;
         margin: auto;
     }
 }
 
 /* Footer */
+
 .footer-area{
     padding: 40px 0px;
     background-color: #7C73C0;
