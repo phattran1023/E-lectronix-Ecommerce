@@ -86,6 +86,8 @@ class CheckoutController extends Controller
             }else{
                 return redirect()->to('thank-you')->with('message', 'Inoice had been created yet!');
             }
+        }else{
+            return redirect()->to('thank-you')->with('error', 'Payment failure!');
         }
     }
     public function callbackMomoQR () {
@@ -108,6 +110,8 @@ class CheckoutController extends Controller
             }else{
                 return redirect()->to('thank-you')->with('message', 'Inoice had been created yet!');
             }
+        }else{
+            return redirect()->to('thank-you')->with('error', 'Payment failure!');
         }
     }    
     public function aftercheck(){

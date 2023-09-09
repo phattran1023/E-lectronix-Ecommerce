@@ -22,10 +22,16 @@
                         <div class="mb-3">
                             <label >Color Name</label>
                             <input type="text" name="name" class="form-control" autofocus value="{{$color->name}}">
+                            @error('code')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label >Color Code</label>
                             <input type="text" name="code" class="form-control" value="{{$color->code}}">
+                            @error('code')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label >Status</label><br>

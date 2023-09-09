@@ -18,7 +18,7 @@ class ColorController extends Controller
         return view('admin.colors.create');
     }
 
-    public function store (ColorFormRequest $request) 
+    public function store (ColorFormRequest $request)
     {
         $validatedData = $request->validated();
         $validatedData['status'] = $request->status == true ? '1':'0';
@@ -27,13 +27,15 @@ class ColorController extends Controller
     }
 
     public function edit (Color $color) {
-        
+
         return view('admin.colors.edit', compact('color'));
     }
 
-    public function update (ColorFormRequest $request, $color_id) 
+    public function update (ColorFormRequest $request, $color_id, $color)
     {
         $validatedData = $request->validated();
+        $color->name = $validatedData['name'];
+        $color->code = $validatedData['code'];
         $validatedData['status'] = $request->status == true ? '1':'0';
         Color::find($color_id)->update($validatedData);
 
