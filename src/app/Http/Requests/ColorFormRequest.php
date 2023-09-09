@@ -22,10 +22,8 @@ class ColorFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','string'],
-            'code' => ['required','string'],
-            'name' => ['nullable'],
-
+            'name' => ['required', 'string'],
+            'code' => ['required', 'string'],
         ];
     }
 }

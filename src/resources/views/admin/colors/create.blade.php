@@ -21,10 +21,16 @@
                         <div class="mb-3">
                             <label >Color Name</label>
                             <input type="text" name="name" class="form-control" autofocus>
+                            @error('name')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label >Color Code</label>
                             <input type="text" name="code" class="form-control">
+                            @error('code')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
                         <div class="mb-3">
                             <label >Status</label><br>
