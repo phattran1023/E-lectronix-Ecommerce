@@ -331,4 +331,17 @@ class CouponController extends Controller
             return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
         }
     }
+    public function deleteCouponExpired(){
+        $now = Carbon::now()->toDateTimeString();
+        $coupons = Coupon::where('date_expires','<',$now)->get();
+        $count = $coupons->count();
+        if ($count>0){
+            foreach ($coupons as $coupon) {
+                $coupon->delete();
+            }
+            return redirect()->back()->with('message', 'Total: '.$count.' Coupons Expired was deleted successfully');
+        }else{
+            return redirect()->back()->with('message', 'Nothing to delete');
+        }
+    }
 }

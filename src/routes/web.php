@@ -181,6 +181,7 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group(function () {
         Route::post('coupon/send/','send')->name('coupon.send');
         Route::post('coupon/sendToAll','sendToAll')->name('coupon.sendToAll');
         Route::post('coupon/sendToSurvey','sendToSurvey')->name('coupon.sendToSurvey');
+        Route::post('coupon/deleteCouponExpired','deleteCouponExpired')->name('coupon.deleteCouponExpired');
     });
     Route::controller(App\Http\Controllers\SurveyController::class)->group(function () {
         Route::get('survey','index')->name('survey.index');

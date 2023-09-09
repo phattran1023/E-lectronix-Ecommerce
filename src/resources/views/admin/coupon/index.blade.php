@@ -63,6 +63,7 @@
                 <a href="{{ Route('coupon.add') }}" class="btn btn-success btn-lg ">Add Coupon</a>
             </div>
             <div class="col d-grid gap-2 d-md-flex justify-content-md-end">
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCouponsExpired">Delete Expired Coupons</button>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#sendToSurvey">Send to Survey</button>
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#topBuyersModal">Send to Top Buyers</button>
             </div>
@@ -225,7 +226,25 @@
             </div>
         </div>
     </div>
-
+    <!-- The deleteExpired -->
+    <div class="modal fade" id="deleteCouponsExpired" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete Expired Coupons</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="{{ Route('coupon.deleteCouponExpired') }}" method="post">
+                    @csrf
+                    <div class="modal-footer">
+                        <div class="row col-12">
+                            <button type="submit" class="btn btn-danger">Delete Expired Coupons</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function() {
             $('button[data-bs-target="#myModal"]').on('click', function() {
