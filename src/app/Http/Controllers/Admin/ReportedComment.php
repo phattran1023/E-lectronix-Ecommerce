@@ -20,7 +20,13 @@ class ReportedComment extends Controller
         return view('admin.comments.index', compact('reportIndex', 'reportPaginate', 'userIndex'));
     }
     
+   
+    public function delete (int $reportId) {
+        $delReport = ReportComment::where('id', $reportId)->delete();
+        return redirect('admin/comments')->with('message', 'Reported comment deleted successfully');
       
+      
+    }
       public function index(Request $request)
       {
           $report_comment_info = ReportComment::where();
@@ -32,4 +38,8 @@ class ReportedComment extends Controller
               ]);
           } 
       }
+      public function edit ($id) {
+        $reportComment = ReportComment::findOrFail($id);
+        return view('admin.comments.edit', compact('reportComment'));
+    }
 }

@@ -68,9 +68,9 @@
                                     </td>
                                     <td>
 
-                                        <button type="button" class="card btn-primary viewFullBtn" data-bs-toggle="modal"
-                                            data-bs-target="#staticBackdrop" data-report-id="{{ $comment->id }}">View
-                                            Full</button>
+                                       
+                                            <a class="card btn-primary" href="{{ url('admin/comments/' . $comment->id . '/edit') }}"
+                                            class="btn btn-sm btn-success">View full</a>
                                     </td>
 
 
