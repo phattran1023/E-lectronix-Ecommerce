@@ -254,7 +254,7 @@ class CouponController extends Controller
             $coupon->delete();
             return redirect()->back()->with('message', 'Delete coupon code: ' . $coupon->code . ' successfully!');
         }
-        return redirect()->back()->with('message', 'Coupon not exist!');
+        return redirect()->back()->with('error', 'Coupon not exist!');
     }
     public function send(Request $request)
     {
@@ -267,7 +267,7 @@ class CouponController extends Controller
 
             return redirect()->back()->with('message', 'Coupon ' . $Coupon->code . ' sent to user: ' . $User->name . ' successfully');
         } else {
-            return redirect()->back()->with('message', 'User not found or Coupon not valid!');
+            return redirect()->back()->with('error', 'User not found or Coupon not valid!');
         }
     }
     public function sendToAll(Request $request)
@@ -293,7 +293,7 @@ class CouponController extends Controller
 
         // dd($now,$coupons,$check);
         if ($topBuyersCount === 0) {
-            return redirect()->back()->with('message', 'User list is empty!');
+            return redirect()->back()->with('error', 'User list is empty!');
         } else {
             if ($check > $topBuyersCount) {
                 foreach ($topBuyers as $buyer) {
@@ -305,7 +305,7 @@ class CouponController extends Controller
                 }
                 return redirect()->back()->with('message', 'Coupon sent to Top Buyer successfully');
             } else {
-                return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
+                return redirect()->back()->with('error', 'The type of discount code you choose is not enough quantity');
             }
         }
     }
@@ -328,7 +328,7 @@ class CouponController extends Controller
             }
             return redirect()->back()->with('message', 'Coupon sent to Survey successfully');
         } else {
-            return redirect()->back()->with('message', 'The type of discount code you choose is not enough quantity');
+            return redirect()->back()->with('error', 'The type of discount code you choose is not enough quantity');
         }
     }
     public function deleteCouponExpired(){
@@ -341,7 +341,7 @@ class CouponController extends Controller
             }
             return redirect()->back()->with('message', 'Total: '.$count.' Coupons Expired was deleted successfully');
         }else{
-            return redirect()->back()->with('message', 'Nothing to delete');
+            return redirect()->back()->with('error', 'Nothing to delete');
         }
     }
 }
