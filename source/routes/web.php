@@ -54,6 +54,9 @@ Route::post('/reply/{reply}/like', [App\Http\Controllers\Frontend\ReplyControlle
 Route::post('replyComment/{id}', [App\Http\Controllers\Frontend\ReplyController::class, 'commentReplyStore'])->name('reply.store');
 Route::post('replyReplyComment/{replyId}/{commentId}', [App\Http\Controllers\Frontend\ReplyController::class, 'replyReplyStore'])->name('replyReply.store');
 Route::post('/delete-replies/{id}',[App\Http\Controllers\Frontend\ReplyController::class, 'deleteReply'])->name('reply.delete');
+// chat realTime
+Route::get('/chat/messages', 'ChatController@getMessages')->name('chat.get_messages');
+Route::post('/chat/send', 'ChatController@sendMessage')->name('chat.send');
 // User's routes  - Phat's routes
 Route::middleware(['auth'])->group(function () {
 

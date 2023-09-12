@@ -103,7 +103,7 @@
             position: relative;
         }
 
-    
+
 
         .chat-input {
             padding-left: 30px;
@@ -149,30 +149,7 @@
         </main>
         <div id="chat-box" style="display: none;" class="chatBox">
             <div class="chat-messages">
-                <!-- Tin nhắn 1 -->
-                <div class="chat-message">Người dùng A: Xin chào!</div>
-                <!-- Tin nhắn 2 -->
-                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
-                <!-- Tin nhắn 3 -->
-                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
-                <!-- Tin nhắn 4 -->
-                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
-                <!-- Tin nhắn 1 -->
-                <div class="chat-message">Người dùng A: Xin chào!</div>
-                <!-- Tin nhắn 2 -->
-                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
-                <!-- Tin nhắn 3 -->
-                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
-                <!-- Tin nhắn 4 -->
-                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
-                <!-- Tin nhắn 1 -->
-                <div class="chat-message">Người dùng A: Xin chào!</div>
-                <!-- Tin nhắn 2 -->
-                <div class="chat-message user-message">Người dùng B: Chào bạn! Có gì mới?</div>
-                <!-- Tin nhắn 3 -->
-                <div class="chat-message">Người dùng A: Tôi cần giúp đỡ về điều này.</div>
-                <!-- Tin nhắn 4 -->
-                <div class="chat-message user-message">Người dùng B: Tất nhiên, hãy hỏi đi.</div>
+                {{-- Display message here --}}
 
                 <div class="fixed-input">
                     <span class="input-icon"><i class="fas fa-envelope"></i></span>
@@ -240,18 +217,64 @@
                 chatBox.toggle();
             });
         });
-    </script>
-    {{-- Reset scrollbar --}}
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function(event) {
-            var scrollpos = localStorage.getItem('scrollpos');
-            if (scrollpos) window.scrollTo(0, scrollpos);
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('#message-input').keypress(function(event) {
+            if (event.which === 13) { // Kiểm tra nếu người dùng ấn Enter
+                event.preventDefault();
+                // Gọi hàm để tải tin nhắn ban đầu
+                loadMessages();
+                var messageText = $('#message-input').val();
+
+                if (messageText.trim() !== '') {
+                    // Gửi tin nhắn đến server thông qua Ajax
+                    $.ajax({
+                        url: '{{ route('chat.send') }}',
+                        method: 'POST',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            message: messageText
+                        },
+                        success: function(response) {
+                            getMessages();
+                        }
+                    });
+                    // Xóa nội dung trong ô input
+                    $('#message-input').val('');
+                }
+            }
         });
 
-        window.onbeforeunload = function(e) {
-            localStorage.setItem('scrollpos', window.scrollY);
-        };
-    </script> --}}
+        function loadMessages() {
+            $.ajax({
+                url: '{{ route('chat.get_messages') }}',
+                method: 'GET',
+                success: function(response) {
+                    var messages = response.messages;
+                    var messageContainer = $('.chat-messages');
+
+                    // Xóa tất cả các tin nhắn hiện tại trong messageContainer
+                    messageContainer.empty();
+
+                    // Thêm tin nhắn vào messageContainer
+                    messages.forEach(function(message) {
+                        var messageHtml = '<div class="chat-message">' +
+                            '<div class="message-content">' + message.content + '</div>' +
+                            '</div>';
+                        messageContainer.append(messageHtml);
+                    });
+
+                    // Cuộn xuống cuối cùng để xem tin nhắn mới nhất
+                    messageContainer.scrollTop(messageContainer[0].scrollHeight);
+                }
+            });
+        }
+    </script>
+   
 
 
     {{-- Back to top --}}
