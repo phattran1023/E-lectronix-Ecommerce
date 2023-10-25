@@ -21,20 +21,20 @@ class OrderController extends Controller
         // dd($todayDate);
         if ($request->date != null) {
             $orders = Order::when($request->date != null, function ($q) use ($request) {
-        
+
                 return $q->whereDate('created_at', $request->date);
             }, function ($q) use ($todayDate) {
                 $q->whereDate('created_at', $todayDate);
             })
                 ->when($request->status != null, function ($q) use ($request) {
-    
+
                     return $q->where('status_message', $request->status);
                 })
                 ->paginate(10);
         } else {
             $orders = Order::get();
         }
-        
+
 
         return view('admin.orders.index', compact('orders'));
     }
@@ -71,7 +71,11 @@ class OrderController extends Controller
     public function updateOrderStatus(int $orderId, Request $request)
     {
         $order = Order::where('id', $orderId)->first();
+        $checkStatus = $order->status_message;
         if ($order) {
+            if($checkStatus =="completed"){
+                return redirect('admin/orders/' . $orderId)->with('message', 'Cant change order status!');
+            }
             $order->update([
                 'status_message' => $request->order_status
             ]);

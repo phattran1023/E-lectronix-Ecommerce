@@ -120,13 +120,20 @@ class CouponController extends Controller
         } else {
             $status = '0';
         }
+        if($request->input('quantity') <1){
+            return redirect()->back()->with('Error', 'Quantity must greater than zero!');
+        }
         if ($request->input('quantity') == '1') {
             $coupon = new Coupon;
             $coupon->code = $request->input('code');
             $coupon->applies = $request->input('applies');
             $coupon->type = $request->input('type');
             $coupon->value = $request->input('value');
-            $coupon->max_value = $request->input('max_value');
+            if($request->input('type') === 'amount'){
+                $coupon->max_value = $request->input('value');
+            }else{
+                $coupon->max_value = $request->input('max_value');
+            }
             $coupon->description = $request->input('description');
             $coupon->date_created = $request->input('date_created');
             $coupon->date_expires = $request->input('date_expires');
@@ -141,7 +148,12 @@ class CouponController extends Controller
                 $coupon->applies = $request->input('applies');
                 $coupon->type = $request->input('type');
                 $coupon->value = $request->input('value');
-                $coupon->max_value = $request->input('max_value');
+                // $coupon->max_value = $request->input('max_value');
+                if($request->input('type') === 'amount'){
+                    $coupon->max_value = $request->input('value');
+                }else{
+                    $coupon->max_value = $request->input('max_value');
+                }
                 $coupon->description = $request->input('description');
                 $coupon->date_created = $request->input('date_created');
                 $coupon->date_expires = $request->input('date_expires');

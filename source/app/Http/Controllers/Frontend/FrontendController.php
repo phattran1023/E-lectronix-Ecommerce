@@ -23,12 +23,13 @@ class FrontendController extends Controller
             $couponList = ['See you again'];
         }
         $sliders = Slider::where('status', '0')->get();
-        $trendingProducts = Product::where('trending','1')->latest()->take(15)->get();
+        $trendingProducts = Product::where('trending','1')->latest()->take(16)->get();
         $newestProducts = Product::with('productImages')->orderBy('created_at', 'desc')->take(8)->get();
         $discount_Products = Product::selectRaw('*, ((original_price - selling_price) / original_price) * 100 AS discount_percent')
-                            ->where('original_price', '>', 0) 
+                            ->where('original_price', '>', 0)
                             ->having('discount_percent', '>', 0)
                             ->orderBy('discount_percent', 'desc')
+                            ->take(8)
                             ->get();
         return view('frontend.index', compact('sliders', 'newestProducts', 'discount_Products','trendingProducts','couponList'));
     }
@@ -36,7 +37,7 @@ class FrontendController extends Controller
 
     public function searchProduct (Request $request) {
         if ($request->search) {
-            
+
             $search = Product::where('name','LIKE','%'.$request->search.'%')->latest()->paginate(10);
             return view('frontend.pages.search',compact('search'));
         }else {
@@ -52,7 +53,7 @@ class FrontendController extends Controller
 
     public function featuredProducts()  {
         $featuredProducts = Product::where('featured','1')->latest()->get();
-        return view('frontend.pages.featured-products', compact('featuredProducts'));   
+        return view('frontend.pages.featured-products', compact('featuredProducts'));
     }
 
     public function categories()
@@ -76,7 +77,7 @@ class FrontendController extends Controller
     public function productView(string  $category_slug,  string $product_slug)
     {
         $category = Category::where('slug', $category_slug)->first();
-        
+
         if ($category) {
 
             $product = $category->products()->where('slug', $product_slug)->where('status', '0')->first();
@@ -85,15 +86,15 @@ class FrontendController extends Controller
                 $checkWishlist = Wishlist::where('user_id', auth()->user()->id)->where('product_id', $product_id)->exists();
                 session()->put('checkWishlist', $checkWishlist);
                 }
-           
-           
+
+
             if ($product) {
                 return view('frontend.collections.products.view', compact('product','category'));
             }else {
                 return redirect()->back();
             }
-        } 
-        
+        }
+
         else {
             return redirect()->back();
         }

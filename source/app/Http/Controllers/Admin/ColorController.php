@@ -22,6 +22,10 @@ class ColorController extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['status'] = $request->status == true ? '1':'0';
+        $check = Color::where('name', $request->name)->first();
+        if( $check){
+            return redirect()->back()->with('error','Color already exists');
+        }
         Color ::create($validatedData);
         return redirect('admin/colors')->with('message','Color added successfully');
     }
@@ -31,12 +35,17 @@ class ColorController extends Controller
         return view('admin.colors.edit', compact('color'));
     }
 
-    public function update (ColorFormRequest $request, $color_id, $color)
+    public function update (ColorFormRequest $request, $color_id)
     {
+        $color = Color::find($color_id)->first();
         $validatedData = $request->validated();
         $color->name = $validatedData['name'];
         $color->code = $validatedData['code'];
         $validatedData['status'] = $request->status == true ? '1':'0';
+        $check = Color::where('name', $request->name)->first();
+        if( $check){
+            return redirect()->back()->with('error','Color already exists');
+        }
         Color::find($color_id)->update($validatedData);
 
         return redirect('admin/colors')->with('message','Color updated successfully');

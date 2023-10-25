@@ -50,11 +50,13 @@ class ProductFormRequest extends FormRequest
             ],
             'original_price' => [
                 'required',
-                'integer'
+                'integer',
+                'min:0'
             ],
             'selling_price' => [
                 'required',
-                'integer'
+                'integer',
+                'min:0'
             ],
             'quantity' => [
                 'required',
@@ -62,11 +64,11 @@ class ProductFormRequest extends FormRequest
             ],
             'trending' => [
                 'nullable',
-                
+
             ],
             'status' => [
                 'nullable',
-                
+
             ],
             'meta_title' => [
                 'required',
@@ -76,12 +78,12 @@ class ProductFormRequest extends FormRequest
             'meta_keyword' => [
                 'required',
                 'string',
-                
+
             ],
             'meta_description' => [
                 'required',
                 'string',
-                
+
             ],
             'image' =>[
                 'nullable',

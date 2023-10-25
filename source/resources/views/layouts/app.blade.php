@@ -147,7 +147,7 @@
         <main>
             @yield('content')
         </main>
-        <div id="chat-box" style="display: none;" class="chatBox">
+        <!--<div id="chat-box" style="display: none;" class="chatBox">
             <div class="chat-messages">
                 {{-- Display message here --}}
 
@@ -156,12 +156,10 @@
                     <input type="text" id="message-input" class="chat-input" placeholder="Type your message...">
                 </div>
             </div>
-
-
         </div>
         <button class="message" id="message-button">
             <i class="fas fa-comments"></i>
-        </button>
+        </button>-->
         <button id="backToTopBtn" class="back-to-top">
             <span>&#8593;</span>
         </button>
@@ -274,7 +272,7 @@
             });
         }
     </script>
-   
+
 
 
     {{-- Back to top --}}

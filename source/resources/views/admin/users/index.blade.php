@@ -31,18 +31,25 @@
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->name }}</td>
                                     <td>{{ $item->email }}</td>
-                                    <td>@if ($item->role_as == '0')
-                                        <label class="badge rounded-pill bg-primary">User</label>
-                                    @elseif ($item->role_as == '1')
-                                        <label class="badge rounded-pill bg-success">Admin</label>
-                                    @else
-                                        <label class="badge rounded-pill bg-danger">Google/Twitter User</label>
-                                    @endif</td>
-                                    <td><a href="{{ url('admin/users/' . $item->id . '/edit') }}"
-                                            class="btn btn-sm btn-success">Edit</a>
-                                        <a href="{{ url('admin/users/' . $item->id . '/delete') }}"
-                                            onclick="return confirm('Are you sure you want to delete this user ?')"
-                                            class="btn btn-sm btn-danger">Delete</a>
+                                    <td>
+                                        @if ($item->role_as == '0')
+                                            <label class="badge rounded-pill bg-primary">User</label>
+                                        @elseif ($item->role_as == '1')
+                                            <label class="badge rounded-pill bg-success">Admin</label>
+                                        @else
+                                            <label class="badge rounded-pill bg-danger">Google/Twitter User</label>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if (Auth::user()->role_as != $item->role_as)
+                                            <a href="{{ url('admin/users/' . $item->id . '/edit') }}"
+                                                class="btn btn-sm btn-success">Edit</a>
+                                        @endif
+                                        @if (Auth::user()->role_as != $item->role_as)
+                                            <a href="{{ url('admin/users/' . $item->id . '/delete') }}"
+                                                onclick="return confirm('Are you sure you want to delete this user ?')"
+                                                class="btn btn-sm btn-danger">Delete</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty
@@ -55,7 +62,7 @@
                     </table>
                 </div>
                 <div>
-                    {{$users->links()}}
+                    {{ $users->links() }}
                 </div>
             </div>
         </div>

@@ -100,14 +100,14 @@
                         <td>{{ $coupon->code }}</td>
                         {{-- <td>{{ $coupon->applies }}</td> --}}
                         {{-- <td>{{$coupon->type=="percent"?"%":"VND"}}</td> --}}
-                        <td>{{ $coupon->type == 'percent' ? $coupon->value . '%' : $coupon->value . 'VND' }}</td>
-                        <td>{{ $coupon->max_value . 'VND' }}</td>
+                        <td>{{ $coupon->type == 'percent' ? $coupon->value . '%' : number_format($coupon->value). 'VND' }}</td>
+                        <td>{{ number_format($coupon->max_value) . 'VND' }}</td>
                         <td>{{ $coupon->description }}</td>
                         <td>{{ $coupon->date_created }}</td>
                         <td><span class="badge rounded-pill
-                            @if (Carbon\Carbon::parse($coupon->date_expires)->isPast()) 
+                            @if (Carbon\Carbon::parse($coupon->date_expires)->isPast())
                                 bg-danger
-                            @elseif(Carbon\Carbon::parse($coupon->date_expires)->diffInDays(now()) < 3) 
+                            @elseif(Carbon\Carbon::parse($coupon->date_expires)->diffInDays(now()) < 3)
                                 bg-warning
                             @else
                                 bg-success
@@ -118,7 +118,7 @@
                         <td><a href="{{ Route('coupon.delete', $coupon->id) }}" class="btn btn-danger">Delete</a></td>
                         <td>
                             <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#myModal"
-                                data-coupon-code="{{ $coupon->code }}" {{$coupon->status!='free' && $coupon->status!='0'?'disabled':''}}>
+                                data-coupon-code="{{ $coupon->code }}" {{$coupon->status!='free'?'disabled':''}}>
                                 Send
                             </button>
                         </td>

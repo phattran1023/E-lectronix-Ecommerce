@@ -17,11 +17,11 @@
             @endforeach
         </div>
     @endif
-    {{-- @if (session('Error'))
+    @if (session('Error'))
         <div class="alert alert-danger" role="alert">
             <span>Error: {{ session('Error') }} !</span>
         </div>
-    @endif --}}
+    @endif
     <a href="{{Route('coupon.index')}}" class="btn btn-info">View Coupons List</a>
     <form action="{{Route('coupon.store')}}" method="POST" class="mt-4 mb-4">
         @csrf
