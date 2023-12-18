@@ -1,4 +1,4 @@
-<h1 align="center">Laravel Shop_v2</h1>
+<h1 align="center">Laravel E-lectronix.com</h1>
 
 <p align="center">
   <a href="https://laravel.com" target="_blank">
